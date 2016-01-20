@@ -1,0 +1,42 @@
+<f:layout name="Default" />
+
+This template displays a EDIT form for the current domain object.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        Edit.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+<f:if condition="{address}">
+	<f:then>
+		<style type="text/css">
+			.typo3-messages .message-ok .message-body {
+				color: darkgreen;
+			}
+		</style>
+		<f:flashMessages renderMode="div" />
+		<br />
+		<f:render partial="FormErrors" arguments="{object:Address}"/>
+
+		<f:form action="update" name="address" object="{address}" >
+		<f:render partial="Address/FormFieldsEdit" arguments="{address:address}" />
+			<f:form.submit value="{f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.edit.saveButton')}" />
+		</f:form>
+
+		<br />
+		<f:link.action action="delete" arguments="{hash: address.registeraddresshash}" noCacheHash="1" pageUid="{settings.pagewithform}" absolute="1">{f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.edit.deleteButton')}</f:link.action>
+	</f:then>
+	<f:else>
+		<p><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.edit.errortext" /></p>
+	</f:else>
+</f:if>
+
+
+
+</f:section>

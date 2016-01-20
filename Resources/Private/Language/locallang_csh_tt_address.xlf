@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-08-28T17:07:34Z" product-name="registeraddress">
+		<header/>
+		<body>
+
+			<trans-unit id="name.description">
+				<source>name</source>
+			</trans-unit>
+			<trans-unit id="gender.description">
+				<source>gender</source>
+			</trans-unit>
+			<trans-unit id="first_name.description">
+				<source>firstName</source>
+			</trans-unit>
+			<trans-unit id="middle_name.description">
+				<source>middleName</source>
+			</trans-unit>
+			<trans-unit id="last_name.description">
+				<source>lastName</source>
+			</trans-unit>
+			<trans-unit id="email.description">
+				<source>email</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-08-28T17:07:33Z" product-name="registeraddress">
+		<header/>
+		<body>
+
+			<trans-unit id="tx_registeraddress_domain_model_address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.name">
+				<source>name</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.gender">
+				<source>Anrede</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.first_name">
+				<source>Vorname</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.middle_name">
+				<source>middleName</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.last_name">
+				<source>Nachname</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.email">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.email.placeholder">
+				<source>E-Mail Adresse</source>
+			</trans-unit>
+
+			<trans-unit id="salutationgeneration.lastname.m">
+				<source>Sehr geehrter Herr </source>
+			</trans-unit>
+			<trans-unit id="salutationgeneration.lastname.f">
+				<source>Sehr geehrte Frau </source>
+			</trans-unit>
+			<trans-unit id="salutationgeneration.onlyfirstname">
+				<source>Hallo </source>
+			</trans-unit>
+			<trans-unit id="salutationgeneration.other">
+				<source>Liebe(r) Leser(in)</source>
+			</trans-unit>
+
+			<trans-unit id="error.1221559976.newAddress.email">
+				<source>Bitte geben Sie eine korrekte E-Mail Adresse an</source>
+			</trans-unit>
+			<trans-unit id="error.1221560718.newAddress.email">
+				<source>Bitte geben Sie eine E-Mail Adresse an</source>
+			</trans-unit>
+			<trans-unit id="error.1221560718.newAddress.firstName">
+				<source>Bitte geben Sie einen Vornamen an</source>
+			</trans-unit>
+			<trans-unit id="error.1221560718.newAddress.lastName">
+				<source>Bitte geben Sie einen Nachnamen an</source>
+			</trans-unit>
+
+			<trans-unit id="form.new.title">
+				<source>Newsletter Anmeldung</source>
+			</trans-unit>
+			<trans-unit id="form.new.submitButton">
+				<source>ANMELDEN</source>
+			</trans-unit>
+			<trans-unit id="form.create.alreadyexists">
+				<source><![CDATA[Diese E-Mail ist bereits bei uns Registriert.<br />
+					Hier können Sie eine E-Mail mit Links zur Bearbeitung und Löschung anfordern:]]></source>
+			</trans-unit>
+			<trans-unit id="form.create.alreadyexistsLinktext">
+				<source>E-Mail Anfordern.</source>
+			</trans-unit>
+			<trans-unit id="form.create.approvetext">
+				<source><![CDATA[Bitte beachten Sie, dass Ihre Anmeldung erst abgeschlossen ist,<br />
+				wenn Sie den Link, den wir an %1s geschickt haben, anklicken.]]></source>
+			</trans-unit>
+			<trans-unit id="form.create.mailnotfound">
+				<source>Adresse konnte nicht in unserer Datenbank gefunden werden.</source>
+			</trans-unit>
+			<trans-unit id="form.approve.approvetext">
+				<source><![CDATA[Sie sind nun mit folgenden Daten für den Newsletter angemeldet:<br />
+		Name: %1s %2s<br />
+		E-Mail: %3s]]></source>
+			</trans-unit>
+			<trans-unit id="form.approve.errortext">
+				<source>Adresse konnte nicht in unserer Datenbank gefunden werden.</source>
+			</trans-unit>
+			<trans-unit id="form.delete.text">
+				<source><![CDATA[Sie sind nun vom Newsletter abgemeldet.<br />
+		Name: %1s %2s<br />
+		E-Mail: %3s]]></source>
+			</trans-unit>
+			<trans-unit id="form.delete.errortext">
+				<source>Adresse konnte nicht in unserer Datenbank gefunden werden.</source>
+			</trans-unit>
+
+			<trans-unit id="form.edit.saveButton">
+				<source>Speichern</source>
+			</trans-unit>
+			<trans-unit id="form.edit.deleteButton">
+				<source>Vom Newsletter abmelden</source>
+			</trans-unit>
+			<trans-unit id="form.edit.errortext">
+				<source>Adresse konnte nicht in unserer Datenbank gefunden werden.</source>
+			</trans-unit>
+			<trans-unit id="form.info.text">
+				<source>Eine E-Mail mit den Daten wurde an Sie gesendet.</source>
+			</trans-unit>
+			<trans-unit id="form.info.error">
+				<source><![CDATA[Ein Fehler ist aufgetreten.<br />Versuchen Sie es bitte erneut.]]></source>
+			</trans-unit>
+
+
+			<trans-unit id="mail.gender.m">
+				<source>Herr</source>
+			</trans-unit>
+			<trans-unit id="mail.gender.f">
+				<source>Frau</source>
+			</trans-unit>
+
+			<trans-unit id="mail.info.greet">
+				<source>Hallo</source>
+			</trans-unit>
+			<trans-unit id="mail.info.editLinkText">
+				<source>Bitte klicken Sie folgenden Link um Ihre Daten zu bearbeiten:</source>
+			</trans-unit>
+			<trans-unit id="mail.info.deleteLinkText">
+				<source>Bitte klicken Sie folgenden Link um Ihre Anmeldung zu löschen:</source>
+			</trans-unit>
+
+			<trans-unit id="mail.registration.greet">
+				<source>Hallo</source>
+			</trans-unit>
+			<trans-unit id="mail.registration.text">
+				<source><![CDATA[Sie sind nun für den Newsletter angemeldet.
+
+WICHTIG:]]></source>
+			</trans-unit>
+			<trans-unit id="mail.registration.approveLinkText">
+				<source>Bevor wir Ihnen den Newsletter regelmäßig zuschicken, bestätigen Sie bitte Ihre Anmeldung und klicken auf folgenden Link:</source>
+			</trans-unit>
+			<trans-unit id="mail.registration.deleteLinkText">
+				<source>Wenn Sie sich nicht für den Newsletter anmelden wollen, dann klicken Sie bitte folgenden Link:</source>
+			</trans-unit>
+			<trans-unit id="mail.registration.editLinkText">
+				<source>Wenn Sie Ihre persöhnlichen Daten ändern wollen, dann klicken Sie bitte folgenden Link:</source>
+			</trans-unit>
+			
+		</body>
+	</file>
+</xliff>

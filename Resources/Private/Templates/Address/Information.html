@@ -1,0 +1,25 @@
+<f:layout name="Default" />
+
+This template displays a NEW form for the current domain object.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        New.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+<f:if condition="{address}">
+	<f:then>
+		<p><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.info.text" /></p>
+	</f:then>
+	<f:else>
+		<p><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.info.error" htmlEscape="false" /></p>
+	</f:else>
+</f:if>
+
+</f:section>

@@ -1,0 +1,30 @@
+plugin.tx_registeraddress {
+	view {
+		# cat=plugin.tx_registeraddress/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:registeraddress/Resources/Private/Templates/
+		# cat=plugin.tx_registeraddress/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:registeraddress/Resources/Private/Partials/
+		# cat=plugin.tx_registeraddress/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:registeraddress/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_registeraddress//a; type=string; label=Default storage PID
+		storagePid =
+	}
+	settings {
+		# cat=plugin.tx_registeraddress//a; type=string; label=Admin email
+		adminmail =
+		# cat=plugin.tx_registeraddress//a; type=int; label=Page id with form
+		pagewithform =
+		# cat=plugin.tx_registeraddress//a; type=string; label=Mail address from which mails are send
+		sendermail = noreply@serverdomainabcd.com
+		# cat=plugin.tx_registeraddress//a; type=string; label=Name from which mails are send
+		sendername = Webserver
+		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of response mail
+		responseSubject = Newsletter Anmeldung
+		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of delete mail
+		deleteSubject = Newsletter Benutzer abgemeldet
+		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of approve mail
+		approveSubject = Newsletter Benutzer angemeldet
+	}
+}

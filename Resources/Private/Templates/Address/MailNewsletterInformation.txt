@@ -1,0 +1,7 @@
+{f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:mail.info.greet')} {f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:mail.gender.{gender}')} {vorname} {nachname}
+
+{f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:mail.info.editLinkText')}
+{f:uri.action(action: 'edit', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1)}
+
+{f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:mail.info.deleteLinkText')}
+{f:uri.action(action: 'delete', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1)}

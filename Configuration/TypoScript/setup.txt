@@ -1,0 +1,48 @@
+plugin.tx_registeraddress {
+	view {
+		templateRootPath = {$plugin.tx_registeraddress.view.templateRootPath}
+		partialRootPath = {$plugin.tx_registeraddress.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_registeraddress.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_registeraddress.persistence.storagePid}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		rewrittenPropertyMapper = 1
+	}
+	settings {
+		adminmail = {$plugin.tx_registeraddress.settings.adminmail}
+		pagewithform = {$plugin.tx_registeraddress.settings.pagewithform}
+		sendermail = {$plugin.tx_registeraddress.settings.sendermail}
+		sendername = {$plugin.tx_registeraddress.settings.sendername}
+		responseSubject = {$plugin.tx_registeraddress.settings.responseSubject}
+		deleteSubject = {$plugin.tx_registeraddress.settings.deleteSubject}
+		approveSubject = {$plugin.tx_registeraddress.settings.approveSubject}
+	}
+}
+
+plugin.tx_registeraddress._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-registeraddress table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-registeraddress table th {
+		font-weight:bold;
+	}
+
+	.tx-registeraddress table td {
+		vertical-align:top;
+	}
+)

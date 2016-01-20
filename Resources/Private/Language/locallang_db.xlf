@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-08-28T17:07:34Z" product-name="registeraddress">
+		<header/>
+		<body>
+
+			<trans-unit id="tx_registeraddress_domain_model_address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.gender">
+				<source>Gender</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.first_name">
+				<source>First Name</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.middle_name">
+				<source>Middle Name</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.last_name">
+				<source>Last Name</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.eigene_anrede">
+				<source>Eigene Anrede</source>
+			</trans-unit>
+			
+			<trans-unit id="tt_address.tx_extbase_type.Tx_Registeraddress_Address">
+				<source>registerttaddress Address</source>
+			</trans-unit>
+			
+		</body>
+	</file>
+</xliff>

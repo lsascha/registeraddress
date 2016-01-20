@@ -1,0 +1,31 @@
+<f:layout name="Default" />
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        Create.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+<f:if condition="{address}">
+	<f:then>
+		<f:if condition="{alreadyExists}">
+			<f:then>
+				<p><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.create.alreadyexists" htmlEscape="false" /><br />
+					<f:link.action action="information" arguments="{email: oldAddress.email, uid: oldAddress}" pageUid="{settings.pagewithform}"><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.create.alreadyexistsLinktext" /></f:link.action></p>
+			</f:then>
+			<f:else>
+				<p><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.create.approvetext" htmlEscape="false" arguments="{0: address.email}" /></p>
+			</f:else>
+		</f:if>
+	</f:then>
+	<f:else>
+		<p><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.create.mailnotfound" /></p>
+	</f:else>
+</f:if>
+
+</f:section>
