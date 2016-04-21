@@ -34,6 +34,10 @@ namespace AFM\Registeraddress\Controller;
  */
 class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
+	const MAILFORMAT_TXT = 1;
+	const MAILFORMAT_HTML = 2;
+	const MAILFORMAT_TXTHTML = 3;
+
 	/**
 	 * addressRepository
 	 *
@@ -105,7 +109,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				'nachname' => $newAddress->getLastName(),
 				'hash' => $regHash
 			);
-			$this->sendResponseMail( $newAddress->getEmail(), 'MailNewsletterRegistration', $data );
+			$this->sendResponseMail( $newAddress->getEmail(), 'MailNewsletterRegistration', $data, $this->settings['mailformat'] );
 
 			$persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
 			$persistenceManager->persistAll(); 
@@ -131,7 +135,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				'nachname' => $address->getLastName(),
 				'hash' => $address->getRegisteraddresshash()
 			);
-			$this->sendResponseMail( $address->getEmail(), 'MailNewsletterInformation', $data );
+			$this->sendResponseMail( $address->getEmail(), 'MailNewsletterInformation', $data, $this->settings['mailformat'] );
 
 			$this->view->assign('address', $address);
 		}
@@ -174,7 +178,10 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				$adminRecipient = array($this->settings['adminmail']);
 				$from = array($this->settings['sendermail']);
 				$subject = $this->settings['approveSubject'];
-				$mailText = 'The User '.$address->getFirstName().' '.$address->getLastName().' ('.$address->getEmail().') has subscribed for the newsletter.';
+
+				//$mailText = 'The User '.$address->getFirstName().' '.$address->getLastName().' ('.$address->getEmail().') has subscribed for the newsletter.';
+				$mailText = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('adminmail.mailtext.subscribed', 'registeraddress', array($address->getFirstName(), $address->getLastName(), $address->getEmail()));
+
 				$this->sendEmail(
 					$adminRecipient,
 					$from,
@@ -234,7 +241,8 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$this->addressRepository->update($address);
 
 		$this->flashMessageContainer->flush();
-		$this->flashMessageContainer->add('Deine Daten wurden aktualisiert.');
+
+		$this->flashMessageContainer->add(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('flashMessage.update', 'registeraddress'));
 		$this->redirect('edit', 'Address', 'registeraddress', array('hash' => $address->getRegisteraddresshash() ));
 		
 	}
@@ -256,7 +264,11 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				$adminRecipient = array($this->settings['adminmail']);
 				$from = array($this->settings['sendermail']);
 				$subject = $this->settings['deleteSubject'];
-				$mailText = 'The User '.$address->getFirstName().' '.$address->getLastName().' ('.$address->getEmail().') has unsubscribed the newsletter.';
+				
+				//$mailText = 'The User '.$address->getFirstName().' '.$address->getLastName().' ('.$address->getEmail().') has unsubscribed the newsletter.';
+
+				$mailText = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('adminmail.mailtext.unsubscribed', 'registeraddress', array($address->getFirstName(), $address->getLastName(), $address->getEmail()));
+
 				$this->sendEmail(
 					$adminRecipient,
 					$from,
@@ -308,7 +320,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @param array $replyTo
 	 * @return integer the number of recipients who were accepted for delivery
 	 */
-	protected function sendEmail(array $recipient, array $from, $subject, $bodyHTML, $bodyPlain = '', array $replyTo = NULL) {
+	protected function sendEmail(array $recipient, array $from, $subject, $bodyHTML = '', $bodyPlain = '', array $replyTo = NULL) {
 
 		if ( $replyTo == NULL ) {
 			$replyTo = $from;
@@ -323,7 +335,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
 			$mail->addPart($bodyHTML, 'text/html');
 		}
-		if ($bodyPlain !== '') {
+		if ($bodyPlain !== '' && $bodyPlain !== NULL ) {
 			$mail->addPart($bodyPlain, 'text/plain');
 		}
 
@@ -335,17 +347,41 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @param string $recipientmails
 	 * @param string $templateName
 	 * @param array $data
+	 * @param array $data
 	 * @return void
 	 */
-	private function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL ) {
+	private function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT ) {
 		$recipients = explode(',', $recipientmails);
 
 		$from = array($this->settings['sendermail'] => $this->settings['sendername']);
 		$subject = $this->settings['responseSubject'];
-		$mailTextView = $this->getPlainRenderer($templateName, 'txt');
-		$mailTextView->assignMultiple($data);
-		$mailText = $mailTextView->render();
+		
 		$mailHtml = '';
+		$mailText = '';
+
+		switch ($type) {
+			case self::MAILFORMAT_TXT:
+				$mailTextView = $this->getPlainRenderer($templateName, 'txt');
+				break;
+			case self::MAILFORMAT_HTML:
+				$mailHtmlView = $this->getPlainRenderer($templateName, 'html');
+				break;
+
+			case self::MAILFORMAT_TXTHTML:
+				$mailHtmlView = $this->getPlainRenderer($templateName, 'html');
+			default:
+				$mailTextView = $this->getPlainRenderer($templateName, 'txt');
+				break;
+		}
+
+		if ( isset($mailTextView) ) {
+			$mailTextView->assignMultiple($data);
+			$mailText = $mailTextView->render();
+		}
+		if ( isset($mailHtmlView) ) {
+			$mailHtmlView->assignMultiple($data);
+			$mailHtml = $mailHtmlView->render();
+		}
 
 		foreach ($recipients as $recipient) {
 			$recipientMail = array(trim($recipient));

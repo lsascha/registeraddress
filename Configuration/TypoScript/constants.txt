@@ -26,5 +26,7 @@ plugin.tx_registeraddress {
 		deleteSubject = Newsletter Benutzer abgemeldet
 		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of approve mail
 		approveSubject = Newsletter Benutzer angemeldet
+		# cat=plugin.tx_registeraddress//a; type=options[txt,html,both]; label=format of send e-mails (txt, html or both)
+		mailformat = txt
 	}
 }
