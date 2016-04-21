@@ -34,9 +34,9 @@ namespace AFM\Registeraddress\Controller;
  */
 class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
-	const MAILFORMAT_TXT = 1;
-	const MAILFORMAT_HTML = 2;
-	const MAILFORMAT_TXTHTML = 3;
+	const MAILFORMAT_TXT = 'txt';
+	const MAILFORMAT_HTML = 'html';
+	const MAILFORMAT_TXTHTML = 'both';
 
 	/**
 	 * addressRepository
