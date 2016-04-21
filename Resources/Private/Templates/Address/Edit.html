@@ -26,14 +26,14 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 		<f:form action="update" name="address" object="{address}" >
 		<f:render partial="Address/FormFieldsEdit" arguments="{address:address}" />
-			<f:form.submit value="{f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.edit.saveButton')}" />
+			<f:form.submit value="{f:translate(key:'form.edit.saveButton')}" />
 		</f:form>
 
 		<br />
-		<f:link.action action="delete" arguments="{hash: address.registeraddresshash}" noCacheHash="1" pageUid="{settings.pagewithform}" absolute="1">{f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.edit.deleteButton')}</f:link.action>
+		<f:link.action action="delete" arguments="{hash: address.registeraddresshash}" noCacheHash="1" pageUid="{settings.pagewithform}" absolute="1">{f:translate(key:'form.edit.deleteButton')}</f:link.action>
 	</f:then>
 	<f:else>
-		<p><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.edit.errortext" /></p>
+		<p><f:translate key="form.edit.errortext" /></p>
 	</f:else>
 </f:if>
 

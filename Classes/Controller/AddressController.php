@@ -43,6 +43,17 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	protected $addressRepository;
 
 	/**
+	 * action form only
+	 *
+	 * @param \AFM\Registeraddress\Domain\Model\Address $newAddress
+	 * @dontvalidate $newAddress
+	 * @return void
+	 */
+	public function formOnlyAction(\AFM\Registeraddress\Domain\Model\Address $newAddress = NULL) {
+		$this->view->assign('newAddress', $newAddress);
+	}
+
+	/**
 	 * action new
 	 *
 	 * @param \AFM\Registeraddress\Domain\Model\Address $newAddress

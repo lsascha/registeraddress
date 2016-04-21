@@ -1,4 +1,7 @@
 plugin.tx_registeraddress {
+
+    mvc.callDefaultActionIfActionCantBeResolved = 1
+
 	view {
 		templateRootPath = {$plugin.tx_registeraddress.view.templateRootPath}
 		partialRootPath = {$plugin.tx_registeraddress.view.partialRootPath}

@@ -12,13 +12,13 @@ in /Configuration/ExtensionBuilder/settings.yaml:
 Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
 <f:section name="main">
-<f:render partial="FormErrors" arguments="{object:Address}"/>
+    <f:render partial="FormErrors" arguments="{object:Address}"/>
 
-<div class="newform">
-    <h2><f:translate key="LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.new.title" /></h2>
-    <f:form action="create"  name="newAddress" object="{newAddress}">
-    <f:render partial="Address/FormFields" />
-    	<f:form.submit value="{f:translate(key:'LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:form.new.submitButton')}" class="submit" />
-    </f:form>
-</div>
+    <div class="newform">
+        <h2><f:translate key="form.new.title" /></h2>
+        <f:form action="create" name="newAddress" object="{newAddress}" pageUid="{settings.mainformpageuid}" pluginName="Registerform">
+        <f:render partial="Address/FormFields" />
+        	<f:form.submit value="{f:translate(key:'form.new.submitButton')}" class="submit" />
+        </f:form>
+    </div>
 </f:section>

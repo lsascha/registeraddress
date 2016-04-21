@@ -12,7 +12,21 @@ if (!defined('TYPO3_MODE')) {
 	),
 	// non-cacheable actions
 	array(
-		'Address' => 'create, approve, edit, update, delete',
+		'Address' => 'new, create, approve, edit, update, delete',
+		
+	)
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'AFM.' . $_EXTKEY,
+	'RegisterformRedirect',
+	array(
+		'Address' => 'new',
+		
+	),
+	// non-cacheable actions
+	array(
+		'Address' => 'new',
 		
 	)
 );
