@@ -11,7 +11,7 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'registerttaddress',
+	'title' => 'Register to tt_address',
 	'description' => 'Simple Registration for tt_address',
 	'category' => 'plugin',
 	'author' => 'Sascha Löffler',
