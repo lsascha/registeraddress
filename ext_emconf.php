@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Register to tt_address',
-	'description' => 'Simple Registration for tt_address',
+	'description' => 'Simple Registration for tt_address for newsletter registration',
 	'category' => 'plugin',
 	'author' => 'Sascha Löffler',
 	'author_email' => 'sl@afm-koeln.de',
