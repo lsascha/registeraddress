@@ -3,9 +3,15 @@ plugin.tx_registeraddress {
     mvc.callDefaultActionIfActionCantBeResolved = 1
 
 	view {
-		templateRootPath = {$plugin.tx_registeraddress.view.templateRootPath}
-		partialRootPath = {$plugin.tx_registeraddress.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_registeraddress.view.layoutRootPath}
+		templateRootPaths {
+			100 = {$plugin.tx_registeraddress.view.templateRootPath}
+		}
+		partialRootPaths {
+			100 = {$plugin.tx_registeraddress.view.partialRootPath}
+		}
+		layoutRootPaths {
+			100 = {$plugin.tx_registeraddress.view.layoutRootPath}
+		}
 	}
 	persistence {
 		storagePid = {$plugin.tx_registeraddress.persistence.storagePid}
