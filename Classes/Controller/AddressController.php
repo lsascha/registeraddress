@@ -293,8 +293,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return Tx_Fluid_View_StandaloneView the Fluid instance
 	 */
 	protected function getPlainRenderer($templateName = 'default', $format = 'txt') {
-		//$view = $this->objectManager->create('Tx_Fluid_View_StandaloneView');
-		$view = $this->objectManager->create('TYPO3\CMS\Fluid\View\StandaloneView');
+		$view = $this->objectManager->get('TYPO3\CMS\Fluid\View\StandaloneView');
 		$view->setFormat($format);
 
 		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
