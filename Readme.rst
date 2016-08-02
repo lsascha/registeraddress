@@ -28,55 +28,57 @@ Setup:
     4. Set "format of send e-mails (txt, html or both)" to the format the send mails should have.
 
 if a newsletter registration form is needed on all pages, you need to have the following configuration in your TypoScript:
-  plugin.tx_registeraddress {
-      mvc.callDefaultActionIfActionCantBeResolved = 1
-  }
-  
-  # then create an user object for the footer form
-  lib.footernewsletter = USER
-  lib.footernewsletter {
-      userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-      extensionName = Registeraddress
-      pluginName = RegisterformRedirect
-      vendorName = AFM
-      controller = Address
-      action = new
-      switchableControllerActions {
-          Address {
-              1 = new
-          }
-      }
-      view < plugin.tx_registeraddress.view
-      view {
-          layoutRootPaths {
-              100 = EXT:afmbootstrap/Resources/Private/Layouts/Registeraddress/
-          }
-          partialRootPath {
-              100 = EXT:afmbootstrap/Resources/Private/Partials/Registeraddress/
-          }
-          templateRootPaths {
-              100 = EXT:afmbootstrap/Resources/Private/Templates/Registeraddress/
-          }
-      }
-      persistence < plugin.tx_registeraddress.persistence
-      settings < plugin.tx_registeraddress.settings
-      settings {
-          mainformpageuid = 34
-      }
-  }
 
+    plugin.tx_registeraddress {
+        mvc.callDefaultActionIfActionCantBeResolved = 1
+    }
+    # then create an user object for the footer form
+    lib.footernewsletter = USER
+    lib.footernewsletter {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = Registeraddress
+        pluginName = RegisterformRedirect
+        vendorName = AFM
+        controller = Address
+        action = new
+        switchableControllerActions {
+            Address {
+                1 = new
+            }
+        }
+        view < plugin.tx_registeraddress.view
+        view {
+            layoutRootPaths {
+                100 = EXT:afmbootstrap/Resources/Private/Layouts/Registeraddress/
+            }
+            
+            partialRootPath {
+                100 = EXT:afmbootstrap/Resources/Private/Partials/Registeraddress/
+            }
+            
+            templateRootPaths {
+                100 = EXT:afmbootstrap/Resources/Private/Templates/Registeraddress/
+            }
+        }
+        persistence < plugin.tx_registeraddress.persistence
+        settings < plugin.tx_registeraddress.settings
+        settings {
+            mainformpageuid = 34
+        }
+    }
 
 for setting your own translations:
-  plugin.tx_registeraddress {
-      _LOCAL_LANG.de {
-          form.new.title = NEWSLETTER
-          form.create.approvetext (
-              Vielen Dank für Ihren Anmeldung.<br />
-              Bitte bestätigen Sie die Newsletter-Anmeldung in der soeben an Sie versendeten E-Mail.
-          )
-          form.create.alreadyexists (
-              Vielen Dank.<br />
-              Sie sind bereits für unseren Newsletter angemeldet.
-          )
-      }
-  }
+
+    plugin.tx_registeraddress {
+        _LOCAL_LANG.de {
+            form.new.title = NEWSLETTER
+            form.create.approvetext (
+                Vielen Dank für Ihren Anmeldung.<br />
+                Bitte bestätigen Sie die Newsletter-Anmeldung in der soeben an Sie versendeten E-Mail.
+            )
+            form.create.alreadyexists (
+                Vielen Dank.<br />
+                Sie sind bereits für unseren Newsletter angemeldet.
+            )
+        }
+    }
