@@ -32,6 +32,7 @@ if a newsletter registration form is needed on all pages, you need to have the f
     plugin.tx_registeraddress {
         mvc.callDefaultActionIfActionCantBeResolved = 1
     }
+    
     # then create an user object for the footer form
     lib.footernewsletter = USER
     lib.footernewsletter {
@@ -46,6 +47,7 @@ if a newsletter registration form is needed on all pages, you need to have the f
                 1 = new
             }
         }
+        
         view < plugin.tx_registeraddress.view
         view {
             layoutRootPaths {
@@ -76,6 +78,7 @@ for setting your own translations:
                 Vielen Dank für Ihren Anmeldung.<br />
                 Bitte bestätigen Sie die Newsletter-Anmeldung in der soeben an Sie versendeten E-Mail.
             )
+            
             form.create.alreadyexists (
                 Vielen Dank.<br />
                 Sie sind bereits für unseren Newsletter angemeldet.
