@@ -62,8 +62,11 @@ if a newsletter registration form is needed on all pages, you need to have the f
                 100 = EXT:afmbootstrap/Resources/Private/Templates/Registeraddress/
             }
         }
+        
         persistence < plugin.tx_registeraddress.persistence
+        
         settings < plugin.tx_registeraddress.settings
+        
         settings {
             mainformpageuid = 34
         }
