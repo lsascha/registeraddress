@@ -34,6 +34,7 @@ if a newsletter registration form is needed on all pages, you need to have the f
     }
     
     # then create an user object for the footer form
+    
     lib.footernewsletter = USER
     lib.footernewsletter {
         userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
