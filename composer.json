@@ -1,0 +1,18 @@
+{
+    "name": "afm/registeraddress",
+    "description": "Register to tt_address package",
+    "type": "typo3-cms-extension",
+    "version": "1.0.4",
+    "require": {
+        "typo3/cms-core": ">=6.2.0 <7.99.99",
+        "typo3-ter/tt_address": ">=3.1.0 <3.2.99"
+    },
+    "replace": {
+        "registeraddress": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "AFM\\Registeraddress\\": "Classes/"
+        }
+    }
+}
