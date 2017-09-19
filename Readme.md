@@ -52,15 +52,15 @@ lib.footernewsletter {
     view < plugin.tx_registeraddress.view
     view {
         layoutRootPaths {
-            100 = EXT:afmbootstrap/Resources/Private/Layouts/Registeraddress/
+            100 = EXT:sitebootstrap/Resources/Private/Layouts/Registeraddress/
         }
         
         partialRootPath {
-            100 = EXT:afmbootstrap/Resources/Private/Partials/Registeraddress/
+            100 = EXT:sitebootstrap/Resources/Private/Partials/Registeraddress/
         }
         
         templateRootPaths {
-            100 = EXT:afmbootstrap/Resources/Private/Templates/Registeraddress/
+            100 = EXT:sitebootstrap/Resources/Private/Templates/Registeraddress/
         }
     }
     
