@@ -4,12 +4,15 @@ plugin.tx_registeraddress {
 
 	view {
 		templateRootPaths {
+			0 = EXT:wm_recipes/Resources/Private/Templates/
 			100 = {$plugin.tx_registeraddress.view.templateRootPath}
 		}
 		partialRootPaths {
+			0 = EXT:wm_recipes/Resources/Private/Partials/
 			100 = {$plugin.tx_registeraddress.view.partialRootPath}
 		}
 		layoutRootPaths {
+			0 = EXT:wm_recipes/Resources/Private/Layouts/
 			100 = {$plugin.tx_registeraddress.view.layoutRootPath}
 		}
 	}
@@ -19,6 +22,7 @@ plugin.tx_registeraddress {
 	features {
 		# uncomment the following line to enable the new Property Mapper.
 		rewrittenPropertyMapper = 1
+		requireCHashArgumentForActionArguments = 0
 	}
 	settings {
 		adminmail = {$plugin.tx_registeraddress.settings.adminmail}

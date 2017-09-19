@@ -46,6 +46,151 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	protected $addressRepository;
 
+
+    /**
+     * This creates another stand-alone instance of the Fluid view to render a template
+     * @param string $templateName the name of the template to use
+     * @param string $format the format of the fluid template "html" or "txt"
+     * @return \TYPO3\CMS\Fluid\View\StandaloneView the Fluid instance
+     */
+    protected function getPlainRenderer($templateName = 'default', $format = 'txt') {
+
+        //$controllerName = $this->controllerContext->getRequest()->getControllerName();
+
+        $view = $this->objectManager->get('TYPO3\CMS\Fluid\View\StandaloneView');
+        $view->getRequest()->setControllerExtensionName('registeraddress');
+        $view->setFormat($format);
+
+
+        // find plugin view configuration
+        $frameworkConfiguration = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+        );
+
+        // find partial paths from plugin configuration
+        $partialPaths = $this->getViewProperty($frameworkConfiguration, 'partialRootPaths');
+        // set configured partialPaths so they can be overwritten
+        $view->setPartialRootPaths($partialPaths);
+
+        $templatePaths = $this->getViewProperty($frameworkConfiguration, 'templateRootPaths');
+        $view->setTemplateRootPaths($templatePaths); // set configured TemplateRootPaths from plugin
+
+        $layoutPaths = $this->getViewProperty($frameworkConfiguration, 'layoutRootPaths');
+        $view->setLayoutRootPaths($layoutPaths);
+
+
+        $view->setTemplate($templateName);
+
+        $view->assign('settings', $this->settings);
+        return $view;
+    }
+
+
+    /**
+     * Send email
+     *
+     * @param array $recipient
+     * @param array $from
+     * @param string $typeOfEmail
+     * @param string $subject
+     * @param string $bodyHTML
+     * @param string $bodyPlain
+     * @param array $replyTo
+     * @return integer the number of recipients who were accepted for delivery
+     */
+    protected function sendEmail(array $recipient, array $from, $subject, $bodyHTML = '', $bodyPlain = '', array $replyTo = NULL) {
+
+        if ( $replyTo == NULL ) {
+            $replyTo = $from;
+        }
+        $mail = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Mail\MailMessage');
+        $mail
+            ->setTo($recipient)
+            ->setFrom($from)
+            ->setReplyTo($replyTo)
+            ->setSubject($subject);
+
+        if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
+            $mail->addPart($bodyHTML, 'text/html');
+        }
+        if ($bodyPlain !== '' && $bodyPlain !== NULL ) {
+            $mail->addPart($bodyPlain, 'text/plain');
+        }
+
+        return $mail->send();
+    }
+
+    /**
+     * sends an e-mail to users
+     * @param string $recipientmails
+     * @param string $templateName
+     * @param array $data
+     * @param array $data
+     * @return void
+     */
+    private function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT ) {
+        $recipients = explode(',', $recipientmails);
+
+        $from = array($this->settings['sendermail'] => $this->settings['sendername']);
+        $subject = $this->settings['responseSubject'];
+
+        $mailHtml = '';
+        $mailText = '';
+
+        switch ($type) {
+            case self::MAILFORMAT_TXT:
+                $mailTextView = $this->getPlainRenderer($templateName, 'txt');
+                break;
+            case self::MAILFORMAT_HTML:
+                $mailHtmlView = $this->getPlainRenderer($templateName, 'html');
+                break;
+
+            case self::MAILFORMAT_TXTHTML:
+                $mailHtmlView = $this->getPlainRenderer($templateName, 'html');
+            default:
+                $mailTextView = $this->getPlainRenderer($templateName, 'txt');
+                break;
+        }
+
+        if ( isset($mailTextView) ) {
+            $mailTextView->assignMultiple($data);
+            $mailText = $mailTextView->render();
+        }
+        if ( isset($mailHtmlView) ) {
+            $mailHtmlView->assignMultiple($data);
+            $mailHtml = $mailHtmlView->render();
+        }
+
+        foreach ($recipients as $recipient) {
+            $recipientMail = array(trim($recipient));
+            $this->sendEmail(
+                $recipientMail,
+                $from,
+                $subject,
+                $mailHtml,
+                $mailText
+            );
+        }
+    }
+
+
+    /**
+     * checks if address already exists
+     * @param  string $address address to check
+     * @return \AFM\Registeraddress\Domain\Model\Address returns the already existing address or NULL if it is new
+     */
+    private function checkIfAddressExists($address) {
+        //$oldAddress = $this->addressRepository->findOneByEmailIgnoreHidden( $address->getEmail() );
+        $oldAddress = $this->addressRepository->findOneByEmailIgnoreHidden( $address );
+
+        if ( isset($oldAddress) && $oldAddress ) {
+            return $oldAddress;
+        } else {
+            return NULL;
+        }
+    }
+
+
 	/**
 	 * action form only
 	 *
@@ -68,21 +213,6 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$this->view->assign('newAddress', $newAddress);
 	}
 
-	/**
-	 * checks if address already exists
-	 * @param  string $address address to check
-	 * @return \AFM\Registeraddress\Domain\Model\Address returns the already existing address or NULL if it is new
-	 */
-	public function checkIfAddressExists($address) {
-		//$oldAddress = $this->addressRepository->findOneByEmailIgnoreHidden( $address->getEmail() );
-		$oldAddress = $this->addressRepository->findOneByEmailIgnoreHidden( $address );
-
-		if ( isset($oldAddress) && $oldAddress ) {
-			return $oldAddress;
-		} else {
-			return NULL;
-		}
-	}
 
 	/**
 	 * action create
@@ -109,7 +239,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				'nachname' => $newAddress->getLastName(),
 				'hash' => $regHash
 			);
-			$this->sendResponseMail( $newAddress->getEmail(), 'MailNewsletterRegistration', $data, $this->settings['mailformat'] );
+			$this->sendResponseMail( $newAddress->getEmail(), 'Address/MailNewsletterRegistration', $data, $this->settings['mailformat'] );
 
 			$persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
 			$persistenceManager->persistAll(); 
@@ -135,7 +265,16 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				'nachname' => $address->getLastName(),
 				'hash' => $address->getRegisteraddresshash()
 			);
-			$this->sendResponseMail( $address->getEmail(), 'MailNewsletterInformation', $data, $this->settings['mailformat'] );
+
+			if ($address->getHidden()) {
+			    // if e-mail still unapproved, send complete registration mail again
+			    $mailTemplate = 'Address/MailNewsletterRegistration';
+            } else {
+                // if e-mail already approved, just send information mail to edit or delete
+                $mailTemplate = 'Address/MailNewsletterInformation';
+            }
+            $this->sendResponseMail( $address->getEmail(), $mailTemplate, $data, $this->settings['mailformat'] );
+
 
 			$this->view->assign('address', $address);
 		}
@@ -240,9 +379,11 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 		$this->addressRepository->update($address);
 
-		$this->flashMessageContainer->flush();
+        // Reset internal messages
+        $flashMessageQueue = $this->controllerContext->getFlashMessageQueue();
+        $flashMessageQueue->getAllMessagesAndFlush(\TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
-		$this->flashMessageContainer->add(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('flashMessage.update', 'registeraddress'));
+        $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('flashMessage.update', 'registeraddress'));
 		$this->redirect('edit', 'Address', 'registeraddress', array('hash' => $address->getRegisteraddresshash() ));
 		
 	}
@@ -284,117 +425,6 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		}
 	}
 
-
-
-	/**
-	 * This creates another stand-alone instance of the Fluid view to render a template
-	 * @param string $templateName the name of the template to use
-	 * @param string $format the format of the fluid template "html" or "txt"
-	 * @return Tx_Fluid_View_StandaloneView the Fluid instance
-	 */
-	protected function getPlainRenderer($templateName = 'default', $format = 'txt') {
-		$view = $this->objectManager->get('TYPO3\CMS\Fluid\View\StandaloneView');
-		$view->setFormat($format);
-
-		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-
-		$templateRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['templateRootPaths'][100]);
-
-		$templatePathAndFilename = $templateRootPath . $this->request->getControllerName().'/' . $templateName . '.' . $format;
-		$view->setTemplatePathAndFilename($templatePathAndFilename);
-		$view->assign('settings', $this->settings);
-		return $view;
-	}
-
-
-	/**
-	 * Send email
-	 *
-	 * @param array $recipient
-	 * @param array $from
-	 * @param string $typeOfEmail
-	 * @param string $subject
-	 * @param string $bodyHTML
-	 * @param string $bodyPlain
-	 * @param array $replyTo
-	 * @return integer the number of recipients who were accepted for delivery
-	 */
-	protected function sendEmail(array $recipient, array $from, $subject, $bodyHTML = '', $bodyPlain = '', array $replyTo = NULL) {
-
-		if ( $replyTo == NULL ) {
-			$replyTo = $from;
-		}
-		$mail = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Mail\MailMessage');
-		$mail
-			->setTo($recipient)
-			->setFrom($from)
-			->setReplyTo($replyTo)
-			->setSubject($subject);
-
-		if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
-			$mail->addPart($bodyHTML, 'text/html');
-		}
-		if ($bodyPlain !== '' && $bodyPlain !== NULL ) {
-			$mail->addPart($bodyPlain, 'text/plain');
-		}
-
-		return $mail->send();
-	}
-
-	/**
-	 * sends an e-mail to users
-	 * @param string $recipientmails
-	 * @param string $templateName
-	 * @param array $data
-	 * @param array $data
-	 * @return void
-	 */
-	private function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT ) {
-		$recipients = explode(',', $recipientmails);
-
-		$from = array($this->settings['sendermail'] => $this->settings['sendername']);
-		$subject = $this->settings['responseSubject'];
-		
-		$mailHtml = '';
-		$mailText = '';
-
-		switch ($type) {
-			case self::MAILFORMAT_TXT:
-				$mailTextView = $this->getPlainRenderer($templateName, 'txt');
-				break;
-			case self::MAILFORMAT_HTML:
-				$mailHtmlView = $this->getPlainRenderer($templateName, 'html');
-				break;
-
-			case self::MAILFORMAT_TXTHTML:
-				$mailHtmlView = $this->getPlainRenderer($templateName, 'html');
-			default:
-				$mailTextView = $this->getPlainRenderer($templateName, 'txt');
-				break;
-		}
-
-		if ( isset($mailTextView) ) {
-			$mailTextView->assignMultiple($data);
-			$mailText = $mailTextView->render();
-		}
-		if ( isset($mailHtmlView) ) {
-			$mailHtmlView->assignMultiple($data);
-			$mailHtml = $mailHtmlView->render();
-		}
-
-		foreach ($recipients as $recipient) {
-			$recipientMail = array(trim($recipient));
-			$mailResult = $this->sendEmail(
-				$recipientMail,
-				$from,
-				$subject,
-				$mailHtml,
-				$mailText
-			);
-
-			$result = $result + $mailResult;
-		}
-	}
 
 }
 ?>
