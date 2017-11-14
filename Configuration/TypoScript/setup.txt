@@ -4,15 +4,15 @@ plugin.tx_registeraddress {
 
 	view {
 		templateRootPaths {
-			0 = EXT:wm_recipes/Resources/Private/Templates/
+			0 = EXT:registeraddress/Resources/Private/Templates/
 			100 = {$plugin.tx_registeraddress.view.templateRootPath}
 		}
 		partialRootPaths {
-			0 = EXT:wm_recipes/Resources/Private/Partials/
+			0 = EXT:registeraddress/Resources/Private/Partials/
 			100 = {$plugin.tx_registeraddress.view.partialRootPath}
 		}
 		layoutRootPaths {
-			0 = EXT:wm_recipes/Resources/Private/Layouts/
+			0 = EXT:registeraddress/Resources/Private/Layouts/
 			100 = {$plugin.tx_registeraddress.view.layoutRootPath}
 		}
 	}
