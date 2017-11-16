@@ -1,0 +1,40 @@
+<f:layout name="Default" />
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        UnsubscribeForm.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+    <f:render partial="FormErrors" arguments="{object:Address}" />
+
+    <div class="unsubscribeform">
+        <h2>
+            <f:translate key="form.unsubscribe.title" />
+        </h2>
+        <f:form action="unsubscribeForm">
+            <div class="fieldrow">
+                <label for="email">
+                    <f:translate key="tx_registeraddress_domain_model_address.email" />
+                </label>
+                <f:form.textfield name="email" id="email" placeholder="{f:translate(key:'tx_registeraddress_domain_model_address.email.placeholder')}"
+                />
+            </div>
+            <f:form.submit value="{f:translate(key:'form.unsubscribe.submitButton')}" class="submit" />
+        </f:form>
+    </div>
+    <f:if condition="{address}">
+        <f:then>
+            <f:translate key="form.unsubscribe.success" />
+        </f:then>
+        <f:else>
+            <f:if condition="{email}">
+                <f:translate key="form.unsubscribe.error" />
+            </f:if>
+        </f:else>
+    </f:if>
+</f:section>

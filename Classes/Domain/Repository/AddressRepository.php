@@ -34,79 +34,78 @@ namespace AFM\Registeraddress\Domain\Repository;
  */
 class AddressRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
-	/**
-	 * Returns an Object by email address and ignores hidden field.
-	 *
-	 * @param \String $email
-	 * @return Tx_Extbase_Persistence_QueryResultInterface|array
-	 *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
-	 */
-	public function findOneByEmailIgnoreHidden($email) {
-		$query = $this->createQuery();
-		$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-		//$query->getQuerySettings()->setRespectStoragePage(FALSE);
+    /**
+     * Returns an Object by email address and ignores hidden field.
+     *
+     * @param \String $email
+     * @return Tx_Extbase_Persistence_QueryResultInterface|array
+     *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
+     */
+    public function findOneByEmailIgnoreHidden($email) {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+        //$query->getQuerySettings()->setRespectStoragePage(FALSE);
 
-		$query->matching(
-			$query->equals('email', $email )
-		);
+        $query->matching(
+            $query->equals('email', $email )
+        );
 
-		return $query->execute()->getFirst();
-	}
+        return $query->execute()->getFirst();
+    }
 
-	/**
-	 * Returns an Object by hash and ignores hidden field.
-	 *
-	 * @param \String $hash
-	 * @return Tx_Extbase_Persistence_QueryResultInterface|array
-	 *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
-	 */
-	public function findOneByRegisteraddresshashIgnoreHidden($hash) {
-		$query = $this->createQuery();
-		$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-		//$query->getQuerySettings()->setRespectStoragePage(FALSE);
+    /**
+     * Returns an Object by hash and ignores hidden field.
+     *
+     * @param \String $hash
+     * @return Tx_Extbase_Persistence_QueryResultInterface|array
+     *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
+     */
+    public function findOneByRegisteraddresshashIgnoreHidden($hash) {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+        //$query->getQuerySettings()->setRespectStoragePage(FALSE);
 
-		$query->matching(
-			$query->equals('registeraddresshash', $hash )
-		);
+        $query->matching(
+            $query->equals('registeraddresshash', $hash )
+        );
 
-		return $query->execute()->getFirst();
-	}
+        return $query->execute()->getFirst();
+    }
 
-	/**
-	 * Returns all Objects by hash.
-	 *
-	 * @param \String $hash
-	 * @return Tx_Extbase_Persistence_QueryResultInterface|array
-	 *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
-	 */
-	public function findAllByRegisteraddresshash($hash) {
-		$query = $this->createQuery();
+    /**
+     * Returns all Objects by hash.
+     *
+     * @param \String $hash
+     * @return Tx_Extbase_Persistence_QueryResultInterface|array
+     *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
+     */
+    public function findAllByRegisteraddresshash($hash) {
+        $query = $this->createQuery();
 
-		$query->matching(
-			$query->equals('registeraddresshash', $hash )
-		);
+        $query->matching(
+            $query->equals('registeraddresshash', $hash )
+        );
 
-		return $query->execute();
-	}
+        return $query->execute();
+    }
 
-	/**
-	 * Returns an Object by hash and ignores hidden field.
-	 *
-	 * @param \String $uid
-	 * @return Tx_Extbase_Persistence_QueryResultInterface|array
-	 *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
-	 */
-	public function findOneByUidIgnoreHidden($uid) {
-		$query = $this->createQuery();
-		$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-		//$query->getQuerySettings()->setRespectStoragePage(FALSE);
+    /**
+     * Returns an Object by hash and ignores hidden field.
+     *
+     * @param \String $uid
+     * @return Tx_Extbase_Persistence_QueryResultInterface|array
+     *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
+     */
+    public function findOneByUidIgnoreHidden($uid) {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+        //$query->getQuerySettings()->setRespectStoragePage(FALSE);
 
-		$query->matching(
-			$query->equals('uid', $uid )
-		);
+        $query->matching(
+            $query->equals('uid', $uid )
+        );
 
-		return $query->execute()->getFirst();
-	}
+        return $query->execute()->getFirst();
+    }
 
 }
-?>

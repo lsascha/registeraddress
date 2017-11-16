@@ -34,17 +34,17 @@ namespace AFM\Registeraddress\Controller;
  */
 class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
-	const MAILFORMAT_TXT = 'txt';
-	const MAILFORMAT_HTML = 'html';
-	const MAILFORMAT_TXTHTML = 'both';
+    const MAILFORMAT_TXT = 'txt';
+    const MAILFORMAT_HTML = 'html';
+    const MAILFORMAT_TXTHTML = 'both';
 
-	/**
-	 * addressRepository
-	 *
-	 * @var \AFM\Registeraddress\Domain\Repository\AddressRepository
-	 * @inject
-	 */
-	protected $addressRepository;
+    /**
+     * addressRepository
+     *
+     * @var \AFM\Registeraddress\Domain\Repository\AddressRepository
+     * @inject
+     */
+    protected $addressRepository;
 
 
     /**
@@ -191,84 +191,84 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
 
 
-	/**
-	 * action form only
-	 *
-	 * @param \AFM\Registeraddress\Domain\Model\Address $newAddress
-	 * @dontvalidate $newAddress
-	 * @return void
-	 */
-	public function formOnlyAction(\AFM\Registeraddress\Domain\Model\Address $newAddress = NULL) {
-		$this->view->assign('newAddress', $newAddress);
-	}
+    /**
+     * action form only
+     *
+     * @param \AFM\Registeraddress\Domain\Model\Address $newAddress
+     * @dontvalidate $newAddress
+     * @return void
+     */
+    public function formOnlyAction(\AFM\Registeraddress\Domain\Model\Address $newAddress = NULL) {
+        $this->view->assign('newAddress', $newAddress);
+    }
 
-	/**
-	 * action new
-	 *
-	 * @param \AFM\Registeraddress\Domain\Model\Address $newAddress
-	 * @dontvalidate $newAddress
-	 * @return void
-	 */
-	public function newAction(\AFM\Registeraddress\Domain\Model\Address $newAddress = NULL) {
-		$this->view->assign('newAddress', $newAddress);
-	}
+    /**
+     * action new
+     *
+     * @param \AFM\Registeraddress\Domain\Model\Address $newAddress
+     * @dontvalidate $newAddress
+     * @return void
+     */
+    public function newAction(\AFM\Registeraddress\Domain\Model\Address $newAddress = NULL) {
+        $this->view->assign('newAddress', $newAddress);
+    }
 
 
-	/**
-	 * action create
-	 *
-	 * @param \AFM\Registeraddress\Domain\Model\Address $newAddress
-	 * @return void
-	 */
-	public function createAction(\AFM\Registeraddress\Domain\Model\Address $newAddress) {
+    /**
+     * action create
+     *
+     * @param \AFM\Registeraddress\Domain\Model\Address $newAddress
+     * @return void
+     */
+    public function createAction(\AFM\Registeraddress\Domain\Model\Address $newAddress) {
 
-		$oldAddress = $this->checkIfAddressExists($newAddress->getEmail());
-		if ($oldAddress) {
-			$this->view->assign('oldAddress', $oldAddress);
-			$this->view->assign('alreadyExists', true);
-		} else {
-			$rnd = microtime(true).mt_rand(10000,90000);
-			$regHash = sha1( $newAddress->getEmail().$rnd );
-			$newAddress->setRegisteraddresshash( $regHash );
-			$newAddress->setHidden(true);
-			$this->addressRepository->add($newAddress);
+        $oldAddress = $this->checkIfAddressExists($newAddress->getEmail());
+        if ($oldAddress) {
+            $this->view->assign('oldAddress', $oldAddress);
+            $this->view->assign('alreadyExists', true);
+        } else {
+            $rnd = microtime(true).mt_rand(10000,90000);
+            $regHash = sha1( $newAddress->getEmail().$rnd );
+            $newAddress->setRegisteraddresshash( $regHash );
+            $newAddress->setHidden(true);
+            $this->addressRepository->add($newAddress);
 
-			$data = array(
-				'gender' => $newAddress->getGender(),
-				'vorname' => $newAddress->getFirstName(),
-				'nachname' => $newAddress->getLastName(),
-				'hash' => $regHash
-			);
-			$this->sendResponseMail( $newAddress->getEmail(), 'Address/MailNewsletterRegistration', $data, $this->settings['mailformat'] );
+            $data = array(
+                'gender' => $newAddress->getGender(),
+                'vorname' => $newAddress->getFirstName(),
+                'nachname' => $newAddress->getLastName(),
+                'hash' => $regHash
+            );
+            $this->sendResponseMail( $newAddress->getEmail(), 'Address/MailNewsletterRegistration', $data, $this->settings['mailformat'] );
 
-			$persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
-			$persistenceManager->persistAll(); 
-		}
+            $persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
+            $persistenceManager->persistAll(); 
+        }
 
-		$this->view->assign('address', $newAddress);
-	}
+        $this->view->assign('address', $newAddress);
+    }
 
-	/**
-	 * action inormation mail anforderung
-	 *
-	 * @param \string $email
-	 * @param integer $uid
-	 * @return void
-	 */
-	public function informationAction($email, $uid) {
-		$address = $this->addressRepository->findOneByEmailIgnoreHidden( $email );
+    /**
+     * action inormation mail anforderung
+     *
+     * @param \string $email
+     * @param integer $uid
+     * @return void
+     */
+    public function informationAction($email, $uid) {
+        $address = $this->addressRepository->findOneByEmailIgnoreHidden( $email );
 
-		if ( $address && $address->getUid() == $uid ) {
-			$data = array(
-				'gender' => $address->getGender(),
-				'vorname' => $address->getFirstName(),
-				'nachname' => $address->getLastName(),
-				'hash' => $address->getRegisteraddresshash()
-			);
+        if ( $address && $address->getUid() == $uid ) {
+            $data = array(
+                'gender' => $address->getGender(),
+                'vorname' => $address->getFirstName(),
+                'nachname' => $address->getLastName(),
+                'hash' => $address->getRegisteraddresshash()
+            );
 
-			if ($address->getHidden()) {
-			    // if e-mail still unapproved, send complete registration mail again
-			    $mailTemplate = 'Address/MailNewsletterRegistration';
+            if ($address->getHidden()) {
+                // if e-mail still unapproved, send complete registration mail again
+                $mailTemplate = 'Address/MailNewsletterRegistration';
             } else {
                 // if e-mail already approved, just send information mail to edit or delete
                 $mailTemplate = 'Address/MailNewsletterInformation';
@@ -276,155 +276,183 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->sendResponseMail( $address->getEmail(), $mailTemplate, $data, $this->settings['mailformat'] );
 
 
-			$this->view->assign('address', $address);
-		}
-	}
+            $this->view->assign('address', $address);
+        }
+    }
 
 
-	/**
-	 * action approve
-	 *
-	 * @param \string $hash
-	 * @return void
-	 */
-	public function approveAction( $hash = NULL ) {
-		$address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
+    /**
+     * action send unsubscribe link to e-mail address
+     *
+     * @param \string $email
+     * @return void
+     */
+    public function unsubscribeFormAction( $email = NULL ) {
 
-		if ($address) {
-			$address->setHidden(false);
-			$address->setModuleSysDmailHtml(true);
+        $address = $this->addressRepository->findOneByEmail( $email );
 
-			// create anrede
-			if ( $address->getLastName() ) {
-				if ($address->getGender() == 'm') {
-					$eigeneAnrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('salutationgeneration.lastname.m', 'registeraddress').$address->getLastName();
-				} elseif ($address->getGender() == 'f') {
-					$eigeneAnrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('salutationgeneration.lastname.f', 'registeraddress').$address->getLastName();
-				}
-			} elseif ( $address->getFirstName() ) {
-				$eigeneAnrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('salutationgeneration.onlyfirstname', 'registeraddress').$address->getFirstName();
-			} else {
-				$eigeneAnrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('salutationgeneration.other', 'registeraddress');
-			}
-			$address->setEigeneAnrede($eigeneAnrede);
+        if ($email != NULL) {
+            $this->view->assign('email', $email);
+        }
+        if ( $address ) {
+            $data = array(
+                'gender' => $address->getGender(),
+                'vorname' => $address->getFirstName(),
+                'nachname' => $address->getLastName(),
+                'hash' => $address->getRegisteraddresshash()
+            );
 
-			$this->view->assign('address', $address);
+            $mailTemplate = 'Address/MailNewsletterUnsubscribe';
+            $this->sendResponseMail( $address->getEmail(), $mailTemplate, $data, $this->settings['mailformat'] );
 
-			$this->addressRepository->update($address);
+            $this->view->assign('address', $address);
+        }
+    }
 
 
-			if ($this->settings['adminmail']) {
-				$adminRecipient = array($this->settings['adminmail']);
-				$from = array($this->settings['sendermail']);
-				$subject = $this->settings['approveSubject'];
+    /**
+     * action approve
+     *
+     * @param \string $hash
+     * @return void
+     */
+    public function approveAction( $hash = NULL ) {
+        $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
 
-				//$mailText = 'The User '.$address->getFirstName().' '.$address->getLastName().' ('.$address->getEmail().') has subscribed for the newsletter.';
-				$mailText = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('adminmail.mailtext.subscribed', 'registeraddress', array($address->getFirstName(), $address->getLastName(), $address->getEmail()));
+        if ($address) {
+            $address->setHidden(false);
+            $address->setModuleSysDmailHtml(true);
 
-				$this->sendEmail(
-					$adminRecipient,
-					$from,
-					$subject,
-					'',
-					$mailText
-				);
-			}
+            // create anrede
+            if ( $address->getLastName() ) {
+                if ($address->getGender() == 'm') {
+                    $eigeneAnrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('salutationgeneration.lastname.m', 'registeraddress').$address->getLastName();
+                } elseif ($address->getGender() == 'f') {
+                    $eigeneAnrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('salutationgeneration.lastname.f', 'registeraddress').$address->getLastName();
+                }
+            } elseif ( $address->getFirstName() ) {
+                $eigeneAnrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('salutationgeneration.onlyfirstname', 'registeraddress').$address->getFirstName();
+            } else {
+                $eigeneAnrede = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('salutationgeneration.other', 'registeraddress');
+            }
+            $address->setEigeneAnrede($eigeneAnrede);
 
-			$persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
-			$persistenceManager->persistAll(); 
-		}
-	}
+            $this->view->assign('address', $address);
 
-	/**
-	 * action edit
-	 *
-	 * @param \string $hash
-	 * @return void
-	 */
-	public function editAction( $hash = NULL ) {
-		$address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
+            $this->addressRepository->update($address);
 
-		if ( $address ) {
-			$this->view->assign('hash', $hash);
-			$this->view->assign('address', $address);
-		}
 
-		// fix addresses without hash
-		$dofix = false;
-		if ($dofix) {
-			$addresslist = $this->addressRepository->findAllByRegisteraddresshash( '' );
-			foreach ($addresslist as $fixAddress) {
-				if ($fixAddress->getRegisteraddresshash() == '') {
-					$rnd = microtime(true).mt_rand(10000,90000);
-					$regHash = sha1( $fixAddress->getEmail().$rnd );
-					$fixAddress->setRegisteraddresshash( $regHash );
-					$this->addressRepository->update($fixAddress);
-				}
-			}
-		}
-	}
+            if ($this->settings['adminmail']) {
+                $adminRecipient = array($this->settings['adminmail']);
+                $from = array($this->settings['sendermail']);
+                $subject = $this->settings['approveSubject'];
 
-	/**
-	 * action update
-	 *
-	 * @param \AFM\Registeraddress\Domain\Model\Address $address
-	 * @return void
-	 */
-	public function updateAction(\AFM\Registeraddress\Domain\Model\Address $address) {
-		$hash = $address->getRegisteraddresshash();
+                //$mailText = 'The User '.$address->getFirstName().' '.$address->getLastName().' ('.$address->getEmail().') has subscribed for the newsletter.';
+                $mailText = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('adminmail.mailtext.subscribed', 'registeraddress', array($address->getFirstName(), $address->getLastName(), $address->getEmail()));
 
-		// always save old e-mail address
-		$addressOld = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
-		$address->setEmail($addressOld->getEmail());
+                $this->sendEmail(
+                    $adminRecipient,
+                    $from,
+                    $subject,
+                    '',
+                    $mailText
+                );
+            }
 
-		$this->addressRepository->update($address);
+            $persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
+            $persistenceManager->persistAll(); 
+        }
+    }
+
+    /**
+     * action edit
+     *
+     * @param \string $hash
+     * @return void
+     */
+    public function editAction( $hash = NULL ) {
+        $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
+
+        if ( $address ) {
+            $this->view->assign('hash', $hash);
+            $this->view->assign('address', $address);
+        }
+
+        // fix addresses without hash
+        $dofix = false;
+        if ($dofix) {
+            $addresslist = $this->addressRepository->findAllByRegisteraddresshash( '' );
+            foreach ($addresslist as $fixAddress) {
+                if ($fixAddress->getRegisteraddresshash() == '') {
+                    $rnd = microtime(true).mt_rand(10000,90000);
+                    $regHash = sha1( $fixAddress->getEmail().$rnd );
+                    $fixAddress->setRegisteraddresshash( $regHash );
+                    $this->addressRepository->update($fixAddress);
+                }
+            }
+        }
+    }
+
+    /**
+     * action update
+     *
+     * @param \AFM\Registeraddress\Domain\Model\Address $address
+     * @return void
+     */
+    public function updateAction(\AFM\Registeraddress\Domain\Model\Address $address) {
+        $hash = $address->getRegisteraddresshash();
+
+        // always save old e-mail address
+        $addressOld = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
+        $address->setEmail($addressOld->getEmail());
+
+        $this->addressRepository->update($address);
 
         // Reset internal messages
         $flashMessageQueue = $this->controllerContext->getFlashMessageQueue();
         $flashMessageQueue->getAllMessagesAndFlush(\TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
         $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('flashMessage.update', 'registeraddress'));
-		$this->redirect('edit', 'Address', 'registeraddress', array('hash' => $address->getRegisteraddresshash() ));
-		
-	}
+        $this->redirect('edit', 'Address', 'registeraddress', array('hash' => $address->getRegisteraddresshash() ));
+        
+    }
 
 
-	/**
-	 * action delete
-	 *
-	 * @param \string $hash
-	 * @return void
-	 */
-	public function deleteAction($hash = NULL) {
-		$address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
+    /**
+     * action delete
+     *
+     * @param \string $hash
+     * @return void
+     */
+    public function deleteAction($hash = NULL) {
+        $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
 
-		if ( $address ) {
-			$this->view->assign('address', $address);
+        if ( $address ) {
+            $this->view->assign('address', $address);
 
-			if ($this->settings['adminmail']) {
-				$adminRecipient = array($this->settings['adminmail']);
-				$from = array($this->settings['sendermail']);
-				$subject = $this->settings['deleteSubject'];
-				
-				//$mailText = 'The User '.$address->getFirstName().' '.$address->getLastName().' ('.$address->getEmail().') has unsubscribed the newsletter.';
+            if ($this->settings['adminmail']) {
+                $adminRecipient = array($this->settings['adminmail']);
+                $from = array($this->settings['sendermail']);
+                $subject = $this->settings['deleteSubject'];
+                
+                //$mailText = 'The User '.$address->getFirstName().' '.$address->getLastName().' ('.$address->getEmail().') has unsubscribed the newsletter.';
 
-				$mailText = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('adminmail.mailtext.unsubscribed', 'registeraddress', array($address->getFirstName(), $address->getLastName(), $address->getEmail()));
+                $mailText = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('adminmail.mailtext.unsubscribed', 'registeraddress', array($address->getFirstName(), $address->getLastName(), $address->getEmail()));
 
-				$this->sendEmail(
-					$adminRecipient,
-					$from,
-					$subject,
-					'',
-					$mailText
-				);
-			}
+                $this->sendEmail(
+                    $adminRecipient,
+                    $from,
+                    $subject,
+                    '',
+                    $mailText
+                );
+            }
 
-			$this->addressRepository->remove($address);
+            $this->addressRepository->remove($address);
 
 
-		}
-	}
+        }
+    }
 
 
 }
-?>

@@ -31,4 +31,17 @@ if (!defined('TYPO3_MODE')) {
 	)
 );
 
-?>
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'AFM.' . $_EXTKEY,
+	'RegisterformUnsubscribe',
+	array(
+		'Address' => 'unsubscribeForm',
+
+	),
+	// non-cacheable actions
+	array(
+		'Address' => 'unsubscribeForm',
+
+	)
+);
