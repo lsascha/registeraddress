@@ -4,7 +4,7 @@ defined('TYPO3_MODE') or die();
 $fields = array(
     'eigene_anrede' => array(
         'exclude' => 0,
-        'label' => 'LLL:EXT:registeraddress/locallang_db.xml:tx_registeraddress_domain_model_address.eigene_anrede',
+        'label' => 'LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xml:tx_registeraddress_domain_model_address.eigene_anrede',
         'config' => array(
             'type'     => 'input',
             'size'     => 30,
