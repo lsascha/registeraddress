@@ -154,12 +154,6 @@ WICHTIG:]]></source>
 			<trans-unit id="flashMessage.update">
 				<source>Deine Daten wurden aktualisiert.</source>
 			</trans-unit>
-			<trans-unit id="adminmail.mailtext.subscribed">
-				<source>The User %1s %2s (%3s) has subscribed for the newsletter.</source>
-			</trans-unit>
-			<trans-unit id="adminmail.mailtext.unsubscribed">
-				<source>The User %1s %2s (%3s) has unsubscribed from the newsletter.</source>
-			</trans-unit>
 
 
 			<trans-unit id="mail.unsubscribe.subjectprefix">

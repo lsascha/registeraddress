@@ -1,0 +1,1 @@
+The User {address.firstName} {address.lastName} ({address.email}) has subscribed for the newsletter.
