@@ -33,6 +33,7 @@ plugin.tx_registeraddress {
 		deleteSubject = {$plugin.tx_registeraddress.settings.deleteSubject}
 		approveSubject = {$plugin.tx_registeraddress.settings.approveSubject}
 		mailformat = {$plugin.tx_registeraddress.settings.mailformat}
+		sendDeleteApproveMails = {$plugin.tx_registeraddress.settings.sendDeleteApproveMails}
 	}
 }
 

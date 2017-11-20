@@ -126,13 +126,19 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param string $templateName
      * @param array $data
      * @param array $data
+     * @param string $subjectPrefix
      * @return void
      */
-    private function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT ) {
+    private function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectPrefix = '' ) {
         $recipients = explode(',', $recipientmails);
 
         $from = array($this->settings['sendermail'] => $this->settings['sendername']);
         $subject = $this->settings['responseSubject'];
+
+        // add prefix to subject if set
+        if ($subjectPrefix != '') {
+            $subject .= ' - ' . $subjectPrefix;
+        }
 
         $mailHtml = '';
         $mailText = '';
@@ -239,7 +245,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'nachname' => $newAddress->getLastName(),
                 'hash' => $regHash
             );
-            $this->sendResponseMail( $newAddress->getEmail(), 'Address/MailNewsletterRegistration', $data, $this->settings['mailformat'] );
+            $this->sendResponseMail( $newAddress->getEmail(), 'Address/MailNewsletterRegistration', $data, $this->settings['mailformat'], \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.registration.subjectprefix', 'registeraddress'));
 
             $persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
             $persistenceManager->persistAll(); 
@@ -273,7 +279,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 // if e-mail already approved, just send information mail to edit or delete
                 $mailTemplate = 'Address/MailNewsletterInformation';
             }
-            $this->sendResponseMail( $address->getEmail(), $mailTemplate, $data, $this->settings['mailformat'] );
+            $this->sendResponseMail( $address->getEmail(), $mailTemplate, $data, $this->settings['mailformat'], \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.info.subjectprefix', 'registeraddress'));
 
 
             $this->view->assign('address', $address);
@@ -303,7 +309,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             );
 
             $mailTemplate = 'Address/MailNewsletterUnsubscribe';
-            $this->sendResponseMail( $address->getEmail(), $mailTemplate, $data, $this->settings['mailformat'] );
+            $this->sendResponseMail( $address->getEmail(), $mailTemplate, $data, $this->settings['mailformat'], \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.unsubscribe.subjectprefix', 'registeraddress'));
 
             $this->view->assign('address', $address);
         }
@@ -340,6 +346,14 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('address', $address);
 
             $this->addressRepository->update($address);
+
+
+            if ($this->settings['sendDeleteApproveMails']) {
+                $data = array(
+                    'address' => $address
+                );
+                $this->sendResponseMail($address->getEmail(), 'Address/MailNewsletterApproveSuccess', $data, $this->settings['mailformat'], \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.approvesuccess.subjectprefix', 'registeraddress'));
+            }
 
 
             if ($this->settings['adminmail']) {
@@ -429,6 +443,13 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
         if ( $address ) {
             $this->view->assign('address', $address);
+
+            if ($this->settings['sendDeleteApproveMails']) {
+                $data = array(
+                    'address' => $address
+                );
+                $this->sendResponseMail($address->getEmail(), 'Address/MailNewsletterDeleteSuccess', $data, $this->settings['mailformat'], \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.deletesuccess.subjectprefix', 'registeraddress'));
+            }
 
             if ($this->settings['adminmail']) {
                 $adminRecipient = array($this->settings['adminmail']);

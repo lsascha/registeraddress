@@ -21,12 +21,14 @@ plugin.tx_registeraddress {
 		# cat=plugin.tx_registeraddress//a; type=string; label=Name from which mails are send
 		sendername = Webserver
 		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of response mail
-		responseSubject = Newsletter Anmeldung
+		responseSubject = Newsletter
 		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of delete mail
 		deleteSubject = Newsletter Benutzer abgemeldet
 		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of approve mail
 		approveSubject = Newsletter Benutzer angemeldet
 		# cat=plugin.tx_registeraddress//a; type=options[txt,html,both]; label=format of send e-mails (txt, html or both)
 		mailformat = txt
+		# cat=plugin.tx_registeraddress//a; type=boolean; label=Send mail to User after successfully deleting or approving
+		sendDeleteApproveMails = 1
 	}
 }

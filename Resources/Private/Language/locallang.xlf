@@ -125,6 +125,9 @@
 			<trans-unit id="mail.info.deleteLinkText">
 				<source>Bitte klicken Sie folgenden Link um Ihre Anmeldung zu löschen:</source>
 			</trans-unit>
+			<trans-unit id="mail.info.subjectprefix">
+				<source>Newsletter Information</source>
+			</trans-unit>
 
 			<trans-unit id="mail.registration.greet">
 				<source>Hallo</source>
@@ -143,6 +146,9 @@ WICHTIG:]]></source>
 			<trans-unit id="mail.registration.editLinkText">
 				<source>Wenn Sie Ihre persöhnlichen Daten ändern wollen, dann klicken Sie bitte folgenden Link:</source>
 			</trans-unit>
+			<trans-unit id="mail.registration.subjectprefix">
+				<source>Newsletter Registration</source>
+			</trans-unit>
 
 
 			<trans-unit id="flashMessage.update">
@@ -156,6 +162,9 @@ WICHTIG:]]></source>
 			</trans-unit>
 
 
+			<trans-unit id="mail.unsubscribe.subjectprefix">
+				<source>Abmeldung</source>
+			</trans-unit>
 			<trans-unit id="form.unsubscribe.title">
 				<source>E-Mail Adresse abmelden</source>
 			</trans-unit>
@@ -170,6 +179,20 @@ WICHTIG:]]></source>
 			</trans-unit>
 			<trans-unit id="flashMessage.unsubscribeform.error">
 				<source>Deine E-Mail wurde nicht gefunden.</source>
+			</trans-unit>
+
+
+			<trans-unit id="mail.deletesuccess.subjectprefix">
+				<source>Abmeldung abgeschlossen</source>
+			</trans-unit>
+			<trans-unit id="mail.deletesuccess.text">
+				<source>Du hast dich erfolgreich Abgemeldet.</source>
+			</trans-unit>
+			<trans-unit id="mail.approvesuccess.subjectprefix">
+				<source>Anmeldung abgeschlossen</source>
+			</trans-unit>
+			<trans-unit id="mail.approvesuccess.text">
+				<source>Du hast dich erfolgreich Angemeldet.</source>
 			</trans-unit>
 			
 		</body>
