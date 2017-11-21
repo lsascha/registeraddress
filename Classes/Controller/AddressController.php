@@ -4,7 +4,7 @@ namespace AFM\Registeraddress\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Sascha Löffler <sl@afm-koeln.de>, Atelier für Mediengestaltung
+ *  (c) 2013 Sascha Löffler <lsascha@gmail.com>
  *  
  *  All rights reserved
  *
