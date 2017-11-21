@@ -357,7 +357,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 
             if ($this->settings['adminmail']) {
-                $adminRecipient = array($this->settings['adminmail']);
+                $adminRecipient = $this->settings['adminmail'];
                 $subject = $this->settings['approveSubject'];
 
                 $this->sendResponseMail($adminRecipient, 'Address/Admin/MailAdminApprove', ['address' => $address], self::MAILFORMAT_TXT, $subject);
@@ -443,7 +443,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
 
             if ($this->settings['adminmail']) {
-                $adminRecipient = array($this->settings['adminmail']);
+                $adminRecipient = $this->settings['adminmail'];
                 $subject = $this->settings['deleteSubject'];
 
                 $this->sendResponseMail($adminRecipient, 'Address/Admin/MailAdminDelete', ['address' => $address], self::MAILFORMAT_TXT, $subject);
