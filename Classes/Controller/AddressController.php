@@ -24,6 +24,7 @@ namespace AFM\Registeraddress\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use AFM\Registeraddress\Logger\LoggerInterface;
 
 /**
  *
@@ -45,6 +46,15 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @inject
      */
     protected $addressRepository;
+
+    /**
+     * @var \AFM\Registeraddress\Logger\LoggerInterface
+     */
+    protected $logger;
+
+    protected function injectLogger(LoggerInterface $logger){
+        $this->logger = $logger;
+    }
 
 
     /**
@@ -247,7 +257,9 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             );
             $this->sendResponseMail( $newAddress->getEmail(), 'Address/MailNewsletterRegistration', $data, $this->settings['mailformat'], \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.registration.subjectsuffix', 'registeraddress'));
 
-            $persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
+            $this->logger->logCreate($newAddress);
+
+            $persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager');
             $persistenceManager->persistAll(); 
         }
 
@@ -364,6 +376,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
             }
 
+            $this->logger->logApprove($address);
             $persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
             $persistenceManager->persistAll(); 
         }
@@ -413,6 +426,8 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
         $this->addressRepository->update($address);
 
+        $this->logger->logUpdate($address);
+
         // Reset internal messages
         $flashMessageQueue = $this->controllerContext->getFlashMessageQueue();
         $flashMessageQueue->getAllMessagesAndFlush(\TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
@@ -448,7 +463,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
                 $this->sendResponseMail($adminRecipient, 'Address/Admin/MailAdminDelete', ['address' => $address], self::MAILFORMAT_TXT, $subject);
             }
-
+            $this->logger->logDelete($address);
             $this->addressRepository->remove($address);
 
 
