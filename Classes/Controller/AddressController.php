@@ -384,7 +384,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
 
         // fix addresses without hash
-        $dofix = false;
+        $dofix = (bool) $this->settings['doHashFix'];
         if ($dofix) {
             $addresslist = $this->addressRepository->findAllByRegisteraddresshash( '' );
             foreach ($addresslist as $fixAddress) {

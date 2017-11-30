@@ -2,10 +2,9 @@
     "name": "afm/registeraddress",
     "description": "Register to tt_address package",
     "type": "typo3-cms-extension",
-    "version": "1.0.6",
     "require": {
-        "typo3/cms-core": ">=6.2.0 <8.99.99",
-        "typo3-ter/tt_address": ">=3.1.0 <3.2.99"
+        "typo3/cms-core": ">=8.7,<9.0",
+        "friendsoftypo3/tt-address": ">=4.0"
     },
     "replace": {
         "registeraddress": "self.version"

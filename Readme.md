@@ -69,7 +69,7 @@ lib.footernewsletter {
     settings < plugin.tx_registeraddress.settings
     
     settings {
-        mainformpageuid = 34
+        pagewithform = 34
     }
 }
 ```
