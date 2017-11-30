@@ -34,6 +34,8 @@ plugin.tx_registeraddress {
 		approveSubject = {$plugin.tx_registeraddress.settings.approveSubject}
 		mailformat = {$plugin.tx_registeraddress.settings.mailformat}
 		sendDeleteApproveMails = {$plugin.tx_registeraddress.settings.sendDeleteApproveMails}
+		# fixes addresses without hash (after migration e.g.) set this to 1 and use editAction, you may deactivate this afterwards
+		doHashFix = 0
 	}
 }
 
