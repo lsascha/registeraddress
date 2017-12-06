@@ -52,7 +52,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     protected $logger;
 
-    protected function injectLogger(LoggerInterface $logger){
+    public function injectLogger(LoggerInterface $logger){
         $this->logger = $logger;
     }
 
