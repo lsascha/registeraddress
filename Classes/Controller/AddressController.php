@@ -24,7 +24,9 @@ namespace AFM\Registeraddress\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use AFM\Registeraddress\Logger\LoggerInterface;
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  *
@@ -47,14 +49,6 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     protected $addressRepository;
 
-    /**
-     * @var \AFM\Registeraddress\Logger\LoggerInterface
-     */
-    protected $logger;
-
-    public function injectLogger(LoggerInterface $logger){
-        $this->logger = $logger;
-    }
 
 
     /**
@@ -255,9 +249,11 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'nachname' => $newAddress->getLastName(),
                 'hash' => $regHash
             );
-            $this->sendResponseMail( $newAddress->getEmail(), 'Address/MailNewsletterRegistration', $data, $this->settings['mailformat'], \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.registration.subjectsuffix', 'registeraddress'));
 
-            $this->logger->logCreate($newAddress);
+            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+            $signalSlotDispatcher->dispatch(__CLASS__, 'createBeforePersist', [$newAddress]);
+
+            $this->sendResponseMail( $newAddress->getEmail(), 'Address/MailNewsletterRegistration', $data, $this->settings['mailformat'], \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.registration.subjectsuffix', 'registeraddress'));
 
             $persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager');
             $persistenceManager->persistAll(); 
@@ -376,7 +372,9 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
             }
 
-            $this->logger->logApprove($address);
+            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+            $signalSlotDispatcher->dispatch(__CLASS__, 'approveBeforePersist', [$address]);
+
             $persistenceManager = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'); 
             $persistenceManager->persistAll(); 
         }
@@ -424,9 +422,10 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $addressOld = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden( $hash );
         $address->setEmail($addressOld->getEmail());
 
-        $this->addressRepository->update($address);
+        $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+        $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);
 
-        $this->logger->logUpdate($address);
+        $this->addressRepository->update($address);
 
         // Reset internal messages
         $flashMessageQueue = $this->controllerContext->getFlashMessageQueue();
@@ -463,7 +462,9 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
                 $this->sendResponseMail($adminRecipient, 'Address/Admin/MailAdminDelete', ['address' => $address], self::MAILFORMAT_TXT, $subject);
             }
-            $this->logger->logDelete($address);
+            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+            $signalSlotDispatcher->dispatch(__CLASS__, 'deleteBeforePersist', [$address]);
+
             $this->addressRepository->remove($address);
 
 
