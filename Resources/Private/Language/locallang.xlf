@@ -29,6 +29,10 @@
 				<source>E-Mail Adresse</source>
 			</trans-unit>
 
+			<trans-unit id="mail.registration.errorAction">
+				<source>Failed executing the action.</source>
+			</trans-unit>
+
 			<trans-unit id="salutationgeneration.lastname.m">
 				<source>Sehr geehrter Herr </source>
 			</trans-unit>

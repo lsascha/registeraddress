@@ -196,6 +196,16 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
     }
 
+    protected function errorAction() {
+        $this->forwardToReferringRequest();
+
+        $errorMessage = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.registration.errorAction', 'registeraddress');
+        if (!$errorMessage) {
+            return 'Failed executing the action.';
+        } else {
+            return $errorMessage;
+        }
+    }
 
     /**
      * action form only
