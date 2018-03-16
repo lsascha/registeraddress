@@ -41,7 +41,6 @@
 			<trans-unit id="salutationgeneration.other" xml:space="preserve">
 				<source>Liebe(r) Leser(in)</source>
 			</trans-unit>
-
 			<trans-unit id="error.1221559976.newAddress.email" xml:space="preserve">
 				<source>Bitte geben Sie eine korrekte E-Mail-Adresse an.</source>
 			</trans-unit>
@@ -137,17 +136,13 @@
 			</trans-unit>
 
 			<trans-unit id="mail.registration.greet" xml:space="preserve">
-				<source>Hallo</source>
+				<source>Herzlich willkommen</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.text" xml:space="preserve">
-				<source>
-				    Sie sind nun für den Newsletter angemeldet.
-
-                    WICHTIG:
-                </source>
+				<source>Sie haben sich für unseren Newsletter registiert.</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.approveLinkText" xml:space="preserve">
-				<source>Bevor wir Ihnen den Newsletter regelmäßig zuschicken, bestätigen Sie bitte Ihre Anmeldung, indem Sie auf folgenden Link klicken:</source>
+				<source>Bitte bestätigen Sie Ihre Anmeldung mit Klick auf folgenden Link:</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.deleteLinkText" xml:space="preserve">
 				<source>Wenn Sie sich nicht für den Newsletter anmelden wollen, dann klicken Sie bitte folgenden Link:</source>
