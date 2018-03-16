@@ -28,7 +28,6 @@
 			<trans-unit id="tx_registeraddress_domain_model_address.email.placeholder" xml:space="preserve">
 				<source>E-Mail-Adresse</source>
 			</trans-unit>
-
 			<trans-unit id="salutationgeneration.lastname.m" xml:space="preserve">
 				<source>Sehr geehrter Herr </source>
 			</trans-unit>
@@ -114,6 +113,9 @@
                 </source>
 			</trans-unit>
 
+			<trans-unit id="mail.registration.errorAction">
+				<source>Failed executing the action.</source>
+			</trans-unit>
 
 			<trans-unit id="mail.gender.m" xml:space="preserve">
 				<source>Herr</source>

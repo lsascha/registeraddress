@@ -200,6 +200,16 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
     }
 
+    protected function errorAction() {
+        $this->forwardToReferringRequest();
+
+        $errorMessage = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('mail.registration.errorAction', 'registeraddress');
+        if (!$errorMessage) {
+            return 'Failed executing the action.';
+        } else {
+            return $errorMessage;
+        }
+    }
 
     /**
      * action form only
@@ -328,6 +338,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * action approve
      *
      * @param \string $hash
+     * @validate $hash NotEmpty
      * @return void
      */
     public function approveAction( $hash = NULL ) {
@@ -384,6 +395,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * action edit
      *
      * @param \string $hash
+     * @validate $hash NotEmpty
      * @return void
      */
     public function editAction( $hash = NULL ) {
@@ -441,6 +453,7 @@ class AddressController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * action delete
      *
      * @param \string $hash
+     * @validate $hash NotEmpty
      * @return void
      */
     public function deleteAction($hash = NULL) {
