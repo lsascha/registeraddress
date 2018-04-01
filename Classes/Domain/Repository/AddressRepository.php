@@ -5,7 +5,7 @@ namespace AFM\Registeraddress\Domain\Repository;
  *  Copyright notice
  *
  *  (c) 2013 Sascha Löffler <lsascha@gmail.com>
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,6 +25,8 @@ namespace AFM\Registeraddress\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
  *
  *
@@ -32,19 +34,20 @@ namespace AFM\Registeraddress\Domain\Repository;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class AddressRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class AddressRepository extends Repository
+{
 
     /**
      * Returns an Object by email address and ignores hidden field.
      *
      * @param \String $email
-     * @return Tx_Extbase_Persistence_QueryResultInterface|array
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
-    public function findOneByEmailIgnoreHidden($email) {
+    public function findOneByEmailIgnoreHidden($email)
+    {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-        //$query->getQuerySettings()->setRespectStoragePage(FALSE);
 
         $query->matching(
             $query->equals('email', $email )
@@ -57,10 +60,11 @@ class AddressRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
      * Returns an Object by hash and ignores hidden field.
      *
      * @param \String $hash
-     * @return Tx_Extbase_Persistence_QueryResultInterface|array
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
-    public function findOneByRegisteraddresshashIgnoreHidden($hash) {
+    public function findOneByRegisteraddresshashIgnoreHidden($hash)
+    {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
         //$query->getQuerySettings()->setRespectStoragePage(FALSE);
@@ -76,10 +80,11 @@ class AddressRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
      * Returns all Objects by hash.
      *
      * @param \String $hash
-     * @return Tx_Extbase_Persistence_QueryResultInterface|array
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
-    public function findAllByRegisteraddresshash($hash) {
+    public function findAllByRegisteraddresshash($hash)
+    {
         $query = $this->createQuery();
 
         $query->matching(
@@ -93,10 +98,11 @@ class AddressRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
      * Returns an Object by hash and ignores hidden field.
      *
      * @param \String $uid
-     * @return Tx_Extbase_Persistence_QueryResultInterface|array
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
-    public function findOneByUidIgnoreHidden($uid) {
+    public function findOneByUidIgnoreHidden($uid)
+    {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
         //$query->getQuerySettings()->setRespectStoragePage(FALSE);
@@ -107,5 +113,4 @@ class AddressRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
         return $query->execute()->getFirst();
     }
-
 }
