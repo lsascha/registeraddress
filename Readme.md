@@ -16,6 +16,10 @@ Installation:
 -----------
 1. Have tt_address and for example direct mail installed and ready
 2. Install registeraddress extension like all others.
+3. Use the update script in the Extension-Manager of registeraddress
+   to add a generated hash to all already existing tt_address entries.
+   
+   _The update script is not shown when no entries with a missing hash are found._
 
 Setup:
 -----------
