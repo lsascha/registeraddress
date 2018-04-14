@@ -40,7 +40,7 @@ class AddressRepository extends Repository
     /**
      * Returns an Object by email address and ignores hidden field.
      *
-     * @param \String $email
+     * @param string $email
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
@@ -59,7 +59,7 @@ class AddressRepository extends Repository
     /**
      * Returns an Object by hash and ignores hidden field.
      *
-     * @param \String $hash
+     * @param string $hash
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
@@ -79,7 +79,7 @@ class AddressRepository extends Repository
     /**
      * Returns all Objects by hash.
      *
-     * @param \String $hash
+     * @param string $hash
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
@@ -97,7 +97,7 @@ class AddressRepository extends Repository
     /**
      * Returns an Object by hash and ignores hidden field.
      *
-     * @param \String $uid
+     * @param string $uid
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */

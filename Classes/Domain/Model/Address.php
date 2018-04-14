@@ -1,11 +1,12 @@
 <?php
+
 namespace AFM\Registeraddress\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Sascha Löffler <lsascha@gmail.com>
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,6 +26,8 @@ namespace AFM\Registeraddress\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  *
  *
@@ -32,47 +35,48 @@ namespace AFM\Registeraddress\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Address extends AbstractEntity
+{
 
     /**
      * name
      *
-     * @var \string
+     * @var string
      */
     protected $name;
 
     /**
      * gender
      *
-     * @var \string
+     * @var string
      */
     protected $gender;
 
     /**
      * firstName
      *
-     * @var \string
+     * @var string
      */
     protected $firstName;
 
     /**
      * middleName
      *
-     * @var \string
+     * @var string
      */
     protected $middleName;
 
     /**
      * lastName
      *
-     * @var \string
+     * @var string
      */
     protected $lastName;
 
     /**
      * email
      *
-     * @var \string
+     * @var string
      * @validate NotEmpty,EmailAddress
      */
     protected $email;
@@ -87,7 +91,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     /**
      * registeraddresshash
      *
-     * @var \string
+     * @var string
      */
     protected $registeraddresshash;
 
@@ -101,147 +105,161 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     /**
      * eigeneAnrede
      *
-     * @var \string
+     * @var string
      */
     protected $eigeneAnrede;
 
     /**
      * tx_directmailsubscription_localgender
      *
-     * @var \string
+     * @var string
      */
     protected $txDirectmailsubscriptionLocalgender;
 
     /**
      * Returns the name
      *
-     * @return \string $name
+     * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
      * Sets the name
      *
-     * @param \string $name
+     * @param string $name
      * @return void
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
     /**
      * Returns the gender
      *
-     * @return \string $gender
+     * @return string
      */
-    public function getGender() {
+    public function getGender()
+    {
         return $this->gender;
     }
 
     /**
      * Sets the gender
      *
-     * @param \string $gender
+     * @param string $gender
      * @return void
      */
-    public function setGender($gender) {
+    public function setGender($gender)
+    {
         $this->gender = $gender;
     }
 
     /**
      * Returns the firstName
      *
-     * @return \string $firstName
+     * @return string
      */
-    public function getFirstName() {
+    public function getFirstName()
+    {
         return $this->firstName;
     }
 
     /**
      * Sets the firstName
      *
-     * @param \string $firstName
+     * @param string $firstName
      * @return void
      */
-    public function setFirstName($firstName) {
+    public function setFirstName($firstName)
+    {
         $this->firstName = $firstName;
     }
 
     /**
      * Returns the middleName
      *
-     * @return \string $middleName
+     * @return string
      */
-    public function getMiddleName() {
+    public function getMiddleName()
+    {
         return $this->middleName;
     }
 
     /**
      * Sets the middleName
      *
-     * @param \string $middleName
+     * @param string $middleName
      * @return void
      */
-    public function setMiddleName($middleName) {
+    public function setMiddleName($middleName)
+    {
         $this->middleName = $middleName;
     }
 
     /**
      * Returns the lastName
      *
-     * @return \string $lastName
+     * @return string
      */
-    public function getLastName() {
+    public function getLastName()
+    {
         return $this->lastName;
     }
 
     /**
      * Sets the lastName
      *
-     * @param \string $lastName
+     * @param string $lastName
      * @return void
      */
-    public function setLastName($lastName) {
+    public function setLastName($lastName)
+    {
         $this->lastName = $lastName;
     }
 
     /**
      * Returns the email
      *
-     * @return \string $email
+     * @return string
      */
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
     /**
      * Sets the email
      *
-     * @param \string $email
+     * @param string $email
      * @return void
      */
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
     }
 
     /**
      * Returns the registeraddresshash
      *
-     * @return \string $registeraddresshash
+     * @return string
      */
-    public function getRegisteraddresshash() {
+    public function getRegisteraddresshash()
+    {
         return $this->registeraddresshash;
     }
 
     /**
      * Sets the registeraddresshash
      *
-     * @param \string $registeraddresshash
+     * @param string $registeraddresshash
      * @return void
      */
-    public function setRegisteraddresshash($registeraddresshash) {
+    public function setRegisteraddresshash($registeraddresshash)
+    {
         $this->registeraddresshash = $registeraddresshash;
     }
 
@@ -251,8 +269,9 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
      * @param boolean $hidden
      * @return void
      */
-    public function setHidden($hidden) {
-        $this->hidden = ($hidden ? TRUE : FALSE);
+    public function setHidden($hidden)
+    {
+        $this->hidden = ($hidden ? true : false);
     }
 
     /**
@@ -260,8 +279,9 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
      *
      * @return boolean
      */
-    public function getHidden() {
-        return ($this->hidden ? TRUE : FALSE);
+    public function getHidden()
+    {
+        return ($this->hidden ? true : false);
     }
 
     /**
@@ -270,8 +290,9 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
      * @param boolean $moduleSysDmailHtml
      * @return void
      */
-    public function setModuleSysDmailHtml($moduleSysDmailHtml) {
-        $this->moduleSysDmailHtml = ($moduleSysDmailHtml ? TRUE : FALSE);
+    public function setModuleSysDmailHtml($moduleSysDmailHtml)
+    {
+        $this->moduleSysDmailHtml = ($moduleSysDmailHtml ? true : false);
     }
 
     /**
@@ -279,27 +300,30 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
      *
      * @return boolean
      */
-    public function getModuleSysDmailHtml() {
-        return ($this->moduleSysDmailHtml ? TRUE : FALSE);
+    public function getModuleSysDmailHtml()
+    {
+        return ($this->moduleSysDmailHtml ? true : false);
     }
 
 
     /**
      * Returns the eigeneAnrede
      *
-     * @return \string $eigeneAnrede
+     * @return string
      */
-    public function getEigeneAnrede() {
+    public function getEigeneAnrede()
+    {
         return $this->eigeneAnrede;
     }
 
     /**
      * Sets the eigeneAnrede
      *
-     * @param \string $eigeneAnrede
+     * @param string $eigeneAnrede
      * @return void
      */
-    public function setEigeneAnrede($eigeneAnrede) {
+    public function setEigeneAnrede($eigeneAnrede)
+    {
         $this->eigeneAnrede = $eigeneAnrede;
 
         $this->setTxDirectmailsubscriptionLocalgender($eigeneAnrede);
@@ -308,10 +332,11 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     /**
      * Sets the eigeneAnrede
      *
-     * @param \string $eigeneAnrede
+     * @param string $txDirectmailsubscriptionLocalgender
      * @return void
      */
-    public function setTxDirectmailsubscriptionLocalgender($txDirectmailsubscriptionLocalgender) {
+    public function setTxDirectmailsubscriptionLocalgender($txDirectmailsubscriptionLocalgender)
+    {
         $this->txDirectmailsubscriptionLocalgender = $txDirectmailsubscriptionLocalgender;
     }
 
