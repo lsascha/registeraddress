@@ -46,9 +46,9 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class AddressController extends ActionController
 {
 
-    public const MAILFORMAT_TXT = 'txt';
-    public const MAILFORMAT_HTML = 'html';
-    public const MAILFORMAT_TXTHTML = 'both';
+    const MAILFORMAT_TXT = 'txt';
+    const MAILFORMAT_HTML = 'html';
+    const MAILFORMAT_TXTHTML = 'both';
 
     /**
      * addressRepository
