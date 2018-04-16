@@ -60,29 +60,22 @@
 				<source>Anmelden</source>
 			</trans-unit>
 			<trans-unit id="form.create.alreadyexists" xml:space="preserve">
-				<source>
-				    Diese E-Mail ist bereits bei uns registriert.
-				    Hier können Sie eine E-Mail mit Links zur Bearbeitung und Löschung anfordern:
-                </source>
+				<source>Diese E-Mail ist bereits bei uns registriert.
+Hier können Sie eine E-Mail mit Links zur Bearbeitung und Löschung anfordern:</source>
 			</trans-unit>
 			<trans-unit id="form.create.alreadyexistsLinktext" xml:space="preserve">
 				<source>E-Mail anfordern</source>
 			</trans-unit>
 			<trans-unit id="form.create.approvetext" xml:space="preserve">
-				<source>
-				    Bitte beachten Sie, dass Ihre Anmeldung erst abgeschlossen ist,
-				    wenn Sie den Link, den wir an %1s geschickt haben, anklicken.
-                </source>
+				<source>Bitte beachten Sie, dass Ihre Anmeldung erst abgeschlossen ist, wenn Sie den Link, den wir an %1s geschickt haben, anklicken.</source>
 			</trans-unit>
 			<trans-unit id="form.create.mailnotfound" xml:space="preserve">
 				<source>Adresse konnte nicht in unserer Datenbank gefunden werden.</source>
 			</trans-unit>
 			<trans-unit id="form.approve.approvetext" xml:space="preserve">
-				<source>
-				    Sie sind nun mit folgenden Daten für den Newsletter angemeldet:
-		            Name: %1s %2s
-		            E-Mail: %3s
-                </source>
+				<source>Sie sind nun mit folgenden Daten für den Newsletter angemeldet:
+Name: %1s %2s
+E-Mail: %3s</source>
 			</trans-unit>
 			<trans-unit id="form.approve.errortext" xml:space="preserve">
 				<source>Adresse konnte nicht in unserer Datenbank gefunden werden.</source>
@@ -107,10 +100,8 @@
 				<source>Eine E-Mail mit den Daten wurde an Sie gesendet.</source>
 			</trans-unit>
 			<trans-unit id="form.info.error" xml:space="preserve">
-				<source>
-				    Ein Fehler ist aufgetreten.
-				    Versuchen Sie es bitte erneut.
-                </source>
+				<source>Ein Fehler ist aufgetreten.
+Versuchen Sie es bitte erneut.</source>
 			</trans-unit>
 
 			<trans-unit id="mail.registration.errorAction">
