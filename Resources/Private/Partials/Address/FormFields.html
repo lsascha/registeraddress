@@ -1,24 +1,37 @@
 <div class="fieldrow">
     <label for="gender">
-        <f:translate key="tx_registeraddress_domain_model_address.gender" />
+        <f:translate key="tx_registeraddress_domain_model_address.gender"/>
     </label>
-    <f:form.select property="gender" options="{m:'Herr',f:'Frau'}" id="gender" />
+    <f:form.select property="gender"
+        options="{
+    m: '{f:translate(key: \'tx_registeraddress_domain_model_address.gender.m\')}',
+    f: '{f:translate(key: \'tx_registeraddress_domain_model_address.gender.f\')}'
+}"
+        id="gender"
+    />
 </div>
 <div class="fieldrow">
     <label for="firstName">
-        <f:translate key="tx_registeraddress_domain_model_address.first_name" />
+        <f:translate key="tx_registeraddress_domain_model_address.first_name"/>
     </label>
-    <f:form.textfield property="firstName" id="firstName" />
+    <f:form.textfield property="firstName"
+        id="firstName"
+    />
 </div>
 <div class="fieldrow">
     <label for="lastName">
-        <f:translate key="tx_registeraddress_domain_model_address.last_name" />
+        <f:translate key="tx_registeraddress_domain_model_address.last_name"/>
     </label>
-    <f:form.textfield property="lastName" id="lastName" />
+    <f:form.textfield property="lastName"
+        id="lastName"
+    />
 </div>
 <div class="fieldrow">
-	<label for="email">
-		<f:translate key="tx_registeraddress_domain_model_address.email" />
-	</label>
-	<f:form.textfield property="email" id="email" placeholder="{f:translate(key:'tx_registeraddress_domain_model_address.email.placeholder')}" />
+    <label for="email">
+        <f:translate key="tx_registeraddress_domain_model_address.email"/>
+    </label>
+    <f:form.textfield property="email"
+        id="email"
+        placeholder="{f:translate(key:'tx_registeraddress_domain_model_address.email.placeholder')}"
+    />
 </div>
