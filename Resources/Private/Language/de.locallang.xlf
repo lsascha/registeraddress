@@ -1,195 +1,195 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2018-04-19T12:59:33Z" product-name="registeraddress">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2018-04-19T12:59:33Z" product-name="registeraddress">
 		<header/>
 		<body>
 
 			<trans-unit id="tx_registeraddress_domain_model_address" xml:space="preserve">
-				<source>Address</source>
+				<target>Adresse</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.name" xml:space="preserve">
-				<source>Name</source>
+				<target>Name</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.gender" xml:space="preserve">
-				<source>Gender</source>
+				<target>Anrede</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.gender.m" xml:space="preserve">
-				<source>Mr</source>
+				<target>Herr</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.gender.f" xml:space="preserve">
-				<source>Mrs</source>
+				<target>Frau</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.first_name" xml:space="preserve">
-				<source>First name</source>
+				<target>Vorname</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.middle_name" xml:space="preserve">
-				<source>Middle Vorname</source>
+				<target>Zweiter Vorname</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.last_name" xml:space="preserve">
-				<source>Last name</source>
+				<target>Nachname</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.email" xml:space="preserve">
-				<source>E-mail</source>
+				<target>E-Mail</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.email.placeholder" xml:space="preserve">
-				<source>E-mail address</source>
+				<target>E-Mail-Adresse</target>
 			</trans-unit>
 			<trans-unit id="salutationgeneration.lastname.m" xml:space="preserve">
-				<source>Dear Mr </source>
+				<target>Sehr geehrter Herr </target>
 			</trans-unit>
 			<trans-unit id="salutationgeneration.lastname.f" xml:space="preserve">
-				<source>Dear Mrs </source>
+				<target>Sehr geehrte Frau </target>
 			</trans-unit>
 			<trans-unit id="salutationgeneration.onlyfirstname" xml:space="preserve">
-				<source>Hallo </source>
+				<target>Hallo </target>
 			</trans-unit>
 			<trans-unit id="salutationgeneration.other" xml:space="preserve">
-				<source>Dear Reader</source>
+				<target>Liebe(r) Leser(in)</target>
 			</trans-unit>
 			<trans-unit id="error.1221559976.newAddress.email" xml:space="preserve">
-				<source>Please enter a valid e-mail address.</source>
+				<target>Bitte geben Sie eine korrekte E-Mail-Adresse an.</target>
 			</trans-unit>
 			<trans-unit id="error.1221560718.newAddress.email" xml:space="preserve">
-				<source>Please enter a e-mail address.</source>
+				<target>Bitte geben Sie eine E-Mail-Adresse an.</target>
 			</trans-unit>
 			<trans-unit id="error.1221560718.newAddress.firstName" xml:space="preserve">
-				<source>Please enter a first name.</source>
+				<target>Bitte geben Sie einen Vornamen an.</target>
 			</trans-unit>
 			<trans-unit id="error.1221560718.newAddress.lastName" xml:space="preserve">
-				<source>Please enter a last name.</source>
+				<target>Bitte geben Sie einen Nachnamen an.</target>
 			</trans-unit>
 
 			<trans-unit id="form.new.title" xml:space="preserve">
-				<source>Newsletter-Subscription</source>
+				<target>Newsletter-Anmeldung</target>
 			</trans-unit>
 			<trans-unit id="form.new.submitButton" xml:space="preserve">
-				<source>Subscribe</source>
+				<target>Anmelden</target>
 			</trans-unit>
 			<trans-unit id="form.create.alreadyexists" xml:space="preserve">
-				<source>This e-mail is already registered with us.
-Here you can request an e-mail with links for editing and deletion:</source>
+				<target>Diese E-Mail ist bereits bei uns registriert.
+Hier können Sie eine E-Mail mit Links zur Bearbeitung und Löschung anfordern:</target>
 			</trans-unit>
 			<trans-unit id="form.create.alreadyexistsLinktext" xml:space="preserve">
-				<source>Request e-mail</source>
+				<target>E-Mail anfordern</target>
 			</trans-unit>
 			<trans-unit id="form.create.approvetext" xml:space="preserve">
-				<source>Please note that your registration will not be completed until you click on the link we sent to %1s.</source>
+				<target>Bitte beachten Sie, dass Ihre Anmeldung erst abgeschlossen ist, wenn Sie den Link, den wir an %1s geschickt haben, anklicken.</target>
 			</trans-unit>
 			<trans-unit id="form.create.mailnotfound" xml:space="preserve">
-				<source>Address could not be found in our database.</source>
+				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
 			<trans-unit id="form.approve.approvetext" xml:space="preserve">
-				<source>You are now subscribed with the following data for the newsletter:
+				<target>Sie sind nun mit folgenden Daten für den Newsletter angemeldet:
 Name: %1s %2s
-E-mail: %3s</source>
+E-Mail: %3s</target>
 			</trans-unit>
 			<trans-unit id="form.approve.errortext" xml:space="preserve">
-				<source>Address could not be found in our database.</source>
+				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
 			<trans-unit id="form.delete.text" xml:space="preserve">
-				<source>You have now been unsubscribed from the newsletter.</source>
+				<target>Sie sind nun vom Newsletter abgemeldet.</target>
 			</trans-unit>
 			<trans-unit id="form.delete.errortext" xml:space="preserve">
-				<source>Address could not be found in our database.</source>
+				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
 
 			<trans-unit id="form.edit.saveButton" xml:space="preserve">
-				<source>Save</source>
+				<target>Speichern</target>
 			</trans-unit>
 			<trans-unit id="form.edit.deleteButton" xml:space="preserve">
-				<source>Unsubscribe Newsletter</source>
+				<target>Newsletter abbestellen</target>
 			</trans-unit>
 			<trans-unit id="form.edit.errortext" xml:space="preserve">
-				<source>Address could not be found in our database.</source>
+				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
 			<trans-unit id="form.info.text" xml:space="preserve">
-				<source>An e-mail with the data has been sent to you.</source>
+				<target>Eine E-Mail mit den Daten wurde an Sie gesendet.</target>
 			</trans-unit>
 			<trans-unit id="form.info.error" xml:space="preserve">
-				<source>An error has occurred.
-Please try again.</source>
+				<target>Ein Fehler ist aufgetreten.
+Versuchen Sie es bitte erneut.</target>
 			</trans-unit>
 
 			<trans-unit id="mail.registration.errorAction">
-				<source>Failed executing the action.</source>
+				<target>Failed executing the action.</target>
 			</trans-unit>
 
 			<trans-unit id="mail.gender.m" xml:space="preserve">
-				<source>Mr</source>
+				<target>Herr</target>
 			</trans-unit>
 			<trans-unit id="mail.gender.f" xml:space="preserve">
-				<source>Mrs</source>
+				<target>Frau</target>
 			</trans-unit>
 
 			<trans-unit id="mail.info.greet" xml:space="preserve">
-				<source>Hallo</source>
+				<target>Hallo</target>
 			</trans-unit>
 			<trans-unit id="mail.info.editLinkText" xml:space="preserve">
-				<source>Please click the following link to edit your data:</source>
+				<target>Bitte klicken Sie folgenden Link, um Ihre Daten zu bearbeiten:</target>
 			</trans-unit>
 			<trans-unit id="mail.info.deleteLinkText" xml:space="preserve">
-				<source>Please click the following link to delete your registration:</source>
+				<target>Bitte klicken Sie folgenden Link, um Ihre Anmeldung zu löschen:</target>
 			</trans-unit>
 			<trans-unit id="mail.info.subjectprefix" xml:space="preserve">
-				<source>Newsletter-Information</source>
+				<target>Newsletter-Information</target>
 			</trans-unit>
 
 			<trans-unit id="mail.registration.greet" xml:space="preserve">
-				<source>Welcome</source>
+				<target>Herzlich willkommen</target>
 			</trans-unit>
 			<trans-unit id="mail.registration.text" xml:space="preserve">
-				<source>You subscribed for our newsletter.</source>
+				<target>Sie haben sich für unseren Newsletter registriert.</target>
 			</trans-unit>
 			<trans-unit id="mail.registration.approveLinkText" xml:space="preserve">
-				<source>Please confirm your subscription by clicking on the following link:</source>
+				<target>Bitte bestätigen Sie Ihre Anmeldung mit Klick auf folgenden Link:</target>
 			</trans-unit>
 			<trans-unit id="mail.registration.deleteLinkText" xml:space="preserve">
-				<source>If you do not want to subscribe for the newsletter, please click the following link:</source>
+				<target>Wenn Sie sich nicht für den Newsletter anmelden wollen, dann klicken Sie bitte folgenden Link:</target>
 			</trans-unit>
 			<trans-unit id="mail.registration.editLinkText" xml:space="preserve">
-				<source>If you want to change your personal data, please click the following link:</source>
+				<target>Wenn Sie Ihre persönlichen Daten ändern wollen, dann klicken Sie bitte folgenden Link:</target>
 			</trans-unit>
 			<trans-unit id="mail.registration.subjectprefix" xml:space="preserve">
-				<source>Newsletter-Subscription</source>
+				<target>Newsletter-Registrierung</target>
 			</trans-unit>
 
 
 			<trans-unit id="flashMessage.update" xml:space="preserve">
-				<source>Your data has been updated.</source>
+				<target>Ihre Daten wurden aktualisiert.</target>
 			</trans-unit>
 
 
 			<trans-unit id="mail.unsubscribe.subjectprefix" xml:space="preserve">
-				<source>Unsubscribe</source>
+				<target>Abmeldung</target>
 			</trans-unit>
 			<trans-unit id="form.unsubscribe.title" xml:space="preserve">
-				<source>Unsubscribe Newsletter</source>
+				<target>Newsletter abbestellen</target>
 			</trans-unit>
 			<trans-unit id="form.unsubscribe.submitButton" xml:space="preserve">
-				<source>Unsubscribe</source>
+				<target>Abbestellen</target>
 			</trans-unit>
 			<trans-unit id="form.unsubscribe.success" xml:space="preserve">
-				<source>You now get to your e-mail address a link to unsubscribe the newsletter.</source>
+				<target>Sie erhalten nun an Ihre E-Mail-Adresse einen Link zum Abbestellen des Newsletters.</target>
 			</trans-unit>
 			<trans-unit id="form.unsubscribe.error" xml:space="preserve">
-				<source>The entered e-mail address was not found.</source>
+				<target>Die angegebene E-Mail-Adresse wurde nicht gefunden.</target>
 			</trans-unit>
 			<trans-unit id="flashMessage.unsubscribeform.error" xml:space="preserve">
-				<source>Your e-mail address was not found.</source>
+				<target>Ihre E-Mail-Adresse wurde nicht gefunden.</target>
 			</trans-unit>
 
 
 			<trans-unit id="mail.deletesuccess.subjectprefix" xml:space="preserve">
-				<source>Unsubscription completed</source>
+				<target>Abmeldung abgeschlossen</target>
 			</trans-unit>
 			<trans-unit id="mail.deletesuccess.text" xml:space="preserve">
-				<source>You have successfully unsubscribed from the newsletter.</source>
+				<target>Sie haben den Newsletter erfolgreich abbestellt.</target>
 			</trans-unit>
 			<trans-unit id="mail.approvesuccess.subjectprefix" xml:space="preserve">
-				<source>Subscription successfull</source>
+				<target>Anmeldung erfolgreich</target>
 			</trans-unit>
 			<trans-unit id="mail.approvesuccess.text" xml:space="preserve">
-				<source>You have successfully subscribed.</source>
+				<target>Sie haben sich erfolgreich angemeldet.</target>
 			</trans-unit>
 			
 		</body>
