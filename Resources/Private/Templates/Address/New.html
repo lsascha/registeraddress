@@ -17,8 +17,8 @@ Otherwise your changes will be overwritten the next time you save the extension 
     <div class="newform">
         <h2><f:translate key="form.new.title" /></h2>
         <f:form action="create" name="newAddress" object="{newAddress}" pageUid="{settings.mainformpageuid}" pluginName="Registerform">
-        <f:render partial="Address/FormFields" />
-        	<f:form.submit value="{f:translate(key:'form.new.submitButton')}" class="submit" />
+            <f:render partial="Address/FormFields" />
+            <f:form.submit value="{f:translate(key:'form.new.submitButton')}" class="submit" />
         </f:form>
     </div>
 </f:section>

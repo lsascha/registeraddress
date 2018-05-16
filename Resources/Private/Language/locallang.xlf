@@ -34,6 +34,13 @@
 			<trans-unit id="tx_registeraddress_domain_model_address.email.placeholder" xml:space="preserve">
 				<source>E-mail address</source>
 			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.consent_newsletter" xml:space="preserve">
+				<source><![CDATA[Ich bin damit einverstanden, dass mich die Firma XYZ über ausgewählte Themen aus dem Unternehmen informieren darf.
+Meine Daten werden ausschließlich zu diesem Zweck genutzt. Insbesondere erfolgt keine Weitergabe an unberechtigte Dritte.
+Mir ist bekannt, dass ich meine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen kann.
+Dies kann ich über folgende Kanäle tun: elektronisch über einen Abmeldelink im jeweiligen Newsletter, per E-Mail an: mail@example.com oder postalisch an: Firma XYZ, Straße, PLZ Ort.
+Es gilt die Datenschutzerklärung (Link zur Datenschutzerklärung) der Firma XYZ, die auch weitere Informationen über Möglichkeiten zur Berichtigung, Löschung und Sperrung meiner Daten beinhaltet.]]></source>
+			</trans-unit>
 			<trans-unit id="salutationgeneration.lastname.m" xml:space="preserve">
 				<source>Dear Mr </source>
 			</trans-unit>

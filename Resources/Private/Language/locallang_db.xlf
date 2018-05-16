@@ -28,6 +28,12 @@
 			<trans-unit id="tx_registeraddress_domain_model_address.eigene_anrede">
 				<source>Eigene Anrede</source>
 			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.consent_newsletter">
+				<source>Datenschutz-Grundverordnung Akzeptiert</source>
+			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.consent_time">
+				<source>Datenschutz-Grundverordnung Zeitpunkt wenn Akzeptiert</source>
+			</trans-unit>
 			
 			<trans-unit id="tt_address.tx_extbase_type.Tx_Registeraddress_Address">
 				<source>registerttaddress Address</source>

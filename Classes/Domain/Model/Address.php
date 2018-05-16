@@ -117,6 +117,20 @@ class Address extends AbstractEntity
     protected $txDirectmailsubscriptionLocalgender;
 
     /**
+     * consent_newsletter
+     *
+     * @var boolean
+     * @validate NotEmpty
+     */
+    protected $consentNewsletter = false;
+
+    /**
+     * consent_time
+     * @var \DateTime
+     */
+    protected $consentTime;
+
+    /**
      * Returns the name
      *
      * @return string
@@ -338,6 +352,38 @@ class Address extends AbstractEntity
     public function setTxDirectmailsubscriptionLocalgender($txDirectmailsubscriptionLocalgender)
     {
         $this->txDirectmailsubscriptionLocalgender = $txDirectmailsubscriptionLocalgender;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isConsentNewsletter()
+    {
+        return $this->consentNewsletter;
+    }
+
+    /**
+     * @param bool $consentNewsletter
+     */
+    public function setConsentNewsletter($consentNewsletter)
+    {
+        $this->consentNewsletter = $consentNewsletter;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getConsentTime()
+    {
+        return $this->consentTime;
+    }
+
+    /**
+     * @param \DateTime $consentTime
+     */
+    public function setConsentTime($consentTime)
+    {
+        $this->consentTime = $consentTime;
     }
 
 }

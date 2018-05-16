@@ -271,6 +271,11 @@ class AddressController extends ActionController
             $regHash = sha1( $newAddress->getEmail().$rnd );
             $newAddress->setRegisteraddresshash( $regHash );
             $newAddress->setHidden(true);
+
+            // save time of dsgvo consent
+            if ($newAddress->isConsentNewsletter()) {
+                $newAddress->setConsentTime(new \DateTime());
+            }
             $this->addressRepository->add($newAddress);
 
             $data = [
@@ -503,6 +508,11 @@ class AddressController extends ActionController
         // always save old e-mail address
         $addressOld = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
         $address->setEmail($addressOld->getEmail());
+
+        // save time of dsgvo consent
+        if (!$addressOld->isConsentNewsletter() && $address->isConsentNewsletter()) {
+            $address->setConsentTime(new \DateTime());
+        }
 
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);

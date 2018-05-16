@@ -6,4 +6,6 @@ CREATE TABLE tt_address (
     registeraddresshash varchar(40) DEFAULT '' NOT NULL,
     eigene_anrede varchar(255) DEFAULT '' NOT NULL,
     tx_directmailsubscription_localgender varchar(255) DEFAULT '' NOT NULL,
+    consent_newsletter tinyint(3) DEFAULT '0',
+    consent_time int(11) DEFAULT '0' NOT NULL
 );
