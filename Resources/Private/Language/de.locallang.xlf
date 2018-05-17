@@ -191,7 +191,12 @@ Versuchen Sie es bitte erneut.</target>
 			<trans-unit id="mail.approvesuccess.text" xml:space="preserve">
 				<target>Sie haben sich erfolgreich angemeldet.</target>
 			</trans-unit>
-			
+
+			<trans-unit id="mail.registration.consentText" xml:space="preserve">
+				<source>You will apply the following consent.</source>
+					<target>Sie stimmen den folgenden Bedingungen zu.</target>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>
