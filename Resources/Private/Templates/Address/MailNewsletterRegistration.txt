@@ -2,6 +2,9 @@
 
 {f:translate(key:'mail.registration.text', htmlEscape:0)}
 
+{f:translate(key:'mail.registration.consentText')}
+{consent -> f:format.html(parseFuncTSPath:"plugin.tx_registeraddress.lib.parseFunc_PLAIN") -> f:format.stripTags()}
+
 {f:translate(key:'mail.registration.approveLinkText')}
 {f:uri.action(action: 'approve', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
 

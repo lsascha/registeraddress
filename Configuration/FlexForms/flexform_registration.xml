@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <settings.consent>
+                <TCEforms>
+                    <label>LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:felxforms.consent</label>
+                    <config>
+                        <type>text</type>
+                        <rows>5</rows>
+                        <cols>30</cols>
+                    </config>
+                    <defaultExtras>richtext[cut|copy|paste|bold|italic|link]:rte_transform[mode=css]</defaultExtras>
+                </TCEforms>
+            </settings.consent>
+        </el>
+    </ROOT>
+</T3DataStructure>
+

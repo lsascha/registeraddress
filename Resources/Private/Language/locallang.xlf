@@ -191,7 +191,12 @@ Please try again.</source>
 			<trans-unit id="mail.approvesuccess.text" xml:space="preserve">
 				<source>You have successfully subscribed.</source>
 			</trans-unit>
-			
+
+			<trans-unit id="mail.registration.consentText" xml:space="preserve">
+				<source>You will apply the following consent.</source>
+			</trans-unit>
+
+
 		</body>
 	</file>
 </xliff>

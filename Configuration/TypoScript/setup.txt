@@ -35,6 +35,16 @@ plugin.tx_registeraddress {
 		mailformat = {$plugin.tx_registeraddress.settings.mailformat}
 		sendDeleteApproveMails = {$plugin.tx_registeraddress.settings.sendDeleteApproveMails}
 	}
+	lib.parseFunc_PLAIN < lib.parseFunc
+    	lib.parseFunc_PLAIN {
+            tags.a.typolink.forceAbsoluteUrl = 1
+            tags.a.typolink.returnLast = url
+    	}
+
+	lib.parseFunc_HTML < lib.parseFunc_RTE
+	lib.parseFunc_HTML {
+        tags.a.typolink.forceAbsoluteUrl = 1
+	}
 }
 
 plugin.tx_registeraddress._CSS_DEFAULT_STYLE (
