@@ -13,6 +13,7 @@
                         <type>text</type>
                         <rows>5</rows>
                         <cols>30</cols>
+                        <enableRichtext>1</enableRichtext>
                     </config>
                     <defaultExtras>richtext[cut|copy|paste|bold|italic|link]:rte_transform[mode=css]</defaultExtras>
                 </TCEforms>
