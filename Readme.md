@@ -104,3 +104,10 @@ After that a link can be created with TypoScript:
 typolink.parameter = 123
 typolink.additionalParams = &tx_registeraddress_registerform[hash]=###USER_registeraddresshash###&tx_registeraddress_registerform[action]=delete&tx_registeraddress_registerform[controller]=Address
 ```
+
+## DSGVO / GDPR
+In version 1.0.13 you can add a consent message to the plugin.
+Additionally for logging when someone subscribed / unsubscribed you should use the Extension
+[_registeraddress_logger_ with the current branch feature/consent](https://github.com/undkonsorten/registeraddress_logger/tree/feature/consent)
+
+`composer require undkonsorten/registeraddress-logger:dev-feature/consent`

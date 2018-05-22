@@ -277,6 +277,7 @@ class AddressController extends ActionController
                 'gender' => $newAddress->getGender(),
                 'vorname' => $newAddress->getFirstName(),
                 'nachname' => $newAddress->getLastName(),
+                'consent' => $newAddress->getConsent(),
                 'hash' => $regHash
             ];
 

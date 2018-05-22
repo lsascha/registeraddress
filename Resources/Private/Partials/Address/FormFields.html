@@ -35,3 +35,8 @@
         placeholder="{f:translate(key:'tx_registeraddress_domain_model_address.email.placeholder')}"
     />
 </div>
+<div class="fieldrow">
+	<f:translate key="tx_registeraddress_domain_model_address.consent"/>
+	<f:format.html>{settings.consent}</f:format.html>
+	<f:form.hidden property="consent" value="{settings.consent}"/>
+</div>

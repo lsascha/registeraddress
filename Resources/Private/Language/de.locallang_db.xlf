@@ -6,39 +6,46 @@
 
 			<trans-unit id="tx_registeraddress_domain_model_address">
 				<source>Address</source>
+				<target>Addresse</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.name">
 				<source>Name</source>
+				<target>Name</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.gender">
 				<source>Gender</source>
+				<target>Geschlecht</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.first_name">
 				<source>First Name</source>
+				<target>Vorname</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.middle_name">
 				<source>Middle Name</source>
+				<target>Mittelname</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.last_name">
 				<source>Last Name</source>
+				<target>Nachname</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.email">
 				<source>Email</source>
+				<target>Email</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.eigene_anrede">
-				<source>Eigene Anrede</source>
+				<source>Own appellation</source>
+				<target>Eigene Anrede</target>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.consent">
 				<source>Consent</source>
-			</trans-unit>
-
-			<trans-unit id="tt_address.tx_extbase_type.Tx_Registeraddress_Address">
-				<source>registerttaddress Address</source>
+				<target>Einwilligung</target>
 			</trans-unit>
 
 			<trans-unit id="felxforms.consent">
 				<source>Einwilligungstext</source>
+				<target>Consent text</target>
 			</trans-unit>
+
 
 		</body>
 	</file>

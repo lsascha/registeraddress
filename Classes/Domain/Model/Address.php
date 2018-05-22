@@ -117,6 +117,13 @@ class Address extends AbstractEntity
     protected $txDirectmailsubscriptionLocalgender;
 
     /**
+     * Consent
+     *
+     * @var string
+     */
+    protected $consent;
+
+    /**
      * Returns the name
      *
      * @return string
@@ -339,5 +346,22 @@ class Address extends AbstractEntity
     {
         $this->txDirectmailsubscriptionLocalgender = $txDirectmailsubscriptionLocalgender;
     }
+
+    /**
+     * @return string
+     */
+    public function getConsent()
+    {
+        return $this->consent;
+    }
+
+    /**
+     * @param string $consent
+     */
+    public function setConsent($consent)
+    {
+        $this->consent = $consent;
+    }
+
 
 }
