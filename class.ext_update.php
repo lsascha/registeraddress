@@ -124,7 +124,7 @@ class ext_update
             foreach ($addresslist as $fixAddress) {
                 $content .= 'Updating tt_address uid:' . $fixAddress['uid'] . PHP_EOL;
 
-                $rnd = microtime(true) . random_int(10000, 90000);
+                $rnd = microtime(true) . mt_rand(10000, 90000);
                 $regHash = sha1($fixAddress['email'] . $rnd);
 
                 $this->databaseConnection->exec_UPDATEquery(

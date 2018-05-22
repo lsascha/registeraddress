@@ -29,6 +29,7 @@ use AFM\Registeraddress\Domain\Model\Address;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -60,17 +61,21 @@ class AddressController extends ActionController
 
     /**
      * This creates another stand-alone instance of the Fluid view to render a template
+     *
      * @param string $templateName the name of the template to use
-     * @param string $format the format of the fluid template "html" or "txt"
+     * @param string $format       the format of the fluid template "html" or "txt"
+     *
      * @return StandaloneView the Fluid instance
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException *@throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
+     * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
      */
     protected function getPlainRenderer($templateName = 'default', $format = 'txt')
     {
+        $typo3Version = VersionNumberUtility::getNumericTypo3Version();
+
         $view = $this->objectManager->get(StandaloneView::class);
         $view->getRequest()->setControllerExtensionName('registeraddress');
         $view->setFormat($format);
-
 
         // find plugin view configuration
         $frameworkConfiguration = $this->configurationManager->getConfiguration(
@@ -82,14 +87,23 @@ class AddressController extends ActionController
         // set configured partialPaths so they can be overwritten
         $view->setPartialRootPaths($partialPaths);
 
-        $templatePaths = $this->getViewProperty($frameworkConfiguration, 'templateRootPaths');
-        $view->setTemplateRootPaths($templatePaths); // set configured TemplateRootPaths from plugin
-
+        // find layout paths from plugin configuration
         $layoutPaths = $this->getViewProperty($frameworkConfiguration, 'layoutRootPaths');
+        // set configured layoutPaths so they can be overwritten
         $view->setLayoutRootPaths($layoutPaths);
 
+        if (VersionNumberUtility::convertVersionNumberToInteger($typo3Version) >= 7000000) {
+            // If TYPO3 version is version 7 or higher
+            $templatePaths = $this->getViewProperty($frameworkConfiguration, 'templateRootPaths');
+            $view->setTemplateRootPaths($templatePaths); // set configured TemplateRootPaths from plugin
 
-        $view->setTemplate($templateName);
+            $view->setTemplate($templateName);
+        } else {
+            // For TYPO3 Version 6 or lower
+            $templateRootPath = $this->getViewProperty($frameworkConfiguration, 'templateRootPath');
+            $templatePathAndFilename = $templateRootPath . $this->request->getControllerName().'/' . $templateName . '.' . $format;
+            $view->setTemplatePathAndFilename($templatePathAndFilename);
+        }
 
         $view->assign('settings', $this->settings);
         return $view;
@@ -262,12 +276,20 @@ class AddressController extends ActionController
      */
     public function createAction(Address $newAddress)
     {
+        $typo3Version = VersionNumberUtility::getNumericTypo3Version();
+
         $oldAddress = $this->checkIfAddressExists($newAddress->getEmail());
         if ($oldAddress) {
             $this->view->assign('oldAddress', $oldAddress);
             $this->view->assign('alreadyExists', true);
         } else {
-            $rnd = microtime(true).random_int(10000,90000);
+            if (VersionNumberUtility::convertVersionNumberToInteger($typo3Version) >= 8000000) {
+                // If TYPO3 version is version 8 or higher
+                $rnd = microtime(true) . random_int(10000, 90000);
+            } else {
+                // For TYPO3 Version 7 or lower
+                $rnd = microtime(true) . mt_rand(10000, 90000);
+            }
             $regHash = sha1( $newAddress->getEmail().$rnd );
             $newAddress->setRegisteraddresshash( $regHash );
             $newAddress->setHidden(true);
