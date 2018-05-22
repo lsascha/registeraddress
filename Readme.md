@@ -108,6 +108,6 @@ typolink.additionalParams = &tx_registeraddress_registerform[hash]=###USER_regis
 ## DSGVO / GDPR
 In version 1.0.13 you can add a consent message to the plugin.
 Additionally for logging when someone subscribed / unsubscribed you should use the Extension
-[_registeraddress_logger_ with the current branch feature/consent](https://github.com/undkonsorten/registeraddress_logger/tree/feature/consent)
+[_registeraddress_logger_ 1.0.1](https://github.com/undkonsorten/registeraddress_logger)
 
-`composer require undkonsorten/registeraddress-logger:dev-feature/consent`
+`composer require undkonsorten/registeraddress-logger ^1.0.1`
