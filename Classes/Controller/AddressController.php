@@ -271,6 +271,7 @@ class AddressController extends ActionController
             $regHash = sha1( $newAddress->getEmail().$rnd );
             $newAddress->setRegisteraddresshash( $regHash );
             $newAddress->setHidden(true);
+            $newAddress->setConsent($this->settings['consent']);
             $this->addressRepository->add($newAddress);
 
             $data = [
