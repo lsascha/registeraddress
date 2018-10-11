@@ -509,6 +509,20 @@ class AddressController extends ActionController
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);
 
+        // send email to admin with updated data
+        if ($this->settings['adminmail']) {
+            $adminRecipient = $this->settings['adminmail'];
+            $subject = $this->settings['updateSubject'];
+
+            $this->sendResponseMail(
+                $adminRecipient,
+                'Address/Admin/MailAdminUpdate',
+                ['address' => $address],
+                self::MAILFORMAT_TXT,
+                $subject
+            );
+        }
+
         $this->addressRepository->update($address);
 
         // Reset internal messages
