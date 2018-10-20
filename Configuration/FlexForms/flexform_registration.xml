@@ -8,7 +8,7 @@
         <el>
             <settings.consent>
                 <TCEforms>
-                    <label>LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:felxforms.consent</label>
+                    <label>LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:flexforms.consent</label>
                     <config>
                         <type>text</type>
                         <rows>5</rows>
