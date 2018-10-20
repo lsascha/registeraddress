@@ -36,7 +36,7 @@
 				<source>registerttaddress Address</source>
 			</trans-unit>
 
-			<trans-unit id="felxforms.consent">
+			<trans-unit id="flexforms.consent">
 				<source>Einwilligungstext</source>
 			</trans-unit>
 
