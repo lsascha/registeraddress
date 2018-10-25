@@ -130,7 +130,7 @@ Versuchen Sie es bitte erneut.</target>
 			<trans-unit id="mail.info.deleteLinkText" xml:space="preserve">
 				<target>Bitte klicken Sie folgenden Link, um Ihre Anmeldung zu löschen:</target>
 			</trans-unit>
-			<trans-unit id="mail.info.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.info.subjectsuffix" xml:space="preserve">
 				<target>Newsletter-Information</target>
 			</trans-unit>
 
@@ -149,7 +149,7 @@ Versuchen Sie es bitte erneut.</target>
 			<trans-unit id="mail.registration.editLinkText" xml:space="preserve">
 				<target>Wenn Sie Ihre persönlichen Daten ändern wollen, dann klicken Sie bitte folgenden Link:</target>
 			</trans-unit>
-			<trans-unit id="mail.registration.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.registration.subjectsuffix" xml:space="preserve">
 				<target>Newsletter-Registrierung</target>
 			</trans-unit>
 
@@ -159,7 +159,7 @@ Versuchen Sie es bitte erneut.</target>
 			</trans-unit>
 
 
-			<trans-unit id="mail.unsubscribe.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.unsubscribe.subjectsuffix" xml:space="preserve">
 				<target>Abmeldung</target>
 			</trans-unit>
 			<trans-unit id="form.unsubscribe.title" xml:space="preserve">
@@ -179,13 +179,13 @@ Versuchen Sie es bitte erneut.</target>
 			</trans-unit>
 
 
-			<trans-unit id="mail.deletesuccess.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.deletesuccess.subjectsuffix" xml:space="preserve">
 				<target>Abmeldung abgeschlossen</target>
 			</trans-unit>
 			<trans-unit id="mail.deletesuccess.text" xml:space="preserve">
 				<target>Sie haben den Newsletter erfolgreich abbestellt.</target>
 			</trans-unit>
-			<trans-unit id="mail.approvesuccess.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.approvesuccess.subjectsuffix" xml:space="preserve">
 				<target>Anmeldung erfolgreich</target>
 			</trans-unit>
 			<trans-unit id="mail.approvesuccess.text" xml:space="preserve">
