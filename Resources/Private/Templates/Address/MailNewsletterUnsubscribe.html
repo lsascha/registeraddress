@@ -3,5 +3,5 @@
 </p>
 <p>
 	{f:translate(key:'mail.info.deleteLinkText')}
-	{f:uri.action(action: 'delete', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
+	{f:link.action(action: 'delete', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
 </p>
