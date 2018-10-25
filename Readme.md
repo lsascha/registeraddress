@@ -91,6 +91,12 @@ plugin.tx_registeraddress {
             Vielen Dank.<br />
             Sie sind bereits für unseren Newsletter angemeldet.
         )
+        
+        mail.info.subjectsuffix = NEWSLETTER
+        mail.registration.subjectsuffix = Newsletter-Registrierung
+        mail.unsubscribe.subjectsuffix = Abmeldung
+        mail.deletesuccess.subjectsuffix = Abmeldung abgeschlossen
+        mail.approvesuccess.subjectsuffix = Anmeldung erfolgreich
     }
 }
 ```
