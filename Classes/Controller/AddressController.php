@@ -275,10 +275,7 @@ class AddressController extends ActionController
             $this->addressRepository->add($newAddress);
 
             $data = [
-                'gender' => $newAddress->getGender(),
-                'vorname' => $newAddress->getFirstName(),
-                'nachname' => $newAddress->getLastName(),
-                'consent' => $newAddress->getConsent(),
+                'address' => $newAddress,
                 'hash' => $regHash
             ];
 
@@ -315,9 +312,7 @@ class AddressController extends ActionController
 
         if ($address && $address->getUid() == $uid) {
             $data = [
-                'gender' => $address->getGender(),
-                'vorname' => $address->getFirstName(),
-                'nachname' => $address->getLastName(),
+                'address' => $address,
                 'hash' => $address->getRegisteraddresshash()
             ];
 
@@ -358,9 +353,7 @@ class AddressController extends ActionController
         }
         if ($address) {
             $data = [
-                'gender' => $address->getGender(),
-                'vorname' => $address->getFirstName(),
-                'nachname' => $address->getLastName(),
+                'address' => $address,
                 'hash' => $address->getRegisteraddresshash()
             ];
 
