@@ -145,6 +145,10 @@ class AddressController extends ActionController
      */
     protected function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
     {
+        $oldSpamProtectSetting = $GLOBALS['TSFE']->spamProtectEmailAddresses;
+        // disable spamProtectEmailAddresses setting for e-mails
+        $GLOBALS['TSFE']->spamProtectEmailAddresses = 0;
+
         $recipients = explode(',', $recipientmails);
 
         $from = [$this->settings['sendermail'] => $this->settings['sendername']];
@@ -193,6 +197,9 @@ class AddressController extends ActionController
                 $mailText
             );
         }
+
+        // revert spamProtectSettings
+        $GLOBALS['TSFE']->spamProtectEmailAddresses = $oldSpamProtectSetting;
     }
 
 
