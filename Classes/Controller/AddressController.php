@@ -143,7 +143,7 @@ class AddressController extends ActionController
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      */
-    private function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
+    protected function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
     {
         $recipients = explode(',', $recipientmails);
 
