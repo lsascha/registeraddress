@@ -86,11 +86,17 @@ E-mail: %3s</source>
 			<trans-unit id="form.approve.errortext" xml:space="preserve">
 				<source>Address could not be found in our database.</source>
 			</trans-unit>
+			<trans-unit id="form.approve.submitButton" xml:space="preserve">
+				<source>Approve</source>
+			</trans-unit>
 			<trans-unit id="form.delete.text" xml:space="preserve">
 				<source>You have now been unsubscribed from the newsletter.</source>
 			</trans-unit>
 			<trans-unit id="form.delete.errortext" xml:space="preserve">
 				<source>Address could not be found in our database.</source>
+			</trans-unit>
+			<trans-unit id="form.delete.submitButton" xml:space="preserve">
+				<source>Confirm delete</source>
 			</trans-unit>
 
 			<trans-unit id="form.edit.saveButton" xml:space="preserve">
