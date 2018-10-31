@@ -510,7 +510,7 @@ class AddressController extends ActionController
         $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);
 
         // send email to admin with updated data
-        if ($this->settings['adminmail']) {
+        if ($this->settings['adminmail'] && !empty($this->settings['updateSubject'])) {
             $adminRecipient = $this->settings['adminmail'];
             $subject = $this->settings['updateSubject'];
 
