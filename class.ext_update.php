@@ -2,6 +2,7 @@
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 
 /**
  * Class ext_update
@@ -33,6 +34,7 @@ class ext_update
         if (VersionNumberUtility::convertVersionNumberToInteger($typo3Version) >= 8000000) {
             // If TYPO3 version is version 8 or higher
             $this->queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('tt_address');
+            $this->queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         } else {
             // For TYPO3 Version 7 or lower
             $this->databaseConnection = $GLOBALS['TYPO3_DB'];
