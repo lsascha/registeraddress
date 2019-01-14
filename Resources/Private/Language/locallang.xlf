@@ -168,7 +168,7 @@ Please try again.</source>
 				<source>If you want to change your personal data, please click the following link:</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.editLink" xml:space="preserve">
-				<target>Update data</target>
+				<source>Update data</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.subjectsuffix" xml:space="preserve">
 				<source>Newsletter-Subscription</source>
