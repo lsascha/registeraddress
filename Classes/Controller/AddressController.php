@@ -586,7 +586,7 @@ class AddressController extends ActionController
     /**
      * Generates content for field eigene_anrede
      *
-     * @param $address
+     * @param Address $address
      * @return string|null
      */
     protected function generateEigeneAnrede($address)
