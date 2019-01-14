@@ -17,13 +17,13 @@
 				<source>Mr</source>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.gender.f" xml:space="preserve">
-				<source>Mrs</source>
+				<source>Ms</source>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.first_name" xml:space="preserve">
 				<source>First name</source>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.middle_name" xml:space="preserve">
-				<source>Middle Vorname</source>
+				<source>Middle name</source>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.last_name" xml:space="preserve">
 				<source>Last name</source>
@@ -41,7 +41,7 @@
 				<source>Dear Mrs </source>
 			</trans-unit>
 			<trans-unit id="salutationgeneration.onlyfirstname" xml:space="preserve">
-				<source>Hallo </source>
+				<source>Hello </source>
 			</trans-unit>
 			<trans-unit id="salutationgeneration.other" xml:space="preserve">
 				<source>Dear Reader</source>
@@ -124,7 +124,7 @@ Please try again.</source>
 				<source>Mr</source>
 			</trans-unit>
 			<trans-unit id="mail.gender.f" xml:space="preserve">
-				<source>Mrs</source>
+				<source>Ms</source>
 			</trans-unit>
 
 			<trans-unit id="mail.info.greet" xml:space="preserve">
@@ -216,7 +216,6 @@ Please try again.</source>
 			<trans-unit id="mail.registration.consentText" xml:space="preserve">
 				<source>You will apply the following consent.</source>
 			</trans-unit>
-
 
 		</body>
 	</file>
