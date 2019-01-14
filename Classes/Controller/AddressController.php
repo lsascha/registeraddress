@@ -592,13 +592,13 @@ class AddressController extends ActionController
     protected function generateEigeneAnrede($address)
     {
         if ($address->getLastName()) {
-            if ($address->getGender() == 'm') {
+            if ($address->getGender() === 'm') {
                 $eigeneAnrede = LocalizationUtility::translate(
                         'salutationgeneration.lastname.m',
                         'registeraddress'
                     ) . $address->getLastName();
 
-            } elseif ($address->getGender() == 'f') {
+            } elseif ($address->getGender() === 'f') {
                 $eigeneAnrede = LocalizationUtility::translate(
                         'salutationgeneration.lastname.f',
                         'registeraddress'
