@@ -35,6 +35,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  *
@@ -235,7 +236,7 @@ class AddressController extends ActionController
      * action form only
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @Extbase\IgnoreValidation("$newAddress")
      * @return void
      */
     public function formOnlyAction(Address $newAddress = NULL)
@@ -247,7 +248,7 @@ class AddressController extends ActionController
      * action new
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @Extbase\IgnoreValidation("$newAddress")
      * @return void
      */
     public function newAction(Address $newAddress = NULL)
