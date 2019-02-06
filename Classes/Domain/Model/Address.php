@@ -124,6 +124,11 @@ class Address extends AbstractEntity
     protected $consent;
 
     /**
+     * @var integer
+     */
+    protected $registeraddressLanguage;
+
+    /**
      * Returns the name
      *
      * @return string
@@ -363,5 +368,20 @@ class Address extends AbstractEntity
         $this->consent = $consent;
     }
 
+    /**
+     * @return int
+     */
+    public function getRegisteraddressLanguage(): int
+    {
+        return $this->registeraddressLanguage;
+    }
+
+    /**
+     * @param int $registeraddressLanguage
+     */
+    public function setRegisteraddressLanguage(int $registeraddressLanguage)
+    {
+        $this->registeraddressLanguage = $registeraddressLanguage;
+    }
 
 }

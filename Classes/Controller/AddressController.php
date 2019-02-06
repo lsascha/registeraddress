@@ -26,6 +26,7 @@ namespace AFM\Registeraddress\Controller;
  ***************************************************************/
 
 use AFM\Registeraddress\Domain\Model\Address;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -280,6 +281,10 @@ class AddressController extends ActionController
             $newAddress->setRegisteraddresshash( $regHash );
             $newAddress->setHidden(true);
             $newAddress->setConsent($this->settings['consent']);
+
+            $context = GeneralUtility::makeInstance(Context::class);
+            $newAddress->setRegisteraddressLanguage($context->getPropertyFromAspect('language', 'id'));
+
             $this->addressRepository->add($newAddress);
 
             $data = [
