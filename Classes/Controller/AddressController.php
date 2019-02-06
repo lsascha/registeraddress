@@ -216,6 +216,36 @@ class AddressController extends ActionController
     }
 
     /**
+     * checks if captcha is valid
+     * @param  void
+     * @return mixed returns true if the captcha is valid.
+     */
+    private function checkIfCaptchaValid()
+    {
+        $result = true;
+
+        if (
+            class_exists(\JambageCom\Div2007\Captcha\CaptchaManager::class) &&
+            is_object(
+                $captcha = \JambageCom\Div2007\Captcha\CaptchaManager::getCaptcha(
+                    'registeraddress',
+                    $this->settings['captcha']
+                )
+            )
+        ) {
+            $formAddress = $this->getControllerContext()->getRequest()->getArgument('newAddress');
+            $captchaWord = $formAddress['captcha'];
+            $result =
+                $captcha->evalValues(
+                    $captchaWord,
+                    $this->settings['captcha']
+                );
+        }
+
+        return $result;
+    }
+
+    /**
      * error action
      * @return null|string
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
@@ -255,6 +285,16 @@ class AddressController extends ActionController
         $this->view->assign('newAddress', $newAddress);
     }
 
+    /**
+    * initialize create action
+    *
+    * @return void
+    */
+    public function initializeCreateAction() {
+        if ($this->arguments->hasArgument('newAddress')) {
+            $this->arguments->getArgument('newAddress')->getPropertyMappingConfiguration()->skipProperties('captcha');
+        }
+    }
 
     /**
      * action create
@@ -273,7 +313,7 @@ class AddressController extends ActionController
         if ($oldAddress) {
             $this->view->assign('oldAddress', $oldAddress);
             $this->view->assign('alreadyExists', true);
-        } else {
+        } else if ($this->checkIfCaptchaValid()) {
             $rnd = microtime(true).random_int(10000,90000);
             $regHash = sha1( $newAddress->getEmail().$rnd );
             $newAddress->setRegisteraddresshash( $regHash );
@@ -299,6 +339,8 @@ class AddressController extends ActionController
 
             $persistenceManager = $this->objectManager->get(PersistenceManager::class);
             $persistenceManager->persistAll();
+        } else {
+            $this->view->assign('captchaWrong', true);
         }
 
         $this->view->assign('address', $newAddress);

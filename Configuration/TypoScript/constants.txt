@@ -32,5 +32,7 @@ plugin.tx_registeraddress {
 		mailformat = txt
 		# cat=plugin.tx_registeraddress//a; type=boolean; label=Send mail to User after successfully deleting or approving
 		sendDeleteApproveMails = 1
+		# cat=plugin.tx_registeraddress//a; type=boolean; label=Captcha check: If you want to display the captcha view. freecap or captcha are supported.
+		captcha =
 	}
 }

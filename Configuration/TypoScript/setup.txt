@@ -35,6 +35,7 @@ plugin.tx_registeraddress {
 		updateSubject = {$plugin.tx_registeraddress.settings.updateSubject}
 		mailformat = {$plugin.tx_registeraddress.settings.mailformat}
 		sendDeleteApproveMails = {$plugin.tx_registeraddress.settings.sendDeleteApproveMails}
+		captcha = {$plugin.tx_registeraddress.settings.captcha}
 	}
 	lib.parseFunc_PLAIN < lib.parseFunc
     	lib.parseFunc_PLAIN {
