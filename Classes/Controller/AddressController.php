@@ -290,7 +290,8 @@ class AddressController extends ActionController
     *
     * @return void
     */
-    public function initializeCreateAction() {
+    public function initializeCreateAction()
+    {
         if ($this->arguments->hasArgument('newAddress')) {
             $this->arguments->getArgument('newAddress')->getPropertyMappingConfiguration()->skipProperties('captcha');
         }
