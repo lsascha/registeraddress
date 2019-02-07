@@ -26,7 +26,6 @@ class GetCaptchaViewHelper extends AbstractViewHelper {
      * @param string $key
      * @return string
      */
-//     public function render() {
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
@@ -64,5 +63,4 @@ class GetCaptchaViewHelper extends AbstractViewHelper {
     protected function getDatabase() {
         return $GLOBALS['TYPO3_DB'];
     }
-
 }
