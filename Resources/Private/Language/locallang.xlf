@@ -75,6 +75,12 @@ Here you can request an e-mail with links for editing and deletion:</source>
 			<trans-unit id="form.create.approvetext" xml:space="preserve">
 				<source>Please note that your registration will not be completed until you click on the link we sent to %1s.</source>
 			</trans-unit>
+			<trans-unit id="form.create.captchawrong" xml:space="preserve">
+				<source>The entered captcha word is wrong.</source>
+			</trans-unit>
+			<trans-unit id="form.create.enterCaptcha" xml:space="preserve">
+				<source>Enter the shown captcha phrase.</source>
+			</trans-unit>
 			<trans-unit id="form.create.mailnotfound" xml:space="preserve">
 				<source>Address could not be found in our database.</source>
 			</trans-unit>
@@ -202,6 +208,9 @@ Please try again.</source>
 				<source>You will apply the following consent.</source>
 			</trans-unit>
 
+			<trans-unit id="captcha.title" xml:space="preserve">
+				<source>Captcha</source>
+			</trans-unit>
 
 		</body>
 	</file>
