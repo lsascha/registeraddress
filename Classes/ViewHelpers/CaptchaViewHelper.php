@@ -14,8 +14,8 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 
-class GetCaptchaViewHelper extends AbstractViewHelper {
-
+class GetCaptchaViewHelper extends AbstractViewHelper
+{
     use CompileWithRenderStatic;
 
     protected $escapeOutput = false;
@@ -30,7 +30,8 @@ class GetCaptchaViewHelper extends AbstractViewHelper {
         array $arguments,
         \Closure $renderChildrenClosure,
         \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
-    ) {
+    )
+    {
         $result = '';
         $settings = $renderingContext->getVariableProvider()->get('settings');
 
@@ -60,7 +61,8 @@ class GetCaptchaViewHelper extends AbstractViewHelper {
     /**
      * @return DatabaseConnection
      */
-    protected function getDatabase() {
+    protected function getDatabase()
+    {
         return $GLOBALS['TYPO3_DB'];
     }
 }
