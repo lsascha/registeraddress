@@ -56,6 +56,7 @@ class Address extends AbstractEntity
      * firstName
      *
      * @var string
+     * @validate NotEmpty
      */
     protected $firstName;
 
@@ -70,6 +71,7 @@ class Address extends AbstractEntity
      * lastName
      *
      * @var string
+     * @validate NotEmpty
      */
     protected $lastName;
 
