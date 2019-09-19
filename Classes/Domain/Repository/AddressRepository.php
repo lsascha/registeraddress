@@ -47,7 +47,10 @@ class AddressRepository extends Repository
     public function findOneByEmailIgnoreHidden($email)
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()->setLanguageOverlayMode(false);
+        $query->getQuerySettings()->setLanguageMode('content_fallback');
 
         $query->matching(
             $query->equals('email', $email )
@@ -66,8 +69,10 @@ class AddressRepository extends Repository
     public function findOneByRegisteraddresshashIgnoreHidden($hash)
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-        //$query->getQuerySettings()->setRespectStoragePage(FALSE);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()->setLanguageOverlayMode(false);
+        $query->getQuerySettings()->setLanguageMode('content_fallback');
 
         $query->matching(
             $query->equals('registeraddresshash', $hash )
@@ -104,8 +109,10 @@ class AddressRepository extends Repository
     public function findOneByUidIgnoreHidden($uid)
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-        //$query->getQuerySettings()->setRespectStoragePage(FALSE);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()->setLanguageOverlayMode(false);
+        $query->getQuerySettings()->setLanguageMode('content_fallback');
 
         $query->matching(
             $query->equals('uid', $uid )

@@ -7,7 +7,7 @@
         "issues": "https://github.com/lsascha/registeraddress/issues"
     },
     "require": {
-        "typo3/cms-core": ">=6.2.0 <9.99.99",
+        "typo3/cms-core": ">=9.5.0 <9.99.99",
         "friendsoftypo3/tt-address": ">=3.1.0 <4.1.99"
     },
     "replace": {
