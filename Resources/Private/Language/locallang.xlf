@@ -156,7 +156,7 @@ Please try again.</source>
 				<source>Please confirm your subscription by clicking on the following link:</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.approveLink" xml:space="preserve">
-				<source>Confirm subscription</source>
+				<source>Confirm</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.deleteLinkText" xml:space="preserve">
 				<source>If you do not want to subscribe for the newsletter, please click the following link:</source>
@@ -168,7 +168,7 @@ Please try again.</source>
 				<source>If you want to change your personal data, please click the following link:</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.editLink" xml:space="preserve">
-				<source>Update data</source>
+				<source>Change data</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.subjectsuffix" xml:space="preserve">
 				<source>Newsletter-Subscription</source>
