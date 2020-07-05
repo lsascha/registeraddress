@@ -466,6 +466,8 @@ class AddressController extends ActionController
 
             $persistenceManager = $this->objectManager->get(PersistenceManager::class);
             $persistenceManager->persistAll();
+            
+            $this->view->assign('gotApproved', true);
         }
 
         $this->view->assign('address', $address);
