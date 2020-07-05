@@ -397,7 +397,7 @@ class AddressController extends ActionController
 
         $this->view->assign('hash', $hash);
 
-        if ($address && $doApprove) {
+        if ($address && $doApprove && $address->getHidden() === true) {
             $address->setHidden(false);
             $address->setModuleSysDmailHtml(true);
 
