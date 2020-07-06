@@ -2,7 +2,7 @@
 	{f:translate(key:'mail.registration.greet')} {f:translate(key:'mail.gender.{address.gender}')} {address.firstName} {address.lastName}
 </p>
 <p>
-	{f:translate(key:'mail.registration.text', htmlEscape:0)}
+	{f:translate(key:'mail.registration.text')}
 </p>
 <div>
 	{f:translate(key:'mail.registration.consentText')}
@@ -10,13 +10,13 @@
 </div>
 <p>
 	{f:translate(key:'mail.registration.approveLinkText')}
-	{f:link.action(action: 'approve', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
+	{f:translate(key:'mail.registration.approveLink') -> f:link.action(action: 'approve', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
 </p>
 <p>
 	{f:translate(key:'mail.registration.deleteLinkText')}
-	{f:link.action(action: 'delete', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
+	{f:translate(key:'mail.registration.deleteLink') -> f:link.action(action: 'delete', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
 </p>
 <p>
 	{f:translate(key:'mail.registration.editLinkText')}
-	{f:link.action(action: 'edit', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
+	{f:translate(key:'mail.registration.editLink') -> f:link.action(action: 'edit', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform', noCacheHash: 1, pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
 </p>

@@ -40,13 +40,10 @@
 				<source>Consent</source>
 				<target>Einwilligung</target>
 			</trans-unit>
-
 			<trans-unit id="flexforms.consent">
-				<source>Einwilligungstext</source>
-				<target>Consent text</target>
+				<source>Consent text</source>
+				<target>Einwilligungstext</target>
 			</trans-unit>
-
-
 		</body>
 	</file>
 </xliff>

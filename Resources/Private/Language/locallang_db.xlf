@@ -31,15 +31,12 @@
 			<trans-unit id="tx_registeraddress_domain_model_address.consent">
 				<source>Consent</source>
 			</trans-unit>
-
 			<trans-unit id="tt_address.tx_extbase_type.Tx_Registeraddress_Address">
 				<source>registerttaddress Address</source>
 			</trans-unit>
-
 			<trans-unit id="flexforms.consent">
-				<source>Einwilligungstext</source>
+				<source>Consent text</source>
 			</trans-unit>
-
 		</body>
 	</file>
 </xliff>
