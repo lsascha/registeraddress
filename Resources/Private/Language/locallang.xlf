@@ -86,11 +86,17 @@ E-mail: %3s</source>
 			<trans-unit id="form.approve.errortext" xml:space="preserve">
 				<source>Address could not be found in our database.</source>
 			</trans-unit>
+			<trans-unit id="form.approve.submitButton" xml:space="preserve">
+				<source>Approve</source>
+			</trans-unit>
 			<trans-unit id="form.delete.text" xml:space="preserve">
 				<source>You have now been unsubscribed from the newsletter.</source>
 			</trans-unit>
 			<trans-unit id="form.delete.errortext" xml:space="preserve">
 				<source>Address could not be found in our database.</source>
+			</trans-unit>
+			<trans-unit id="form.delete.submitButton" xml:space="preserve">
+				<source>Confirm delete</source>
 			</trans-unit>
 
 			<trans-unit id="form.edit.saveButton" xml:space="preserve">
@@ -130,7 +136,7 @@ Please try again.</source>
 			<trans-unit id="mail.info.deleteLinkText" xml:space="preserve">
 				<source>Please click the following link to delete your registration:</source>
 			</trans-unit>
-			<trans-unit id="mail.info.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.info.subjectsuffix" xml:space="preserve">
 				<source>Newsletter-Information</source>
 			</trans-unit>
 
@@ -149,7 +155,7 @@ Please try again.</source>
 			<trans-unit id="mail.registration.editLinkText" xml:space="preserve">
 				<source>If you want to change your personal data, please click the following link:</source>
 			</trans-unit>
-			<trans-unit id="mail.registration.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.registration.subjectsuffix" xml:space="preserve">
 				<source>Newsletter-Subscription</source>
 			</trans-unit>
 
@@ -159,7 +165,7 @@ Please try again.</source>
 			</trans-unit>
 
 
-			<trans-unit id="mail.unsubscribe.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.unsubscribe.subjectsuffix" xml:space="preserve">
 				<source>Unsubscribe</source>
 			</trans-unit>
 			<trans-unit id="form.unsubscribe.title" xml:space="preserve">
@@ -179,13 +185,13 @@ Please try again.</source>
 			</trans-unit>
 
 
-			<trans-unit id="mail.deletesuccess.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.deletesuccess.subjectsuffix" xml:space="preserve">
 				<source>Unsubscription completed</source>
 			</trans-unit>
 			<trans-unit id="mail.deletesuccess.text" xml:space="preserve">
 				<source>You have successfully unsubscribed from the newsletter.</source>
 			</trans-unit>
-			<trans-unit id="mail.approvesuccess.subjectprefix" xml:space="preserve">
+			<trans-unit id="mail.approvesuccess.subjectsuffix" xml:space="preserve">
 				<source>Subscription successfull</source>
 			</trans-unit>
 			<trans-unit id="mail.approvesuccess.text" xml:space="preserve">

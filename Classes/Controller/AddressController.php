@@ -143,8 +143,12 @@ class AddressController extends ActionController
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      */
-    private function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
+    protected function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
     {
+        $oldSpamProtectSetting = $GLOBALS['TSFE']->spamProtectEmailAddresses;
+        // disable spamProtectEmailAddresses setting for e-mails
+        $GLOBALS['TSFE']->spamProtectEmailAddresses = 0;
+
         $recipients = explode(',', $recipientmails);
 
         $from = [$this->settings['sendermail'] => $this->settings['sendername']];
@@ -193,6 +197,9 @@ class AddressController extends ActionController
                 $mailText
             );
         }
+
+        // revert spamProtectSettings
+        $GLOBALS['TSFE']->spamProtectEmailAddresses = $oldSpamProtectSetting;
     }
 
 
@@ -275,10 +282,7 @@ class AddressController extends ActionController
             $this->addressRepository->add($newAddress);
 
             $data = [
-                'gender' => $newAddress->getGender(),
-                'vorname' => $newAddress->getFirstName(),
-                'nachname' => $newAddress->getLastName(),
-                'consent' => $newAddress->getConsent(),
+                'address' => $newAddress,
                 'hash' => $regHash
             ];
 
@@ -315,9 +319,7 @@ class AddressController extends ActionController
 
         if ($address && $address->getUid() == $uid) {
             $data = [
-                'gender' => $address->getGender(),
-                'vorname' => $address->getFirstName(),
-                'nachname' => $address->getLastName(),
+                'address' => $address,
                 'hash' => $address->getRegisteraddresshash()
             ];
 
@@ -358,9 +360,7 @@ class AddressController extends ActionController
         }
         if ($address) {
             $data = [
-                'gender' => $address->getGender(),
-                'vorname' => $address->getFirstName(),
-                'nachname' => $address->getLastName(),
+                'address' => $address,
                 'hash' => $address->getRegisteraddresshash()
             ];
 
@@ -380,8 +380,9 @@ class AddressController extends ActionController
     /**
      * action approve
      *
-     * @param \string $hash
+     * @param string $hash
      * @validate $hash NotEmpty
+     * @param boolean $doApprove
      * @return void
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
@@ -390,11 +391,13 @@ class AddressController extends ActionController
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      */
-    public function approveAction($hash = NULL)
+    public function approveAction($hash = NULL, $doApprove = false)
     {
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
 
-        if ($address) {
+        $this->view->assign('hash', $hash);
+
+        if ($address && $doApprove) {
             $address->setHidden(false);
             $address->setModuleSysDmailHtml(true);
 
@@ -424,8 +427,6 @@ class AddressController extends ActionController
                 );
             }
             $address->setEigeneAnrede($eigeneAnrede);
-
-            $this->view->assign('address', $address);
 
             $this->addressRepository->update($address);
 
@@ -466,6 +467,9 @@ class AddressController extends ActionController
             $persistenceManager = $this->objectManager->get(PersistenceManager::class);
             $persistenceManager->persistAll();
         }
+
+        $this->view->assign('address', $address);
+        $this->view->assign('doApprove', $doApprove);
     }
 
     /**
@@ -509,6 +513,20 @@ class AddressController extends ActionController
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);
 
+        // send email to admin with updated data
+        if ($this->settings['adminmail'] && !empty($this->settings['updateSubject'])) {
+            $adminRecipient = $this->settings['adminmail'];
+            $subject = $this->settings['updateSubject'];
+
+            $this->sendResponseMail(
+                $adminRecipient,
+                'Address/Admin/MailAdminUpdate',
+                ['address' => $address],
+                self::MAILFORMAT_TXT,
+                $subject
+            );
+        }
+
         $this->addressRepository->update($address);
 
         // Reset internal messages
@@ -533,6 +551,7 @@ class AddressController extends ActionController
      *
      * @param \string $hash
      * @validate $hash NotEmpty
+     * @param boolean $doDelete
      * @return void
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
@@ -540,12 +559,12 @@ class AddressController extends ActionController
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      */
-    public function deleteAction($hash = NULL)
+    public function deleteAction($hash = NULL, $doDelete = false)
     {
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
+        $this->view->assign('hash', $hash);
 
-        if ($address) {
-            $this->view->assign('address', $address);
+        if ($address && $doDelete) {
 
             if ($this->settings['sendDeleteApproveMails']) {
                 $data = [
@@ -581,5 +600,7 @@ class AddressController extends ActionController
             $this->addressRepository->remove($address);
 
         }
+        $this->view->assign('address', $address);
+        $this->view->assign('doDelete', $doDelete);
     }
 }

@@ -91,6 +91,12 @@ plugin.tx_registeraddress {
             Vielen Dank.<br />
             Sie sind bereits für unseren Newsletter angemeldet.
         )
+        
+        mail.info.subjectsuffix = NEWSLETTER
+        mail.registration.subjectsuffix = Newsletter-Registrierung
+        mail.unsubscribe.subjectsuffix = Abmeldung
+        mail.deletesuccess.subjectsuffix = Abmeldung abgeschlossen
+        mail.approvesuccess.subjectsuffix = Anmeldung erfolgreich
     }
 }
 ```
@@ -108,6 +114,10 @@ typolink.additionalParams = &tx_registeraddress_registerform[hash]=###USER_regis
 ## DSGVO / GDPR
 In version 1.0.13 you can add a consent message to the plugin.
 Additionally for logging when someone subscribed / unsubscribed you should use the Extension
-[_registeraddress_logger_ 1.0.1](https://github.com/undkonsorten/registeraddress_logger)
+[_registeraddress_logger_](https://github.com/undkonsorten/registeraddress_logger)
 
-`composer require undkonsorten/registeraddress-logger ^1.0.1`
+`composer require undkonsorten/registeraddress-logger ^1.0`
+
+Usage with other extensions than tt_address:
+-----------
+An example extension that connects *registeraddress* with fe_users can be found here https://github.com/lsascha/feusers_for_registeraddress

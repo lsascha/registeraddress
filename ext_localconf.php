@@ -15,7 +15,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 	),
 	// non-cacheable actions
 	array(
-		'Address' => 'new, create, approve, edit, update, delete',
+		'Address' => 'new, create, approve, edit, update, delete, information',
 		
 	)
 );

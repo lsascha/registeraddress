@@ -41,7 +41,7 @@
 				<target>Einwilligung</target>
 			</trans-unit>
 
-			<trans-unit id="felxforms.consent">
+			<trans-unit id="flexforms.consent">
 				<source>Einwilligungstext</source>
 				<target>Consent text</target>
 			</trans-unit>
