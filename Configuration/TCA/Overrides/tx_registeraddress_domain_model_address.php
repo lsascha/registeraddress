@@ -11,7 +11,7 @@ $fields = array(
             'eval' => 'trim'
         ),
     ),
-    'consent' => array(
+        'consent' => array(
         'exclude' => 0,
         'label' => 'LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xml:tx_registeraddress_domain_model_address.consent',
         'config' => array(
@@ -20,6 +20,16 @@ $fields = array(
             'size'     => 30,
             'eval' => 'trim'
         ),
+    ),
+    'registeraddresshash' => array(
+        'exclude' => 0,
+        'label' => 'RegHash',
+        'config' => array(
+            'type'     => 'text',
+            'readOnly' => 1
+        ),
+
+
     ),
 );
 

@@ -26,6 +26,7 @@ namespace AFM\Registeraddress\Controller;
  ***************************************************************/
 
 use AFM\Registeraddress\Domain\Model\Address;
+use AFM\Registeraddress\Domain\Repository\AddressRepository;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -53,10 +54,29 @@ class AddressController extends ActionController
     /**
      * addressRepository
      *
-     * @var \AFM\Registeraddress\Domain\Repository\AddressRepository
-     * @inject
+     * @var AddressRepository
      */
     protected $addressRepository;
+
+    public function injectAddressRepository(AddressRepository $addressRepository): void
+    {
+        $this->addressRepository = $addressRepository;
+    }
+
+    /**
+     * persistenceManager
+     *
+     * @var PersistenceManager
+     */
+    protected $persistenceManager;
+
+    /**
+     * @param PersistenceManager $persistenceManager
+     */
+    public function injectPersistenceManager(PersistenceManager $persistenceManager): void
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
 
     /**
      * This creates another stand-alone instance of the Fluid view to render a template
@@ -235,7 +255,7 @@ class AddressController extends ActionController
      * action form only
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation
      * @return void
      */
     public function formOnlyAction(Address $newAddress = NULL)
@@ -247,7 +267,7 @@ class AddressController extends ActionController
      * action new
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation
      * @return void
      */
     public function newAction(Address $newAddress = NULL)
@@ -297,8 +317,7 @@ class AddressController extends ActionController
                 LocalizationUtility::translate('mail.registration.subjectsuffix', 'registeraddress')
             );
 
-            $persistenceManager = $this->objectManager->get(PersistenceManager::class);
-            $persistenceManager->persistAll();
+            $this->persistenceManager->persistAll();
         }
 
         $this->view->assign('address', $newAddress);
@@ -381,7 +400,7 @@ class AddressController extends ActionController
      * action approve
      *
      * @param string $hash
-     * @validate $hash NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
      * @param boolean $doApprove
      * @return void
      * @throws \InvalidArgumentException
@@ -464,8 +483,7 @@ class AddressController extends ActionController
             $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
             $signalSlotDispatcher->dispatch(__CLASS__, 'approveBeforePersist', [$address]);
 
-            $persistenceManager = $this->objectManager->get(PersistenceManager::class);
-            $persistenceManager->persistAll();
+            $this->persistenceManager->persistAll();
         }
 
         $this->view->assign('address', $address);
@@ -476,7 +494,7 @@ class AddressController extends ActionController
      * action edit
      *
      * @param \string $hash
-     * @validate $hash NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
      * @return void
      */
     public function editAction( $hash = NULL )
@@ -550,7 +568,7 @@ class AddressController extends ActionController
      * action delete
      *
      * @param \string $hash
-     * @validate $hash NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
      * @param boolean $doDelete
      * @return void
      * @throws \InvalidArgumentException
