@@ -122,10 +122,10 @@ class AddressController extends ActionController
             ->setSubject($subject);
 
         if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
-            $mail->addPart($bodyHTML, 'text/html');
+            $mail->html($bodyHTML);
         }
         if ($bodyPlain !== '' && $bodyPlain !== NULL ) {
-            $mail->addPart($bodyPlain, 'text/plain');
+            $mail->text($bodyPlain);
         }
 
         return $mail->send();
