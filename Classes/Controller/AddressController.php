@@ -235,7 +235,7 @@ class AddressController extends ActionController
      * action form only
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @ignorevalidation $newAddress
      * @return void
      */
     public function formOnlyAction(Address $newAddress = NULL)
@@ -247,7 +247,7 @@ class AddressController extends ActionController
      * action new
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @ignorevalidation $newAddress
      * @return void
      */
     public function newAction(Address $newAddress = NULL)

@@ -17,7 +17,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 	<f:then>
 		<f:if condition="{doApprove}">
 			<f:then>
-				<p><f:translate key="form.approve.approvetext" htmlEscape="false" arguments="{0: address.firstName, 1:address.lastName, 2:address.email}" /></p>
+				<p><f:translate key="form.approve.approvetext" arguments="{0: address.firstName, 1:address.lastName, 2:address.email}" /></p>
 			</f:then>
 			<f:else>
 				<f:form action="approve" arguments="{hash: hash}">
