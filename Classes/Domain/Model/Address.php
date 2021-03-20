@@ -77,7 +77,8 @@ class Address extends AbstractEntity
      * email
      *
      * @var string
-     * @validate NotEmpty,EmailAddress
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      */
     protected $email;
 

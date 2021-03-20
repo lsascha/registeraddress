@@ -1,6 +1,6 @@
 {f:translate(key:'mail.registration.greet')} {f:translate(key:'mail.gender.{address.gender}')} {address.firstName} {address.lastName}
 
-{f:translate(key:'mail.registration.text', htmlEscape:0)}
+{f:translate(key:'mail.registration.text')}
 
 {f:translate(key:'mail.registration.consentText')}
 {address.consent -> f:format.html(parseFuncTSPath:"plugin.tx_registeraddress.lib.parseFunc_PLAIN") -> f:format.stripTags()}
