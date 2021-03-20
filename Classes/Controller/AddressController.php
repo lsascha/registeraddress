@@ -401,31 +401,7 @@ class AddressController extends ActionController
             $address->setHidden(false);
             $address->setModuleSysDmailHtml(true);
 
-            // create anrede
-            if ( $address->getLastName() ) {
-                if ($address->getGender() == 'm') {
-                    $eigeneAnrede = LocalizationUtility::translate(
-                        'salutationgeneration.lastname.m',
-                        'registeraddress'
-                    ).$address->getLastName();
-
-                } elseif ($address->getGender() == 'f') {
-                    $eigeneAnrede = LocalizationUtility::translate(
-                        'salutationgeneration.lastname.f',
-                        'registeraddress'
-                    ).$address->getLastName();
-                }
-            } elseif ( $address->getFirstName() ) {
-                $eigeneAnrede = LocalizationUtility::translate(
-                    'salutationgeneration.onlyfirstname',
-                    'registeraddress'
-                ).$address->getFirstName();
-            } else {
-                $eigeneAnrede = LocalizationUtility::translate(
-                    'salutationgeneration.other',
-                    'registeraddress'
-                );
-            }
+            $eigeneAnrede = $this->generateEigeneAnrede($address);
             $address->setEigeneAnrede($eigeneAnrede);
 
             $this->addressRepository->update($address);
@@ -509,6 +485,9 @@ class AddressController extends ActionController
         // always save old e-mail address
         $addressOld = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
         $address->setEmail($addressOld->getEmail());
+
+        $eigeneAnrede = $this->generateEigeneAnrede($address);
+        $address->setEigeneAnrede($eigeneAnrede);
 
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);
@@ -602,5 +581,40 @@ class AddressController extends ActionController
         }
         $this->view->assign('address', $address);
         $this->view->assign('doDelete', $doDelete);
+    }
+
+    /**
+     * Generates content for field eigene_anrede
+     *
+     * @param Address $address
+     * @return string|null
+     */
+    protected function generateEigeneAnrede($address)
+    {
+        if ($address->getLastName()) {
+            if ($address->getGender() === 'm') {
+                $eigeneAnrede = LocalizationUtility::translate(
+                        'salutationgeneration.lastname.m',
+                        'registeraddress'
+                    ) . $address->getLastName();
+
+            } elseif ($address->getGender() === 'f') {
+                $eigeneAnrede = LocalizationUtility::translate(
+                        'salutationgeneration.lastname.f',
+                        'registeraddress'
+                    ) . $address->getLastName();
+            }
+        } elseif ($address->getFirstName()) {
+            $eigeneAnrede = LocalizationUtility::translate(
+                    'salutationgeneration.onlyfirstname',
+                    'registeraddress'
+                ) . $address->getFirstName();
+        } else {
+            $eigeneAnrede = LocalizationUtility::translate(
+                'salutationgeneration.other',
+                'registeraddress'
+            );
+        }
+        return $eigeneAnrede;
     }
 }
