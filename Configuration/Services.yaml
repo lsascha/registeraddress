@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  AFM\Registeraddress\:
+    resource: '../Classes/*'
+
+  AFM\Registeraddress\Command\DeleteHiddenRegistrationsCommand:
+    tags:
+      - name: 'console.command'
+        command: 'registeraddress:deleteHiddenRegistrations'
+        description: 'Delete not activated registrations older than 24h'
+        # not required, defaults to false
+        hidden: false
