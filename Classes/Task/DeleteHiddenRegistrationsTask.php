@@ -28,7 +28,7 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
      * Public method, called by scheduler.
      */
     public function execute() {
-        $deleteHiddenRegistrations = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\AFM\Registeraddress\Command\DeleteHiddenRegistrations::class);
+        $deleteHiddenRegistrations = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\AFM\Registeraddress\Command\DeleteHiddenRegistrationsCommand::class);
         $deleteHiddenRegistrations->run();
     }
 }
