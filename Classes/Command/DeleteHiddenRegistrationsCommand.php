@@ -55,14 +55,13 @@ class DeleteHiddenRegistrationsCommand extends Command
             ->select('uid','pid','email')
             ->from($table)
             ->where(
-                $queryBuilder->expr()->eq($hiddenField, 1)
+                $queryBuilder->expr()->eq($hiddenField, 1),
+                $queryBuilder->expr()->lt('crdate', $limit)
             )
-            ->andWhere('crdate < ' . $limit)
-            ->setMaxResults(10);
-        $result = $query
-            ->execute()
-            ->fetchAll();
-        $count = $query->execute()->rowCount();
+            ->setMaxResults(10)
+            ->execute();
+        $result = $query->fetchAll();
+        $count = $query->rowCount();
         foreach ($result as $row) {
             $io->writeln('uid:' . $row['uid'] . '; pid:' . $row['pid'] . '; E-Mail:' . $row['email']);
         }
