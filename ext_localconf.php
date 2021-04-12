@@ -53,5 +53,5 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\AFM\Registeradd
     'extension' => 'registeraddress',
     'title' => 'DeleteHiddenRegistrations',
     'description' => 'Delete old, hidden registrations',
-    'additionalFields' => '',
+    'additionalFields' => \AFM\Registeraddress\Task\DeleteHiddenRegistrationsTaskAdditionalFieldProvider::class,
 ];

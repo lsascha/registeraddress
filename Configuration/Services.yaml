@@ -11,6 +11,5 @@ services:
     tags:
       - name: 'console.command'
         command: 'registeraddress:deleteHiddenRegistrations'
+        schedulable: false
         description: 'Delete not activated registrations older than 24h'
-        # not required, defaults to false
-        hidden: false

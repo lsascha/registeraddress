@@ -40,6 +40,16 @@
 				<source>Einwilligungstext</source>
 			</trans-unit>
 
+			<trans-unit id="scheduler.maxAge">
+				<source>Max age of hidden entries (in seconds)</source>
+			</trans-unit>
+			<trans-unit id="scheduler.maxAge.invalidMaxAge'">
+				<source>Time invalid. Please use positive number.</source>
+			</trans-unit>
+			<trans-unit id="scheduler.table">
+				<source>Used table</source>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

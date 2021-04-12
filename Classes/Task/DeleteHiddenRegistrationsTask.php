@@ -25,10 +25,37 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
 class DeleteHiddenRegistrationsTask extends AbstractTask
 {
     /**
+     * Number of seconds which is the max age of hidden entries
+     *
+     * @var int
+     */
+    public $maxAge = 86400;
+
+    /**
+     * Number of seconds which is the max age of hidden entries
+     *
+     * @var string
+     */
+    public $table = 'tt_address';
+
+    /**
      * Public method, called by scheduler.
      */
     public function execute() {
-        $deleteHiddenRegistrations = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\AFM\Registeraddress\Command\DeleteHiddenRegistrationsCommand::class);
-        $deleteHiddenRegistrations->run();
+        $deleteHiddenRegistrations = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class);
+        $deleteHiddenRegistrations->selectEntries('tt_address', $this->maxAge);
+        return true;
+    }
+    /**
+     * This method returns the sleep duration as additional information
+     *
+     * @return string Information to display
+     */
+    public function getAdditionalInformation()
+    {
+         $infoMaxAge = [$this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.maxAge'), $this->maxAge];
+         $infoTable = [$this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.table'), $this->table];
+
+        return  $infoTable[0] . ': '. $infoTable[1] . ', ' . $infoMaxAge[0] . ': ' . $infoMaxAge[1] . '.';
     }
 }

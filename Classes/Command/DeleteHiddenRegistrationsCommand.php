@@ -25,11 +25,13 @@ class DeleteHiddenRegistrationsCommand extends Command
         $this->addArgument(
             'table',
             InputArgument::OPTIONAL,
-            'Execute on this table. Default is tt_address.');
+            'Execute on this table. Default is tt_address.',
+            'tt_address');
         $this->addArgument(
             'maxAge',
             InputArgument::OPTIONAL,
-        'Set max age in seconds. Default is 86400 = 24h');
+        'Set max age in seconds. Default is 86400 = 24h',
+        86400);
     }
 
     /**
@@ -44,22 +46,11 @@ class DeleteHiddenRegistrationsCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title($this->getDescription());
 
-        $table = $input->getArgument('table') ?: 'tt_address';
-        $maxAge = $input->getArgument('maxAge') ?: '86400';
-        $limit = time() - $maxAge;
-        /**@var $queryBuilder \TYPO3\CMS\Core\Database\Query\QueryBuilder**/
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
-        $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-        $hiddenField = $GLOBALS['TCA'][$table]['ctrl']['enablecolumns']['disabled'];
-        $query = $queryBuilder
-            ->select('uid','pid','email')
-            ->from($table)
-            ->where(
-                $queryBuilder->expr()->eq($hiddenField, 1),
-                $queryBuilder->expr()->lt('crdate', $limit)
-            )
-            ->setMaxResults(10)
-            ->execute();
+        $table = $input->getArgument('table');
+        $maxAge = (int)$input->getArgument('maxAge');
+
+        $query = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class)->selectEntries($table, $maxAge);
+
         $result = $query->fetchAll();
         $count = $query->rowCount();
         foreach ($result as $row) {
