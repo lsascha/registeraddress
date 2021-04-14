@@ -27,8 +27,38 @@ class DeleteHiddenRegistrationsService
                 $queryBuilder->expr()->eq($hiddenField, 1),
                 $queryBuilder->expr()->lt('crdate', $limit)
             )
-            ->setMaxResults(10)
             ->execute();
+        return $query;
+    }
+    /*
+     * @return \Doctrine\DBAL\Driver\Statement|int
+     */
+    public function deleteEntries(string $table = 'tt_address', int $maxAge = 86400, $forceDelete) {
+        $limit = time() - $maxAge;
+        $hiddenField = $GLOBALS['TCA'][$table]['ctrl']['enablecolumns']['disabled'];
+        $deleteField = $GLOBALS['TCA'][$table]['ctrl']['delete'];
+
+        /**@var $queryBuilder \TYPO3\CMS\Core\Database\Query\QueryBuilder**/
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+        $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        if($forceDelete) {
+            $query = $queryBuilder
+                ->delete($table)
+                ->where(
+                    $queryBuilder->expr()->eq($hiddenField, 1),
+                    $queryBuilder->expr()->lt('crdate', $limit)
+                )
+                ->execute();
+        } else {
+            $query = $queryBuilder
+                ->update($table)
+                ->where(
+                    $queryBuilder->expr()->eq($hiddenField, 1),
+                    $queryBuilder->expr()->lt('crdate', $limit)
+                )
+                ->set($deleteField, 1)
+                ->execute();
+        }
         return $query;
     }
 }

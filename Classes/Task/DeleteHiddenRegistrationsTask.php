@@ -15,10 +15,9 @@ namespace AFM\Registeraddress\Task;
  */
 
 
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Extensionmanager\Utility\Repository\Helper;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 
@@ -50,7 +49,19 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
      */
     public function execute() {
         $deleteHiddenRegistrations = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class);
-        $deleteHiddenRegistrations->selectEntries('tt_address', $this->maxAge);
+        $countDeletedEntries = $deleteHiddenRegistrations->deleteEntries('tt_address', $this->maxAge, $this->forceDelete);
+        /** @var FlashMessageService $flashMessageService */
+        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+        $flashMessageService->getMessageQueueByIdentifier()->addMessage(
+            new FlashMessage(
+                sprintf(
+                    $this->getLanguageService()->sL('%s entries deleted'),
+                    $countDeletedEntries
+                ),
+                $this->getLanguageService()->sL('Delete old hidden registrations'),
+                FlashMessage::OK
+            )
+        );
         return true;
     }
     /**

@@ -9,8 +9,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DeleteHiddenRegistrationsCommand extends Command
@@ -21,28 +19,29 @@ class DeleteHiddenRegistrationsCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription('Delete all hidden registrations older than 24h.');
-        $this->setHelp('You can change table and time if needed. First argument is used table, the second are the max age of entries in seconds from now.');
-        $this->addArgument(
+        $this->setDescription('Delete all hidden registrations older than 24h.')
+        ->setHelp('You can change table and time if needed. First argument is used table, the second are the max age of entries in seconds from now.')
+        ->addArgument(
             'table',
             InputArgument::OPTIONAL,
             'Execute on this table. Default is tt_address.',
-            'tt_address');
-        $this->addArgument(
+            'tt_address')
+        ->addArgument(
             'maxAge',
             InputArgument::OPTIONAL,
         'Set max age in seconds. Default is 86400 = 24h',
-        86400);
-        $this->addOption(
+        86400)
+        ->addOption(
             'force-delete',
             'f',
-            InputOption::VALUE_OPTIONAL,
-        'Force deleting entries from database');
-        $this->addOption(
+            InputOption::VALUE_NONE,
+        'Force deleting entries from database')
+        ->addOption(
             'dry-run',
             'd',
-            InputOption::VALUE_OPTIONAL,
-        'Dry run before deleting entries.');
+            InputOption::VALUE_NONE,
+        'Dry run before deleting entries.'
+        );
     }
 
     /**
@@ -59,9 +58,10 @@ class DeleteHiddenRegistrationsCommand extends Command
 
         $table = $input->getArgument('table');
         $maxAge = (int)$input->getArgument('maxAge');
+        $forceDelete = $input->getOption('force-delete');
 
         if($input->getOption('dry-run')) {
-            $query = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class)->selectEntries($table, $maxAge);
+            $query = GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class)->selectEntries($table, $maxAge);
             $result = $query->fetchAll();
             $count = $query->rowCount();
             foreach ($result as $row) {
@@ -71,7 +71,16 @@ class DeleteHiddenRegistrationsCommand extends Command
             return Command::SUCCESS;
         }
 
-        $io->writeln('No dry run');
+        $countDeletedEntries = GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class)->deleteEntries(
+            $table,
+            $maxAge,
+            $forceDelete);
+
+        if($forceDelete) {
+            $io->writeln($countDeletedEntries . ' entries really deleted.');
+        } else {
+            $io->writeln($countDeletedEntries . ' entries updated and set to be deleted.');
+        }
 
         return Command::SUCCESS;
     }
