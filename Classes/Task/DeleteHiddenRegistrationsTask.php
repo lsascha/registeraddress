@@ -39,6 +39,13 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
     public $table = 'tt_address';
 
     /**
+     * Remove entries from database instead of mark as deleted
+     *
+     * @var boolean
+     */
+    public $forceDelete = false;
+
+    /**
      * Public method, called by scheduler.
      */
     public function execute() {
@@ -53,9 +60,16 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
      */
     public function getAdditionalInformation()
     {
-         $infoMaxAge = [$this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.maxAge'), $this->maxAge];
-         $infoTable = [$this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.table'), $this->table];
-
-        return  $infoTable[0] . ': '. $infoTable[1] . ', ' . $infoMaxAge[0] . ': ' . $infoMaxAge[1] . '.';
+        $message = '';
+        if($this->table){
+            $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.table') . ': ' . $this->table . '. ';
+        }
+        if($this->maxAge){
+            $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.maxAge') . ': ' . $this->maxAge . '. ';
+        }
+        if($this->forceDelete){
+            $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.force-delete.active') . ' ';
+        }
+        return $message;
     }
 }

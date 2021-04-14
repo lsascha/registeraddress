@@ -41,20 +41,21 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
     public function getAdditionalFields(array &$taskInfo, $task, SchedulerModuleController $schedulerModule)
     {
         $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
-        $fieldNames = ['table', 'maxAge'];
+
         // Initialize extra field value
-        if (empty($taskInfo['maxAge'])) {
-            if ($currentSchedulerModuleAction->equals(Action::ADD)) {
-                // In case of new task and if field is empty, set default sleep time
-                $taskInfo['maxAge'] = $task->maxAge;
-            } else {
-                // Otherwise set an empty value, as it will not be used anyway
-                $taskInfo['maxAge'] = 86400;
-            }
+       if ($currentSchedulerModuleAction->equals(Action::EDIT)) {
+            // In case of edit, set to internal value if no data was submitted already
+            $taskInfo['table'] = $task->table;
+            $taskInfo['maxAge'] = $task->maxAge;
+            $taskInfo['forceDelete'] = $task->forceDelete;
+        }
+       if ($currentSchedulerModuleAction->equals(Action::ADD)) {
+           $taskInfo['maxAge'] = $task->maxAge ? : '86400';
+           $taskInfo['table'] = $task->table ? : 'tt_address';
         }
 
+        $fieldNames = ['table', 'maxAge'];
         $additionalFields = [];
-
         foreach ($fieldNames as $fieldName) {
             $fieldID = 'task_' . $fieldName;
             $fieldCode = '<input type="text" class="form-control" name="tx_scheduler[' . $fieldName . ']" id="' . $fieldID . '" value="' . $taskInfo[$fieldName] . '" size="10">';
@@ -65,6 +66,13 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
                 'cshLabel' => $fieldID
             ];
         }
+        $checked = $taskInfo['forceDelete'] ? 'checked="checked"' : '';
+        $additionalFields['task_forceDelete'] = [
+            'code' => '<input type="checkbox" class="checkbox" ' . $checked . ' name="tx_scheduler[forceDelete]" id="task_forceDelete" value="1">',
+            'label' => 'LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.forceDelete',
+            'cshKey' => '_MOD_system_txschedulerM1',
+            'cshLabel' => 'task_forceDelete'
+        ];
 
         return $additionalFields;
     }
@@ -80,7 +88,7 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
     public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule)
     {
         $submittedData['maxAge'] = (int)$submittedData['maxAge'];
-        if ($submittedData['maxAge'] < 0) {
+        if ($submittedData['maxAge'] < 1) {
             $this->addMessage($this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.maxAge.invalidMaxAge'), FlashMessage::ERROR);
             $result = false;
         } else {
@@ -100,6 +108,7 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
     {
         $task->maxAge = $submittedData['maxAge'];
         $task->table = $submittedData['table'];
+        $task->forceDelete = $submittedData['forceDelete'];
     }
 
     /**

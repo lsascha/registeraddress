@@ -43,11 +43,17 @@
 			<trans-unit id="scheduler.maxAge">
 				<source>Max age of hidden entries (in seconds)</source>
 			</trans-unit>
-			<trans-unit id="scheduler.maxAge.invalidMaxAge'">
-				<source>Time invalid. Please use positive number.</source>
+			<trans-unit id="scheduler.maxAge.invalidMaxAge">
+				<source>Max age is invalid. Please set time in seconds greater than 0.</source>
 			</trans-unit>
 			<trans-unit id="scheduler.table">
 				<source>Used table</source>
+			</trans-unit>
+			<trans-unit id="scheduler.forceDelete">
+				<source>Remove entries from database, really!</source>
+			</trans-unit>
+			<trans-unit id="scheduler.force-delete.active">
+				<source>Delete entries!</source>
 			</trans-unit>
 
 		</body>
