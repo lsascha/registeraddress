@@ -55,6 +55,12 @@
 			<trans-unit id="scheduler.force-delete.active">
 				<source>Delete entries!</source>
 			</trans-unit>
+			<trans-unit id="scheduler.deleteSuccessMessage">
+				<source>%s entries deleted.</source>
+			</trans-unit>
+			<trans-unit id="scheduler.deleteSuccessTitle">
+				<source>Delete old entries</source>
+			</trans-unit>
 
 		</body>
 	</file>

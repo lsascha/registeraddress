@@ -55,10 +55,10 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
         $flashMessageService->getMessageQueueByIdentifier()->addMessage(
             new FlashMessage(
                 sprintf(
-                    $this->getLanguageService()->sL('%s entries deleted'),
+                    $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessMessage'),
                     $countDeletedEntries
                 ),
-                $this->getLanguageService()->sL('Delete old hidden registrations'),
+                $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessTitle'),
                 FlashMessage::OK
             )
         );
