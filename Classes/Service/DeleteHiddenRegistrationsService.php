@@ -40,12 +40,12 @@ class DeleteHiddenRegistrationsService
 
         /**@var $queryBuilder \TYPO3\CMS\Core\Database\Query\QueryBuilder**/
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
-        $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         if($forceDelete) {
             $query = $queryBuilder
                 ->delete($table)
                 ->where(
                     $queryBuilder->expr()->eq($hiddenField, 1),
+                    $queryBuilder->expr()->eq($deleteField, 0),
                     $queryBuilder->expr()->lt('crdate', $limit)
                 )
                 ->execute();
@@ -54,6 +54,7 @@ class DeleteHiddenRegistrationsService
                 ->update($table)
                 ->where(
                     $queryBuilder->expr()->eq($hiddenField, 1),
+                    $queryBuilder->expr()->eq($deleteField, 0),
                     $queryBuilder->expr()->lt('crdate', $limit)
                 )
                 ->set($deleteField, 1)
