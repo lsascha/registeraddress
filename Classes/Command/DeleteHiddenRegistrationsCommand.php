@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace AFM\Registeraddress\Command;
 
+use AFM\Registeraddress\Service\DeleteHiddenRegistrationsService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,12 +36,12 @@ class DeleteHiddenRegistrationsCommand extends Command
             'force-delete',
             'f',
             InputOption::VALUE_NONE,
-        'Force deleting entries from database.')
+        'Force deleting entries from database. Otherwise, records will be marked as deleted.')
         ->addOption(
             'dry-run',
             'd',
             InputOption::VALUE_NONE,
-        'Dry run before deleting entries. Output some information of data sets.'
+        'Dry run before deleting entries. Increase verbosity (-v) to see additional information about records to be deleted.'
         );
     }
 
@@ -61,25 +62,25 @@ class DeleteHiddenRegistrationsCommand extends Command
         $forceDelete = $input->getOption('force-delete');
 
         if($input->getOption('dry-run')) {
-            $query = GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class)->selectEntries($table, $maxAge);
+            $query = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class)->selectEntries($table, $maxAge);
             $result = $query->fetchAll();
             $count = $query->rowCount();
             foreach ($result as $row) {
-                $io->writeln('uid:' . $row['uid'] . '; pid:' . $row['pid'] . '; E-Mail:' . $row['email']);
+                $io->writeln('uid:' . $row['uid'] . '; pid:' . $row['pid'] . '; E-Mail:' . $row['email'], OutputInterface::VERBOSITY_VERBOSE);
             }
-            $io->writeln('Tried to delete ' . $count . ' entries in table "'. $table .'".');
+            $io->writeln('Identified ' . $count . ' entries in table "'. $table .'" that can be deleted. Remove --dry-run to actually delete those entries.');
             return Command::SUCCESS;
         }
 
-        $countDeletedEntries = GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class)->deleteEntries(
+        $countDeletedEntries = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class)->deleteEntries(
             $table,
             $maxAge,
             $forceDelete);
 
         if($forceDelete) {
-            $io->writeln($countDeletedEntries . ' entries really deleted.');
+            $io->writeln($countDeletedEntries . ' entries removed from database.');
         } else {
-            $io->writeln($countDeletedEntries . ' entries updated and set to be deleted.');
+            $io->writeln($countDeletedEntries . ' entries updated and marked as deleted.');
         }
 
         return Command::SUCCESS;
