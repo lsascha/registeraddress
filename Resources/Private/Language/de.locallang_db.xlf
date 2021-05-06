@@ -46,6 +46,34 @@
 				<target>Consent text</target>
 			</trans-unit>
 
+			<trans-unit id="scheduler.maxAge">
+				<source>Max age of hidden entries (in seconds)</source>
+				<target>Max. Alter von deaktivierten Einträgen</target>
+			</trans-unit>
+			<trans-unit id="scheduler.maxAge.invalidMaxAge">
+				<source>Max age is invalid. Please set time in seconds greater than 0.</source>
+				<target>Angabe Sekunden für max. Alter von Datensätzen muß größer als 0 sein.</target>
+			</trans-unit>
+			<trans-unit id="scheduler.table">
+				<source>Used table</source>
+				<target>Genutzte Tabelle</target>
+			</trans-unit>
+			<trans-unit id="scheduler.forceDelete">
+				<source>Remove entries from database, really!</source>
+				<target>Einträge wirklich aus der Datenbank löschen!</target>
+			</trans-unit>
+			<trans-unit id="scheduler.force-delete.active">
+				<source>Delete entries!</source>
+				<target>Einträge werden gelöscht!</target>
+			</trans-unit>
+			<trans-unit id="scheduler.deleteSuccessMessage">
+				<source>%s entries deleted.</source>
+				<target>%s Einträge gelöscht.</target>
+			</trans-unit>
+			<trans-unit id="scheduler.deleteSuccessTitle">
+				<source>Delete old entries</source>
+				<target>Alte Einträge löschen</target>
+			</trans-unit>
 
 		</body>
 	</file>
