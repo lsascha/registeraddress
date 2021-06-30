@@ -18,5 +18,10 @@
         "psr-4": {
             "AFM\\Registeraddress\\": "Classes/"
         }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "registeraddress"
+        }
     }
 }

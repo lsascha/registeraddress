@@ -54,7 +54,7 @@ class AddressController extends ActionController
      * addressRepository
      *
      * @var \AFM\Registeraddress\Domain\Repository\AddressRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $addressRepository;
 
@@ -114,7 +114,10 @@ class AddressController extends ActionController
         if ($replyTo == NULL) {
             $replyTo = $from;
         }
+
+        /** @var MailMessage $mail */
         $mail = GeneralUtility::makeInstance(MailMessage::class);
+
         $mail
             ->setTo($recipient)
             ->setFrom($from)
@@ -122,10 +125,10 @@ class AddressController extends ActionController
             ->setSubject($subject);
 
         if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
-            $mail->addPart($bodyHTML, 'text/html');
+            $mail->html($bodyHTML, 'text/html');
         }
         if ($bodyPlain !== '' && $bodyPlain !== NULL ) {
-            $mail->addPart($bodyPlain, 'text/plain');
+            $mail->html($bodyPlain, 'text/plain');
         }
 
         return $mail->send();
@@ -180,6 +183,8 @@ class AddressController extends ActionController
 
         if (isset($mailTextView)) {
             $mailTextView->assignMultiple($data);
+//            debug($mailTextView);die;
+
             $mailText = $mailTextView->render();
         }
         if (isset($mailHtmlView)) {
@@ -222,7 +227,10 @@ class AddressController extends ActionController
      */
     protected function errorAction()
     {
+        $this->clearCacheOnError();
+        $this->addErrorFlashMessage();
         $this->forwardToReferringRequest();
+        return $this->getFlattenedValidationErrorMessage();
 
         $errorMessage = LocalizationUtility::translate(
             'mail.registration.errorAction',
@@ -235,7 +243,7 @@ class AddressController extends ActionController
      * action form only
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $newAddress
      * @return void
      */
     public function formOnlyAction(Address $newAddress = NULL)
@@ -247,7 +255,7 @@ class AddressController extends ActionController
      * action new
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $newAddress
      * @return void
      */
     public function newAction(Address $newAddress = NULL)
@@ -315,6 +323,7 @@ class AddressController extends ActionController
      */
     public function informationAction($email, $uid)
     {
+        /** @var \AFM\Registeraddress\Domain\Repository\AddressRepository $address */
         $address = $this->addressRepository->findOneByEmailIgnoreHidden($email);
 
         if ($address && $address->getUid() == $uid) {
@@ -380,9 +389,7 @@ class AddressController extends ActionController
     /**
      * action approve
      *
-     * @param string $hash
-     * @validate $hash NotEmpty
-     * @param boolean $doApprove
+     * @param boolean|false $doApprove
      * @return void
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
@@ -393,6 +400,7 @@ class AddressController extends ActionController
      */
     public function approveAction($hash = NULL, $doApprove = false)
     {
+
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
 
         $this->view->assign('hash', $hash);
@@ -452,7 +460,7 @@ class AddressController extends ActionController
      * action edit
      *
      * @param \string $hash
-     * @validate $hash NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
      * @return void
      */
     public function editAction( $hash = NULL )
@@ -529,7 +537,7 @@ class AddressController extends ActionController
      * action delete
      *
      * @param \string $hash
-     * @validate $hash NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
      * @param boolean $doDelete
      * @return void
      * @throws \InvalidArgumentException

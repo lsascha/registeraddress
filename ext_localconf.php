@@ -3,6 +3,8 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
+$_EXTKEY = 'registeraddress';
+
 // Register Hook
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \AFM\Registeraddress\Hook\DataHandlerHook::class;
 
@@ -11,12 +13,12 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 	'Registerform',
 	array(
 		'Address' => 'new, create, approve, edit, update, delete, information',
-		
+
 	),
 	// non-cacheable actions
 	array(
 		'Address' => 'new, create, approve, edit, update, delete, information',
-		
+
 	)
 );
 
@@ -25,12 +27,12 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 	'RegisterformRedirect',
 	array(
 		'Address' => 'new',
-		
+
 	),
 	// non-cacheable actions
 	array(
 		'Address' => 'new',
-		
+
 	)
 );
 
