@@ -409,7 +409,7 @@ class AddressController extends ActionController
 
         $this->view->assign('hash', $hash);
 
-        if ($address && $doApprove) {
+        if ($address /*&& $doApprove*/) {
             $address->setHidden(false);
             $address->setModuleSysDmailHtml(true);
 
@@ -522,8 +522,7 @@ class AddressController extends ActionController
         $addressOld = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
         $address->setEmail($addressOld->getEmail());
 
-        $eigeneAnrede = $this->generateEigeneAnrede($address);
-        $address->setEigeneAnrede($eigeneAnrede);
+
 
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);
