@@ -3,13 +3,11 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$_EXTKEY = 'registeraddress';
-
 // Register Hook
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \AFM\Registeraddress\Hook\DataHandlerHook::class;
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'AFM.' . $_EXTKEY,
+	'AFM.registeraddress',
 	'Registerform',
 	array(
 		'Address' => 'new, create, approve, edit, update, delete, information',
@@ -23,8 +21,8 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'AFM.' . $_EXTKEY,
-	'RegisterformRedirect',
+    'AFM.registeraddress',
+    'RegisterformRedirect',
 	array(
 		'Address' => 'new',
 
@@ -38,8 +36,8 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'AFM.' . $_EXTKEY,
-	'RegisterformUnsubscribe',
+    'AFM.registeraddress',
+    'RegisterformUnsubscribe',
 	array(
 		'Address' => 'unsubscribeForm',
 
