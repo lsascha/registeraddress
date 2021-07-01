@@ -21,6 +21,15 @@ $fields = array(
             'eval' => 'trim'
         ),
     ),
+    'registeraddresshash' => array(
+        'exclude' => 0,
+        'label' => 'registeraddresshash',
+        'config' => array(
+            'type'     => 'text',
+            'size'     => 30,
+            'eval' => 'trim'
+        ),
+    ),
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_address', $fields, TRUE);

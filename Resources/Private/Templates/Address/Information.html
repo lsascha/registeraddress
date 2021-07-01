@@ -18,7 +18,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 		<p><f:translate key="form.info.text" /></p>
 	</f:then>
 	<f:else>
-		<p><f:translate key="form.info.error" htmlEscape="false" /></p>
+		<p><f:format.raw><f:translate key="form.info.error" /></f:format.raw></p>
 	</f:else>
 </f:if>
 
