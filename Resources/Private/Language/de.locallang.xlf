@@ -86,6 +86,9 @@ E-Mail: %3s</target>
 			<trans-unit id="form.approve.errortext" xml:space="preserve">
 				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
+			<trans-unit id="form.approve.alreadyapproved" xml:space="preserve">
+				<target>Adresse wurde bereits bestätigt.</target>
+			</trans-unit>
 			<trans-unit id="form.approve.submitButton" xml:space="preserve">
 				<target>zustimmen</target>
 			</trans-unit>
