@@ -15,6 +15,8 @@ namespace AFM\Registeraddress\Task;
  */
 
 
+use AFM\Registeraddress\Service\DeleteHiddenRegistrationsService;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -31,11 +33,18 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
     public $maxAge = 86400;
 
     /**
-     * Number of seconds which is the max age of hidden entries
+     * Table with address data
      *
      * @var string
      */
     public $table = 'tt_address';
+
+    /**
+     * Additionally log table and field
+     *
+     * @var string
+     */
+    public $logTableAndField = 'tx_registeraddresslogger_domain_model_logentry:address';
 
     /**
      * Remove entries from database instead of mark as deleted
@@ -48,10 +57,27 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
      * Public method, called by scheduler.
      */
     public function execute() {
-        $deleteHiddenRegistrations = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\AFM\Registeraddress\Service\DeleteHiddenRegistrationsService::class);
-        $countDeletedEntries = $deleteHiddenRegistrations->deleteEntries('tt_address', $this->maxAge, $this->forceDelete);
+        $deleteHiddenRegistrations = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class);
+
         /** @var FlashMessageService $flashMessageService */
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+        $logTableAndFieldArray = explode(':', $this->logTableAndField, 2);
+
+        if($this->logTableAndField && GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($logTableAndFieldArray[0])) {
+            $countDeletedLogEntries = $deleteHiddenRegistrations->deleteLogEntries($this->forceDelete, $this->logTableAndField, $this->table, $this->maxAge);
+            $flashMessageService->getMessageQueueByIdentifier()->addMessage(
+                new FlashMessage(
+                    sprintf(
+                        $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteLogSuccessMessage'),
+                        $countDeletedLogEntries
+                    ),
+                    $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteLogSuccessTitle'),
+                    FlashMessage::OK
+                )
+            );
+        }
+
+        $countDeletedEntries = $deleteHiddenRegistrations->deleteEntries($this->forceDelete, 'tt_address', $this->maxAge);
         $flashMessageService->getMessageQueueByIdentifier()->addMessage(
             new FlashMessage(
                 sprintf(
@@ -77,6 +103,9 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
         }
         if($this->maxAge){
             $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.maxAge') . ': ' . $this->maxAge . '. ';
+        }
+        if($this->logTableAndField){
+            $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.logTableAndField') . ': ' . $this->logTableAndField . '. ';
         }
         if($this->forceDelete){
             $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.force-delete.active') . ' ';

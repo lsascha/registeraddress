@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DeleteHiddenRegistrationsCommand extends Command
@@ -32,6 +33,11 @@ class DeleteHiddenRegistrationsCommand extends Command
             InputArgument::OPTIONAL,
         'Set max age in seconds. Default is 86400 = 24h.',
         86400)
+        ->addArgument(
+            'logTableAndField',
+            InputArgument::OPTIONAL,
+        'Delete entries als in additionally log table. Define table and used relation field in this kind of way: tablename:fieldname',
+        'tx_registeraddresslogger_domain_model_logentry:address')
         ->addOption(
             'force-delete',
             'f',
@@ -59,10 +65,13 @@ class DeleteHiddenRegistrationsCommand extends Command
 
         $table = $input->getArgument('table');
         $maxAge = (int)$input->getArgument('maxAge');
+        $logTableAndField = $input->getArgument('logTableAndField');
         $forceDelete = $input->getOption('force-delete');
 
+        $deleteHiddenRegistrations = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class);
+
         if($input->getOption('dry-run')) {
-            $query = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class)->selectEntries($table, $maxAge);
+            $query = $deleteHiddenRegistrations->selectEntries($table, $maxAge);
             $result = $query->fetchAll();
             $count = $query->rowCount();
             foreach ($result as $row) {
@@ -72,10 +81,20 @@ class DeleteHiddenRegistrationsCommand extends Command
             return Command::SUCCESS;
         }
 
-        $countDeletedEntries = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class)->deleteEntries(
+        $logTableAndFieldArray = explode(':', $logTableAndField, 2);
+        if($logTableAndField && GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($logTableAndFieldArray[0])) {
+            $countDeletedLogEntries = $deleteHiddenRegistrations->deleteLogEntries($forceDelete, $logTableAndField, $table, $maxAge);
+
+            if($forceDelete) {
+                $io->writeln($countDeletedLogEntries . ' entries removed from log table.');
+            } else {
+                $io->writeln($countDeletedLogEntries . ' log entries updated and marked as deleted.');
+            }
+        }
+        $countDeletedEntries = $deleteHiddenRegistrations->deleteEntries(
+            $forceDelete,
             $table,
-            $maxAge,
-            $forceDelete);
+            $maxAge);
 
         if($forceDelete) {
             $io->writeln($countDeletedEntries . ' entries removed from database.');
