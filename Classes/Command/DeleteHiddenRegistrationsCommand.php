@@ -78,7 +78,7 @@ class DeleteHiddenRegistrationsCommand extends Command
                 $io->writeln('uid:' . $row['uid'] . '; pid:' . $row['pid'] . '; E-Mail:' . $row['email'], OutputInterface::VERBOSITY_VERBOSE);
             }
             $io->writeln('Identified ' . $count . ' entries in table "'. $table .'" that can be deleted. Remove --dry-run to actually delete those entries.');
-            return Command::SUCCESS;
+            return 0;
         }
 
         $logTableAndFieldArray = explode(':', $logTableAndField, 2);
@@ -102,6 +102,6 @@ class DeleteHiddenRegistrationsCommand extends Command
             $io->writeln($countDeletedEntries . ' entries updated and marked as deleted.');
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 }
