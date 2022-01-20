@@ -21,17 +21,17 @@ class DeleteHiddenRegistrationsCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription('Delete all hidden registrations older than 24h (just the default value).')
-        ->setHelp('You can change table and time if needed. First argument is for the table, the second are the max age of entries in seconds from now. Add -d for dry run or -f to remove entries completely from database.')
+        $this->setDescription('Delete all hidden registrations older than min. 24h (just the default value).')
+        ->setHelp('You can change table and time if needed. First argument is for the table, the second are the max age of entries in seconds from now. Add -d for dry run or -f to remove entries completely from database. With the option -l you can define a log table with relation field to the other table. If set entries in log table will be deleted too.')
         ->addArgument(
             'table',
             InputArgument::OPTIONAL,
-            'Execute command on this table. Default is tt_address.',
+            'Execute command on this table. If not set the default is tt_address.',
             'tt_address')
         ->addArgument(
             'maxAge',
             InputArgument::OPTIONAL,
-        'Set max age in seconds. Default is 86400 = 24h.',
+        'Set max age in seconds. If not set the default is set to 86400 = 24h.',
         86400)
         ->addOption(
             'log-table-and-field',
