@@ -64,7 +64,7 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
         $logTableAndFieldArray = explode(':', $this->logTableAndField, 2);
 
         if($this->logTableAndField && GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($logTableAndFieldArray[0])) {
-            $countDeletedLogEntries = $deleteHiddenRegistrations->deleteLogEntries($this->forceDelete, $this->logTableAndField, $this->table, $this->maxAge);
+            $countDeletedLogEntries = $deleteHiddenRegistrations->deleteLogEntries($this->forceDelete, $this->table, $logTableAndFieldArray, $this->maxAge);
             $flashMessageService->getMessageQueueByIdentifier()->addMessage(
                 new FlashMessage(
                     sprintf(

@@ -33,11 +33,11 @@ class DeleteHiddenRegistrationsCommand extends Command
             InputArgument::OPTIONAL,
         'Set max age in seconds. Default is 86400 = 24h.',
         86400)
-        ->addArgument(
-            'logTableAndField',
-            InputArgument::OPTIONAL,
-        'Delete entries als in additionally log table. Define table and used relation field in this kind of way: tablename:fieldname',
-        'tx_registeraddresslogger_domain_model_logentry:address')
+        ->addOption(
+            'log-table-and-field',
+            'l',
+            InputOption::VALUE_OPTIONAL,
+        'Delete entries also in additionally log table. Define table and used relation field in this kind of way: tablename:fieldname')
         ->addOption(
             'force-delete',
             'f',
@@ -65,7 +65,7 @@ class DeleteHiddenRegistrationsCommand extends Command
 
         $table = $input->getArgument('table');
         $maxAge = (int)$input->getArgument('maxAge');
-        $logTableAndField = $input->getArgument('logTableAndField');
+        $logTableAndField = ($input->getOption('log-table-and-field')) ? explode(':', $input->getOption('log-table-and-field'), 2) : false;
         $forceDelete = $input->getOption('force-delete');
 
         $deleteHiddenRegistrations = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class);
@@ -81,9 +81,8 @@ class DeleteHiddenRegistrationsCommand extends Command
             return 0;
         }
 
-        $logTableAndFieldArray = explode(':', $logTableAndField, 2);
-        if($logTableAndField && GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($logTableAndFieldArray[0])) {
-            $countDeletedLogEntries = $deleteHiddenRegistrations->deleteLogEntries($forceDelete, $logTableAndField, $table, $maxAge);
+        if($logTableAndField && GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($logTableAndField[0])) {
+            $countDeletedLogEntries = $deleteHiddenRegistrations->deleteLogEntries($forceDelete, $table, $logTableAndField, $maxAge);
 
             if($forceDelete) {
                 $io->writeln($countDeletedLogEntries . ' entries removed from log table.');

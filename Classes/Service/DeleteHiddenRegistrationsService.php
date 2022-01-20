@@ -68,14 +68,13 @@ class DeleteHiddenRegistrationsService
      */
     public function deleteLogEntries(
         $forceDelete,
-        string $logTableAndField,
         string $table,
+        array $logTableAndField,
         int $maxAge
     )
     {
-        $logTableAndFieldArray = explode(':', $logTableAndField, 2);
-        $logTable = $logTableAndFieldArray[0];
-        $logRelationField = $logTableAndFieldArray[1];
+        $logTable = $logTableAndField[0];
+        $logRelationField = $logTableAndField[1];
         /**@var $queryBuilder \TYPO3\CMS\Core\Database\Query\QueryBuilder**/
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($logTable);
         $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
