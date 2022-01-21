@@ -54,17 +54,19 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
         $registrationsService = $objectManager->get(DeleteHiddenRegistrationsService::class);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $records = $registrationsService->selectEntries($this->table, $this->maxAge);
-        $countDeletedEntries = $registrationsService->delete($records, $this->table, $this->isForceDelete());
-        $flashMessageService->getMessageQueueByIdentifier()->addMessage(
-            new FlashMessage(
-                sprintf(
-                    $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessMessage' . ($this->forceDelete ? '.forceDelete' : '')),
-                    $countDeletedEntries
-                ),
-                $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessTitle'),
-                FlashMessage::OK
-            )
-        );
+        if($records) {
+            $countDeletedEntries = $registrationsService->delete($records, $this->table, $this->isForceDelete());
+            $flashMessageService->getMessageQueueByIdentifier()->addMessage(
+                new FlashMessage(
+                    sprintf(
+                        $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessMessage' . ($this->forceDelete ? '.forceDelete' : '')),
+                        $countDeletedEntries
+                    ),
+                    $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessTitle'),
+                    FlashMessage::OK
+                )
+            );
+        }
         return true;
     }
     /**

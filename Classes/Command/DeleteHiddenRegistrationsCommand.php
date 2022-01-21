@@ -72,7 +72,7 @@ class DeleteHiddenRegistrationsCommand extends Command
         $dryRun = $input->getOption('dry-run');
 
         $records = $this->registrationsService->selectEntries($table, $maxAge);
-        if (!$dryRun) {
+        if (!$dryRun && $records) {
             $resultCount = $this->registrationsService->delete($records, $table, $forceDelete);
             if($forceDelete) {
                 $io->writeln(sprintf("%d entries removed from database.", $resultCount));
@@ -80,12 +80,15 @@ class DeleteHiddenRegistrationsCommand extends Command
                 $io->writeln(sprintf("%d entries updated and marked as deleted.", $resultCount));
             }
         } else {
-            foreach ($records as $row) {
-                $io->writeln(sprintf("uid:%d; pid:%d; E-Mail:%s", $row['uid'], $row['pid'], $row['email']), OutputInterface::VERBOSITY_VERBOSE);
+            if(!$records) {
+                $io->writeln("No entries found to delete.");
+            } else {
+                foreach ($records as $row) {
+                    $io->writeln(sprintf("uid:%d; pid:%d; E-Mail:%s", $row['uid'], $row['pid'], $row['email']), OutputInterface::VERBOSITY_VERBOSE);
+                }
+                $io->writeln(sprintf("Identified %d entries in table \"%s\" that can be deleted. Remove --dry-run to actually delete those entries.",
+                    count($records), $table));
             }
-            $io->writeln(sprintf("Identified %d entries in table \"%s\" that can be deleted. Remove --dry-run to actually delete those entries.",
-                count($records), $table));
-
         }
         return 0;
     }
