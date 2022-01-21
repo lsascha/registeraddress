@@ -62,46 +62,4 @@ class DeleteHiddenRegistrationsService
         }
         return $query;
     }
-
-    /*
-     * @return int
-     */
-    public function deleteLogEntries(
-        $forceDelete,
-        string $table,
-        array $logTableAndField,
-        int $maxAge
-    )
-    {
-        $logTable = $logTableAndField[0];
-        $logRelationField = $logTableAndField[1];
-        /**@var $queryBuilder \TYPO3\CMS\Core\Database\Query\QueryBuilder**/
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($logTable);
-        $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-        $deleteField = $GLOBALS['TCA'][$logTable]['ctrl']['delete'];
-
-        $selectedData = $this->selectEntries($table,$maxAge);
-        $result = $selectedData->fetchAllAssociative();
-        $logCounter = 0;
-        foreach ($result as $address) {
-            if($forceDelete) {
-                $numberOfDeletedRows = $queryBuilder
-                    ->delete($logTable)
-                    ->where(
-                        $queryBuilder->expr()->eq($logRelationField, $queryBuilder->createNamedParameter($address['uid'], \PDO::PARAM_INT))
-                    )
-                    ->execute();
-            } else {
-                $numberOfDeletedRows = $queryBuilder
-                    ->update($logTable)
-                    ->where(
-                        $queryBuilder->expr()->eq($logRelationField, $queryBuilder->createNamedParameter($address['uid'], \PDO::PARAM_INT))
-                    )
-                    ->set($deleteField, 1)
-                    ->execute();
-            }
-            $logCounter = $logCounter + $numberOfDeletedRows;
-        }
-        return $logCounter;
-    }
 }

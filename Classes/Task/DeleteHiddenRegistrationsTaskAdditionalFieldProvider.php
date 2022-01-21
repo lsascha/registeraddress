@@ -47,16 +47,14 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
             // In case of edit, set to internal value if no data was submitted already
             $taskInfo['table'] = $task->table;
             $taskInfo['maxAge'] = $task->maxAge;
-            $taskInfo['logTableAndField'] = $task->logTableAndField;
             $taskInfo['forceDelete'] = $task->forceDelete;
         }
        if ($currentSchedulerModuleAction->equals(Action::ADD)) {
            $taskInfo['maxAge'] = $task->maxAge ? : '86400';
            $taskInfo['table'] = $task->table ? : 'tt_address';
-           $taskInfo['logTableAndField'] = $task->logTableAndField ? : 'tx_registeraddresslogger_domain_model_logentry:address';
-       }
+        }
 
-        $fieldNames = ['table', 'maxAge','logTableAndField'];
+        $fieldNames = ['table', 'maxAge'];
         $additionalFields = [];
         foreach ($fieldNames as $fieldName) {
             $fieldID = 'task_' . $fieldName;
@@ -110,7 +108,6 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
     {
         $task->maxAge = $submittedData['maxAge'];
         $task->table = $submittedData['table'];
-        $task->logTableAndField = $submittedData['logTableAndField'];
         $task->forceDelete = $submittedData['forceDelete'];
     }
 

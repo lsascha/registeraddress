@@ -78,15 +78,6 @@
 				<source>Delete old entries</source>
 				<target>Alte Einträge löschen</target>
 			</trans-unit>
-			<trans-unit id="scheduler.deleteLogSuccessTitle">
-				<source>Delete old log entries</source>
-				<target>Alte Log Einträge löschen</target>
-			</trans-unit>
-			<trans-unit id="scheduler.logTableAndField">
-				<source>Delete entries in additionally log table. Define table and used relation field: "table:field"</source>
-				<target>Auch die Einträge in Logtabelle löschen. Tabelle und Verknüpfungsfeld Angabe mit Doppelpunkt trennen: "tabelle:feld"</target>
-			</trans-unit>
-
 		</body>
 	</file>
 </xliff>

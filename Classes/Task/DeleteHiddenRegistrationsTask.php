@@ -40,13 +40,6 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
     public $table = 'tt_address';
 
     /**
-     * Additionally log table and field
-     *
-     * @var string
-     */
-    public $logTableAndField = 'tx_registeraddresslogger_domain_model_logentry:address';
-
-    /**
      * Remove entries from database instead of mark as deleted
      *
      * @var boolean
@@ -103,9 +96,6 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
         }
         if($this->maxAge){
             $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.maxAge') . ': ' . $this->maxAge . '. ';
-        }
-        if($this->logTableAndField){
-            $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.logTableAndField') . ': ' . $this->logTableAndField . '. ';
         }
         if($this->forceDelete){
             $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.force-delete.active') . ' ';

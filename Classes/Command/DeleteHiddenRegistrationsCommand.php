@@ -34,11 +34,6 @@ class DeleteHiddenRegistrationsCommand extends Command
         'Set max age in seconds. If not set the default is set to 86400 = 24h.',
         86400)
         ->addOption(
-            'log-table-and-field',
-            'l',
-            InputOption::VALUE_OPTIONAL,
-        'Delete entries also in additionally log table. Define table and used relation field in this kind of way: tablename:fieldname')
-        ->addOption(
             'force-delete',
             'f',
             InputOption::VALUE_NONE,
@@ -65,7 +60,6 @@ class DeleteHiddenRegistrationsCommand extends Command
 
         $table = $input->getArgument('table');
         $maxAge = (int)$input->getArgument('maxAge');
-        $logTableAndField = ($input->getOption('log-table-and-field')) ? explode(':', $input->getOption('log-table-and-field'), 2) : false;
         $forceDelete = $input->getOption('force-delete');
 
         $deleteHiddenRegistrations = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class);

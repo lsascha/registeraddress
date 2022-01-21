@@ -64,13 +64,6 @@
 			<trans-unit id="scheduler.deleteSuccessTitle">
 				<source>Delete old entries</source>
 			</trans-unit>
-			<trans-unit id="scheduler.deleteLogSuccessTitle">
-				<source>Delete old log entries</source>
-			</trans-unit>
-			<trans-unit id="scheduler.logTableAndField">
-				<source>Delete entries in additionally log table. Define table and used relation field: "table:field"</source>
-			</trans-unit>
-
 		</body>
 	</file>
 </xliff>
