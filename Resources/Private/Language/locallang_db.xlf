@@ -56,10 +56,10 @@
 				<source>Delete entries!</source>
 			</trans-unit>
 			<trans-unit id="scheduler.deleteSuccessMessage">
-				<source>%s entries deleted.</source>
+				<source>%d entries updated and marked deleted.</source>
 			</trans-unit>
-			<trans-unit id="scheduler.deleteLogSuccessMessage">
-				<source>%s log entries deleted.</source>
+			<trans-unit id="scheduler.deleteSuccessMessage.forceDelete">
+				<source>%d entries deleted from DB.</source>
 			</trans-unit>
 			<trans-unit id="scheduler.deleteSuccessTitle">
 				<source>Delete old entries</source>

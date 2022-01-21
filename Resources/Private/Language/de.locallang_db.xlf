@@ -67,12 +67,12 @@
 				<target>Einträge werden gelöscht!</target>
 			</trans-unit>
 			<trans-unit id="scheduler.deleteSuccessMessage">
-				<source>%s entries deleted.</source>
-				<target>%s Einträge gelöscht.</target>
+				<source>%d entries updated and marked deleted.</source>
+				<target>%d Einträge als gelöscht markiert.</target>
 			</trans-unit>
-			<trans-unit id="scheduler.deleteLogSuccessMessage">
-				<source>%s log entries deleted.</source>
-				<target>%s Log Einträge gelöscht.</target>
+			<trans-unit id="scheduler.deleteSuccessMessage.forceDelete">
+				<source>%d entries deleted from DB.</source>
+				<target>%d Einträge aus der Datenbank gelöscht.</target>
 			</trans-unit>
 			<trans-unit id="scheduler.deleteSuccessTitle">
 				<source>Delete old entries</source>

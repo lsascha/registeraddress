@@ -16,10 +16,10 @@ namespace AFM\Registeraddress\Task;
 
 
 use AFM\Registeraddress\Service\DeleteHiddenRegistrationsService;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 
@@ -50,31 +50,15 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
      * Public method, called by scheduler.
      */
     public function execute() {
-        $deleteHiddenRegistrations = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class);
-
-        /** @var FlashMessageService $flashMessageService */
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $registrationsService = $objectManager->get(DeleteHiddenRegistrationsService::class);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-        $logTableAndFieldArray = explode(':', $this->logTableAndField, 2);
-
-        if($this->logTableAndField && GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($logTableAndFieldArray[0])) {
-            $countDeletedLogEntries = $deleteHiddenRegistrations->deleteLogEntries($this->forceDelete, $this->table, $logTableAndFieldArray, $this->maxAge);
-            $flashMessageService->getMessageQueueByIdentifier()->addMessage(
-                new FlashMessage(
-                    sprintf(
-                        $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteLogSuccessMessage'),
-                        $countDeletedLogEntries
-                    ),
-                    $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteLogSuccessTitle'),
-                    FlashMessage::OK
-                )
-            );
-        }
-
-        $countDeletedEntries = $deleteHiddenRegistrations->deleteEntries($this->forceDelete, 'tt_address', $this->maxAge);
+        $records = $registrationsService->selectEntries($this->table, $this->maxAge);
+        $countDeletedEntries = $registrationsService->delete($records, $this->table, $this->isForceDelete());
         $flashMessageService->getMessageQueueByIdentifier()->addMessage(
             new FlashMessage(
                 sprintf(
-                    $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessMessage'),
+                    $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessMessage' . ($this->forceDelete ? '.forceDelete' : '')),
                     $countDeletedEntries
                 ),
                 $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessTitle'),
@@ -101,5 +85,10 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
             $message .= $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.force-delete.active') . ' ';
         }
         return $message;
+    }
+
+    protected function isForceDelete(): bool
+    {
+        return (bool)$this->forceDelete;
     }
 }

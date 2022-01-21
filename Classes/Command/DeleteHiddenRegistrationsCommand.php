@@ -16,6 +16,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class DeleteHiddenRegistrationsCommand extends Command
 {
 
+    protected DeleteHiddenRegistrationsService $registrationsService;
+
+    public function __construct(string $name = null, DeleteHiddenRegistrationsService $registrationsService = null)
+    {
+        parent::__construct($name);
+        $this->registrationsService = $registrationsService;
+    }
+
     /**
      * Configure the command by defining the name, options and arguments
      */
@@ -61,40 +69,24 @@ class DeleteHiddenRegistrationsCommand extends Command
         $table = $input->getArgument('table');
         $maxAge = (int)$input->getArgument('maxAge');
         $forceDelete = $input->getOption('force-delete');
+        $dryRun = $input->getOption('dry-run');
 
-        $deleteHiddenRegistrations = GeneralUtility::makeInstance(DeleteHiddenRegistrationsService::class);
-
-        if($input->getOption('dry-run')) {
-            $query = $deleteHiddenRegistrations->selectEntries($table, $maxAge);
-            $result = $query->fetchAll();
-            $count = $query->rowCount();
-            foreach ($result as $row) {
-                $io->writeln('uid:' . $row['uid'] . '; pid:' . $row['pid'] . '; E-Mail:' . $row['email'], OutputInterface::VERBOSITY_VERBOSE);
-            }
-            $io->writeln('Identified ' . $count . ' entries in table "'. $table .'" that can be deleted. Remove --dry-run to actually delete those entries.');
-            return 0;
-        }
-
-        if($logTableAndField && GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($logTableAndField[0])) {
-            $countDeletedLogEntries = $deleteHiddenRegistrations->deleteLogEntries($forceDelete, $table, $logTableAndField, $maxAge);
-
+        $records = $this->registrationsService->selectEntries($table, $maxAge);
+        if (!$dryRun) {
+            $resultCount = $this->registrationsService->delete($records, $table, $forceDelete);
             if($forceDelete) {
-                $io->writeln($countDeletedLogEntries . ' entries removed from log table.');
+                $io->writeln(sprintf("%d entries removed from database.", $resultCount));
             } else {
-                $io->writeln($countDeletedLogEntries . ' log entries updated and marked as deleted.');
+                $io->writeln(sprintf("%d entries updated and marked as deleted.", $resultCount));
             }
-        }
-        $countDeletedEntries = $deleteHiddenRegistrations->deleteEntries(
-            $forceDelete,
-            $table,
-            $maxAge);
-
-        if($forceDelete) {
-            $io->writeln($countDeletedEntries . ' entries removed from database.');
         } else {
-            $io->writeln($countDeletedEntries . ' entries updated and marked as deleted.');
-        }
+            foreach ($records as $row) {
+                $io->writeln(sprintf("uid:%d; pid:%d; E-Mail:%s", $row['uid'], $row['pid'], $row['email']), OutputInterface::VERBOSITY_VERBOSE);
+            }
+            $io->writeln(sprintf("Identified %d entries in table \"%s\" that can be deleted. Remove --dry-run to actually delete those entries.",
+                count($records), $table));
 
+        }
         return 0;
     }
 }
