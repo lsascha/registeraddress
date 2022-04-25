@@ -30,7 +30,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 		</f:form>
 
 		<br />
-		<f:link.action action="delete" arguments="{hash: address.registeraddresshash}" noCacheHash="1" pageUid="{settings.pagewithform}" absolute="1">{f:translate(key:'form.edit.deleteButton')}</f:link.action>
+		<f:link.action action="delete" arguments="{hash: address.registeraddresshash}" pageUid="{settings.pagewithform}" absolute="1">{f:translate(key:'form.edit.deleteButton')}</f:link.action>
 	</f:then>
 	<f:else>
 		<p><f:translate key="form.edit.errortext" /></p>
