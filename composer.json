@@ -8,7 +8,7 @@
     },
     "require": {
         "typo3/cms-core": "^10.4 || ^11.5",
-        "friendsoftypo3/tt-address": "^5.2"
+        "friendsoftypo3/tt-address": "^5.2 || ^6.1"
     },
     "replace": {
         "registeraddress": "self.version",
