@@ -8,6 +8,7 @@
     },
     "require": {
         "typo3/cms-core": "^10.4",
+		"php": "^7.4",
         "friendsoftypo3/tt-address": "^5.2"
     },
     "replace": {
