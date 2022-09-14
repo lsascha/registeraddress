@@ -9,8 +9,9 @@
     "require": {
         "typo3/cms-core": "^10.4",
 		"php": "^7.4",
-        "friendsoftypo3/tt-address": "^5.2"
-    },
+        "friendsoftypo3/tt-address": "^5.2",
+		"undkonsorten/typo3-extbase-honeypot": "^0.0.1"
+	},
     "replace": {
         "registeraddress": "self.version",
         "typo3-ter/registeraddress": "self.version"
