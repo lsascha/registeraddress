@@ -1,3 +1,6 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/ViewHelpers"
+			data-namespace-typo3-fluid="true"
+			lang="en">
 <div class="fieldrow">
     <label for="gender">
         <f:translate key="tx_registeraddress_domain_model_address.gender"/>
@@ -35,7 +38,11 @@
         placeholder="{f:translate(key:'tx_registeraddress_domain_model_address.email.placeholder')}"
     />
 </div>
+<f:if condition="{settings.enableHoneyPot}">
+	<f:render section="Main" partial="Field/HoneyPot" arguments="{field:settings.honeyPotFieldName}" />
+</f:if>
 <div class="fieldrow">
 	<f:translate key="tx_registeraddress_domain_model_address.consent"/>
 	<f:format.html>{settings.consent}</f:format.html>
 </div>
+</html>

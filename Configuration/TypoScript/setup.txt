@@ -35,6 +35,8 @@ plugin.tx_registeraddress {
 		updateSubject = {$plugin.tx_registeraddress.settings.updateSubject}
 		mailformat = {$plugin.tx_registeraddress.settings.mailformat}
 		sendDeleteApproveMails = {$plugin.tx_registeraddress.settings.sendDeleteApproveMails}
+		enableHoneyPot = {$plugin.tx_registeraddress.settings.enableHoneyPot}
+		honeyPotFieldName = {$plugin.tx_registeraddress.settings.honeyPotFieldName}
 	}
 	lib.parseFunc_PLAIN < lib.parseFunc
     	lib.parseFunc_PLAIN {
