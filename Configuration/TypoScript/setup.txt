@@ -49,6 +49,10 @@ plugin.tx_registeraddress {
 	lib.parseFunc_HTML {
         tags.a.typolink.forceAbsoluteUrl = 1
 	}
+	_LOCAL_LANG {
+		default.error.1663185337.newAddress.{$plugin.tx_registeraddress.settings.honeyPotFieldName} = Error with some form fields!
+		de.error.1663185337.newAddress.{$plugin.tx_registeraddress.settings.honeyPotFieldName} = Fehler, kein gültiges Format!
+	}
 }
 
 plugin.tx_registeraddress._CSS_DEFAULT_STYLE (
