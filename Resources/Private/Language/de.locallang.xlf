@@ -117,7 +117,7 @@ Versuchen Sie es bitte erneut.</target>
 			</trans-unit>
 
 			<trans-unit id="mail.registration.errorAction">
-				<target>Failed executing the action.</target>
+				<target>Fehler im Registrierungsformular.</target>
 			</trans-unit>
 
 			<trans-unit id="mail.gender.m" xml:space="preserve">
