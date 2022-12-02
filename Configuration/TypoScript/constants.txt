@@ -32,5 +32,9 @@ plugin.tx_registeraddress {
 		mailformat = txt
 		# cat=plugin.tx_registeraddress//a; type=boolean; label=Send mail to User after successfully deleting or approving
 		sendDeleteApproveMails = 1
+		# cat=plugin.tx_registeraddress//a; type=int; label=Enable honey pot: Set this to 1 to enable the honey pot field
+		enableHoneyPot = 0
+		# cat=plugin.tx_registeraddress//a; type=string; label=Honey pot field name: Name of the field to be rendered as honey pot
+		honeyPotFieldName =
 	}
 }

@@ -8,8 +8,10 @@
     },
     "require": {
         "typo3/cms-core": "^10.4 || ^11.5",
-        "friendsoftypo3/tt-address": "^5.2 || ^6.1"
-    },
+		"php": "^7.4",
+		"friendsoftypo3/tt-address": "^5.2 || ^6.1",
+		"undkonsorten/typo3-extbase-honeypot": "^0.0.2"
+	},
     "replace": {
         "registeraddress": "self.version",
         "typo3-ter/registeraddress": "self.version"
