@@ -68,7 +68,8 @@ class AddressRepository extends Repository
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
         //$query->getQuerySettings()->setRespectStoragePage(FALSE);
-
+        $query->getQuerySettings()->setRespectSysLanguage(FALSE);
+        $query->getQuerySettings()->setLanguageOverlayMode(FALSE);
         $query->matching(
             $query->equals('registeraddresshash', $hash )
         );
