@@ -1,3 +1,6 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/ViewHelpers"
+			data-namespace-typo3-fluid="true"
+			lang="en">
 <p>
 	{f:translate(key:'mail.registration.greet')} {f:translate(key:'mail.gender.{address.gender}')} {address.firstName} {address.lastName}
 </p>
@@ -20,3 +23,4 @@
 	{f:translate(key:'mail.registration.editLinkText')}
 	<f:link.action action="edit" arguments="{hash: hash}" controller="Address" extensionName="Registeraddress" pluginName="Registerform" pageUid="{settings.pagewithform}" absolute="1">[click]</f:link.action>
 </p>
+</html>

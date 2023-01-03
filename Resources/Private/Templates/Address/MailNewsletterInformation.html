@@ -1,3 +1,6 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/ViewHelpers"
+			data-namespace-typo3-fluid="true"
+			lang="en">
 <p>
 	{f:translate(key:'mail.info.greet')} {f:translate(key:'mail.gender.{address.gender}')} {address.firstName} {address.lastName}
 </p>
@@ -9,3 +12,4 @@
 	{f:translate(key:'mail.info.deleteLinkText')}
 	<f:link.action action="delete" arguments="{hash: hash}" controller="Address" extensionName="Registeraddress" pluginName="Registerform" pageUid="{settings.pagewithform}" absolute="1">[click/klick]</f:link.action>
 </p>
+</html>
