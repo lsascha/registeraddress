@@ -33,9 +33,12 @@
     <label for="email">
         <f:translate key="tx_registeraddress_domain_model_address.email"/>
     </label>
-    <f:form.textfield property="email"
-        id="email"
-        placeholder="{f:translate(key:'tx_registeraddress_domain_model_address.email.placeholder')}"
+    <f:form.textfield
+				id="email"
+				property="email"
+				placeholder="{f:translate(key:'tx_registeraddress_domain_model_address.email.placeholder')}"
+				required="required"
+				type="email"
     />
 </div>
 <f:if condition="{settings.enableHoneyPot}">
