@@ -435,11 +435,12 @@ class AddressController extends ActionController
      */
     public function approveAction($hash = NULL, $doApprove = false)
     {
+        /** @var Address $address */
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
 
         $this->view->assign('hash', $hash);
 
-        if ($address && $doApprove) {
+        if ($address && $address->getHidden() && $doApprove) {
             $address->setHidden(false);
             $address->setModuleSysDmailHtml(true);
 
