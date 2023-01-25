@@ -508,6 +508,8 @@ class AddressController extends ActionController
             $signalSlotDispatcher->dispatch(__CLASS__, 'approveBeforePersist', [$address]);
 
             $this->persistenceManager->persistAll();
+        } else {
+            $this->view->assign('alreadyApproved',true);
         }
 
         $this->view->assign('address', $address);

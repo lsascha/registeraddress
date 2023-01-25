@@ -203,6 +203,11 @@ Versuchen Sie es bitte erneut.</target>
 					<target>Sie stimmen den folgenden Bedingungen zu.</target>
 			</trans-unit>
 
+			<trans-unit id="alreadyApproved" xml:space="preserve">
+				<source>Address already approved.</source>
+				<target>Adresse bereits bestätigt.</target>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>
