@@ -8,7 +8,7 @@
     },
     "require": {
         "typo3/cms-core": "^10.4 || ^11.5",
-		"php": "^7.4",
+		"php": "^7.4 || ^8.1",
 		"friendsoftypo3/tt-address": "^5.2 || ^6.1 || ^7.0",
 		"undkonsorten/typo3-extbase-honeypot": "^0.1.0"
 	},
