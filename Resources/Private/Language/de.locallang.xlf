@@ -87,7 +87,7 @@ E-Mail: %3s</target>
 				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
 			<trans-unit id="form.approve.submitButton" xml:space="preserve">
-				<target>zustimmen</target>
+				<target>Zustimmen</target>
 			</trans-unit>
 			<trans-unit id="form.delete.text" xml:space="preserve">
 				<target>Sie sind nun vom Newsletter abgemeldet.</target>
@@ -96,7 +96,7 @@ E-Mail: %3s</target>
 				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
 			<trans-unit id="form.delete.submitButton" xml:space="preserve">
-				<target>Dem löschen zustimmen</target>
+				<target>Dem Löschen zustimmen</target>
 			</trans-unit>
 
 			<trans-unit id="form.edit.saveButton" xml:space="preserve">
@@ -200,7 +200,7 @@ Versuchen Sie es bitte erneut.</target>
 
 			<trans-unit id="mail.registration.consentText" xml:space="preserve">
 				<source>You will apply the following consent.</source>
-					<target>Sie stimmen den folgenden Bedingungen zu.</target>
+				<target>Sie stimmen den folgenden Bedingungen zu.</target>
 			</trans-unit>
 
 			<trans-unit id="alreadyApproved" xml:space="preserve">
