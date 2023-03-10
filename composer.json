@@ -7,8 +7,8 @@
         "issues": "https://github.com/lsascha/registeraddress/issues"
     },
     "require": {
-        "typo3/cms-core": "^10.4 || ^11.5",
-		"php": "^7.4 || ^8.1",
+        "typo3/cms-core": "^11.5",
+		"php": "^7.4 || ^8.0",
 		"friendsoftypo3/tt-address": "^5.2 || ^6.1 || ^7.0",
 		"undkonsorten/typo3-extbase-honeypot": "^0.1.0"
 	},
