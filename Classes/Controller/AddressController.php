@@ -27,6 +27,7 @@ namespace AFM\Registeraddress\Controller;
 
 use AFM\Registeraddress\Domain\Model\Address;
 use AFM\Registeraddress\Domain\Repository\AddressRepository;
+use AFM\Registeraddress\Event\InitializeCreateActionEvent;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -275,6 +276,11 @@ class AddressController extends ActionController
         $this->view->assign('newAddress', $newAddress);
     }
 
+
+    public function initializeCreateAction(): void
+    {
+        $this->eventDispatcher->dispatch(new InitializeCreateActionEvent($this->arguments, $this->request));
+    }
 
     /**
      * action create
