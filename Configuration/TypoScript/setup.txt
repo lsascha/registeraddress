@@ -9,7 +9,6 @@ plugin.tx_registeraddress {
 		}
 		partialRootPaths {
 			0 = EXT:registeraddress/Resources/Private/Partials/
-			45 = EXT:extbase_honeypot/Resources/Private/Partials/
 			100 = {$plugin.tx_registeraddress.view.partialRootPath}
 		}
 		layoutRootPaths {
@@ -36,8 +35,6 @@ plugin.tx_registeraddress {
 		updateSubject = {$plugin.tx_registeraddress.settings.updateSubject}
 		mailformat = {$plugin.tx_registeraddress.settings.mailformat}
 		sendDeleteApproveMails = {$plugin.tx_registeraddress.settings.sendDeleteApproveMails}
-		enableHoneyPot = {$plugin.tx_registeraddress.settings.enableHoneyPot}
-		honeyPotFieldName = {$plugin.tx_registeraddress.settings.honeyPotFieldName}
 	}
 	lib.parseFunc_PLAIN < lib.parseFunc
     	lib.parseFunc_PLAIN {

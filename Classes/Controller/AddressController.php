@@ -27,7 +27,6 @@ namespace AFM\Registeraddress\Controller;
 
 use AFM\Registeraddress\Domain\Model\Address;
 use AFM\Registeraddress\Domain\Repository\AddressRepository;
-use AFM\Registeraddress\Validator\HoneyPotValidator;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -36,9 +35,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
 use TYPO3\CMS\Fluid\View\StandaloneView;
-use Undkonsorten\HoneyPot\Service\HoneyPotService;
 
 /**
  *
@@ -64,16 +61,6 @@ class AddressController extends ActionController
     public function injectAddressRepository(AddressRepository $addressRepository): void
     {
         $this->addressRepository = $addressRepository;
-    }
-
-    /**
-     * @var HoneyPotService
-     */
-    protected $honeyPotService;
-
-    public function injectHoneyPotService(HoneyPotService $honeyPotService)
-    {
-        $this->honeyPotService = $honeyPotService;
     }
 
     /**
@@ -288,16 +275,6 @@ class AddressController extends ActionController
         $this->view->assign('newAddress', $newAddress);
     }
 
-    public function initializeCreateAction()
-    {
-        if ($this->settings['enableHoneyPot']) {
-            $this->honeyPotService->configureHoneyPotForArgument(
-                $this->arguments->getArgument('newAddress'),
-                $this->request->getArgument('newAddress'),
-                $this->settings['honeyPotFieldName']
-            );
-        }
-    }
 
     /**
      * action create
