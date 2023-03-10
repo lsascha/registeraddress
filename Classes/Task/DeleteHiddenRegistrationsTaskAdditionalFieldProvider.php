@@ -47,11 +47,11 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
             // In case of edit, set to internal value if no data was submitted already
             $taskInfo['table'] = $task->table;
             $taskInfo['maxAge'] = $task->maxAge;
-            $taskInfo['forceDelete'] = $task->forceDelete;
+            $taskInfo['forceDelete'] = $task->forceDelete ?? false;
         }
        if ($currentSchedulerModuleAction->equals(Action::ADD)) {
-           $taskInfo['maxAge'] = $task->maxAge ? : '86400';
-           $taskInfo['table'] = $task->table ? : 'tt_address';
+           $taskInfo['maxAge'] = $task->maxAge ?? '86400';
+           $taskInfo['table'] = $task->table ?? 'tt_address';
         }
 
         $fieldNames = ['table', 'maxAge'];
@@ -66,7 +66,7 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
                 'cshLabel' => $fieldID
             ];
         }
-        $checked = $taskInfo['forceDelete'] ? 'checked="checked"' : '';
+        $checked = (!empty($taskInfo['forceDelete'])) ? 'checked="checked"' : '';
         $additionalFields['task_forceDelete'] = [
             'code' => '<input type="checkbox" class="checkbox" ' . $checked . ' name="tx_scheduler[forceDelete]" id="task_forceDelete" value="1">',
             'label' => 'LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.forceDelete',
@@ -108,7 +108,7 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
     {
         $task->maxAge = $submittedData['maxAge'];
         $task->table = $submittedData['table'];
-        $task->forceDelete = $submittedData['forceDelete'];
+        $task->forceDelete = $submittedData['forceDelete'] ?? false;
     }
 
     /**
