@@ -50,8 +50,8 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
             $taskInfo['forceDelete'] = $task->forceDelete ?? false;
         }
        if ($currentSchedulerModuleAction->equals(Action::ADD)) {
-           $taskInfo['maxAge'] = $task->maxAge ?? '86400';
-           $taskInfo['table'] = $task->table ?? 'tt_address';
+           $taskInfo['maxAge'] = '86400';
+           $taskInfo['table'] = 'tt_address';
         }
 
         $fieldNames = ['table', 'maxAge'];
