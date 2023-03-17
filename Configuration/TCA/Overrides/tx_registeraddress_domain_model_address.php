@@ -1,4 +1,6 @@
 <?php
+
+/** @noinspection PhpFullyQualifiedNameUsageInspection */
 defined('TYPO3_MODE') or die();
 
 $fields = array(
@@ -21,9 +23,19 @@ $fields = array(
             'eval' => 'trim'
         ),
     ),
+    'registeraddresshash' => array(
+        'exclude' => 0,
+        'label' => 'RegHash',
+        'config' => array(
+            'type'     => 'text',
+            'readOnly' => 1
+        ),
+
+
+    ),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_address', $fields, TRUE);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_address', $fields);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tt_address', 'eigene_anrede', '', 'after:name');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('tt_address', 'eigene_anrede', '', 'after:name');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tt_address', 'consent','','after:description');

@@ -15,11 +15,11 @@ Otherwise your changes will be overwritten the next time you save the extension 
 	<f:then>
 		<f:if condition="{alreadyExists}">
 			<f:then>
-				<p><f:translate key="form.create.alreadyexists" htmlEscape="false" /><br />
+				<p><f:translate key="form.create.alreadyexists" /><br />
 					<f:link.action action="information" arguments="{email: oldAddress.email, uid: oldAddress}" pageUid="{settings.pagewithform}"><f:translate key="form.create.alreadyexistsLinktext" /></f:link.action></p>
 			</f:then>
 			<f:else>
-				<p><f:translate key="form.create.approvetext" htmlEscape="false" arguments="{0: address.email}" /></p>
+				<p><f:translate key="form.create.approvetext" arguments="{0: address.email}" /></p>
 			</f:else>
 		</f:if>
 	</f:then>
