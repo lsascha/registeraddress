@@ -17,13 +17,13 @@
 				<source>Mr</source>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.gender.f" xml:space="preserve">
-				<source>Mrs</source>
+				<source>Ms</source>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.first_name" xml:space="preserve">
 				<source>First name</source>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.middle_name" xml:space="preserve">
-				<source>Middle Vorname</source>
+				<source>Middle name</source>
 			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.last_name" xml:space="preserve">
 				<source>Last name</source>
@@ -41,7 +41,7 @@
 				<source>Dear Mrs </source>
 			</trans-unit>
 			<trans-unit id="salutationgeneration.onlyfirstname" xml:space="preserve">
-				<source>Hallo </source>
+				<source>Hello </source>
 			</trans-unit>
 			<trans-unit id="salutationgeneration.other" xml:space="preserve">
 				<source>Dear Reader</source>
@@ -124,7 +124,7 @@ Please try again.</source>
 				<source>Mr</source>
 			</trans-unit>
 			<trans-unit id="mail.gender.f" xml:space="preserve">
-				<source>Mrs</source>
+				<source>Ms</source>
 			</trans-unit>
 
 			<trans-unit id="mail.info.greet" xml:space="preserve">
@@ -133,8 +133,14 @@ Please try again.</source>
 			<trans-unit id="mail.info.editLinkText" xml:space="preserve">
 				<source>Please click the following link to edit your data:</source>
 			</trans-unit>
+			<trans-unit id="mail.info.editLink" xml:space="preserve">
+				<source>Edit data</source>
+			</trans-unit>
 			<trans-unit id="mail.info.deleteLinkText" xml:space="preserve">
 				<source>Please click the following link to delete your registration:</source>
+			</trans-unit>
+			<trans-unit id="mail.info.deleteLink" xml:space="preserve">
+				<source>Delete registration</source>
 			</trans-unit>
 			<trans-unit id="mail.info.subjectsuffix" xml:space="preserve">
 				<source>Newsletter-Information</source>
@@ -149,11 +155,20 @@ Please try again.</source>
 			<trans-unit id="mail.registration.approveLinkText" xml:space="preserve">
 				<source>Please confirm your subscription by clicking on the following link:</source>
 			</trans-unit>
+			<trans-unit id="mail.registration.approveLink" xml:space="preserve">
+				<source>Confirm subscription</source>
+			</trans-unit>
 			<trans-unit id="mail.registration.deleteLinkText" xml:space="preserve">
 				<source>If you do not want to subscribe for the newsletter, please click the following link:</source>
 			</trans-unit>
+			<trans-unit id="mail.registration.deleteLink" xml:space="preserve">
+				<source>Reject subscription</source>
+			</trans-unit>
 			<trans-unit id="mail.registration.editLinkText" xml:space="preserve">
 				<source>If you want to change your personal data, please click the following link:</source>
+			</trans-unit>
+			<trans-unit id="mail.registration.editLink" xml:space="preserve">
+				<source>Update data</source>
 			</trans-unit>
 			<trans-unit id="mail.registration.subjectsuffix" xml:space="preserve">
 				<source>Newsletter-Subscription</source>
@@ -201,7 +216,6 @@ Please try again.</source>
 			<trans-unit id="mail.registration.consentText" xml:space="preserve">
 				<source>You will apply the following consent.</source>
 			</trans-unit>
-
 
 		</body>
 	</file>

@@ -26,6 +26,7 @@ namespace AFM\Registeraddress\Controller;
  ***************************************************************/
 
 use AFM\Registeraddress\Domain\Model\Address;
+use AFM\Registeraddress\Domain\Repository\AddressRepository;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -53,10 +54,29 @@ class AddressController extends ActionController
     /**
      * addressRepository
      *
-     * @var \AFM\Registeraddress\Domain\Repository\AddressRepository
-     * @inject
+     * @var AddressRepository
      */
     protected $addressRepository;
+
+    public function injectAddressRepository(AddressRepository $addressRepository): void
+    {
+        $this->addressRepository = $addressRepository;
+    }
+
+    /**
+     * persistenceManager
+     *
+     * @var PersistenceManager
+     */
+    protected $persistenceManager;
+
+    /**
+     * @param PersistenceManager $persistenceManager
+     */
+    public function injectPersistenceManager(PersistenceManager $persistenceManager): void
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
 
     /**
      * This creates another stand-alone instance of the Fluid view to render a template
@@ -122,10 +142,10 @@ class AddressController extends ActionController
             ->setSubject($subject);
 
         if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
-            $mail->addPart($bodyHTML, 'text/html');
+            $mail->html($bodyHTML);
         }
         if ($bodyPlain !== '' && $bodyPlain !== NULL ) {
-            $mail->addPart($bodyPlain, 'text/plain');
+            $mail->text($bodyPlain);
         }
 
         return $mail->send();
@@ -235,7 +255,7 @@ class AddressController extends ActionController
      * action form only
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation
      * @return void
      */
     public function formOnlyAction(Address $newAddress = NULL)
@@ -247,7 +267,7 @@ class AddressController extends ActionController
      * action new
      *
      * @param Address $newAddress
-     * @dontvalidate $newAddress
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation
      * @return void
      */
     public function newAction(Address $newAddress = NULL)
@@ -297,8 +317,7 @@ class AddressController extends ActionController
                 LocalizationUtility::translate('mail.registration.subjectsuffix', 'registeraddress')
             );
 
-            $persistenceManager = $this->objectManager->get(PersistenceManager::class);
-            $persistenceManager->persistAll();
+            $this->persistenceManager->persistAll();
         }
 
         $this->view->assign('address', $newAddress);
@@ -381,7 +400,7 @@ class AddressController extends ActionController
      * action approve
      *
      * @param string $hash
-     * @validate $hash NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
      * @param boolean $doApprove
      * @return void
      * @throws \InvalidArgumentException
@@ -401,31 +420,7 @@ class AddressController extends ActionController
             $address->setHidden(false);
             $address->setModuleSysDmailHtml(true);
 
-            // create anrede
-            if ( $address->getLastName() ) {
-                if ($address->getGender() == 'm') {
-                    $eigeneAnrede = LocalizationUtility::translate(
-                        'salutationgeneration.lastname.m',
-                        'registeraddress'
-                    ).$address->getLastName();
-
-                } elseif ($address->getGender() == 'f') {
-                    $eigeneAnrede = LocalizationUtility::translate(
-                        'salutationgeneration.lastname.f',
-                        'registeraddress'
-                    ).$address->getLastName();
-                }
-            } elseif ( $address->getFirstName() ) {
-                $eigeneAnrede = LocalizationUtility::translate(
-                    'salutationgeneration.onlyfirstname',
-                    'registeraddress'
-                ).$address->getFirstName();
-            } else {
-                $eigeneAnrede = LocalizationUtility::translate(
-                    'salutationgeneration.other',
-                    'registeraddress'
-                );
-            }
+            $eigeneAnrede = $this->generateEigeneAnrede($address);
             $address->setEigeneAnrede($eigeneAnrede);
 
             $this->addressRepository->update($address);
@@ -464,8 +459,7 @@ class AddressController extends ActionController
             $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
             $signalSlotDispatcher->dispatch(__CLASS__, 'approveBeforePersist', [$address]);
 
-            $persistenceManager = $this->objectManager->get(PersistenceManager::class);
-            $persistenceManager->persistAll();
+            $this->persistenceManager->persistAll();
         }
 
         $this->view->assign('address', $address);
@@ -476,7 +470,7 @@ class AddressController extends ActionController
      * action edit
      *
      * @param \string $hash
-     * @validate $hash NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
      * @return void
      */
     public function editAction( $hash = NULL )
@@ -509,6 +503,9 @@ class AddressController extends ActionController
         // always save old e-mail address
         $addressOld = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
         $address->setEmail($addressOld->getEmail());
+
+        $eigeneAnrede = $this->generateEigeneAnrede($address);
+        $address->setEigeneAnrede($eigeneAnrede);
 
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);
@@ -550,7 +547,7 @@ class AddressController extends ActionController
      * action delete
      *
      * @param \string $hash
-     * @validate $hash NotEmpty
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
      * @param boolean $doDelete
      * @return void
      * @throws \InvalidArgumentException
@@ -602,5 +599,40 @@ class AddressController extends ActionController
         }
         $this->view->assign('address', $address);
         $this->view->assign('doDelete', $doDelete);
+    }
+
+    /**
+     * Generates content for field eigene_anrede
+     *
+     * @param Address $address
+     * @return string|null
+     */
+    protected function generateEigeneAnrede($address)
+    {
+        if ($address->getLastName()) {
+            if ($address->getGender() === 'm') {
+                $eigeneAnrede = LocalizationUtility::translate(
+                        'salutationgeneration.lastname.m',
+                        'registeraddress'
+                    ) . $address->getLastName();
+
+            } elseif ($address->getGender() === 'f') {
+                $eigeneAnrede = LocalizationUtility::translate(
+                        'salutationgeneration.lastname.f',
+                        'registeraddress'
+                    ) . $address->getLastName();
+            }
+        } elseif ($address->getFirstName()) {
+            $eigeneAnrede = LocalizationUtility::translate(
+                    'salutationgeneration.onlyfirstname',
+                    'registeraddress'
+                ) . $address->getFirstName();
+        } else {
+            $eigeneAnrede = LocalizationUtility::translate(
+                'salutationgeneration.other',
+                'registeraddress'
+            );
+        }
+        return $eigeneAnrede;
     }
 }
