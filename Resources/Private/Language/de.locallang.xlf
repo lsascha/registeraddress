@@ -87,7 +87,7 @@ E-Mail: %3s</target>
 				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
 			<trans-unit id="form.approve.submitButton" xml:space="preserve">
-				<target>zustimmen</target>
+				<target>Zustimmen</target>
 			</trans-unit>
 			<trans-unit id="form.delete.text" xml:space="preserve">
 				<target>Sie sind nun vom Newsletter abgemeldet.</target>
@@ -96,7 +96,7 @@ E-Mail: %3s</target>
 				<target>Adresse konnte nicht in unserer Datenbank gefunden werden.</target>
 			</trans-unit>
 			<trans-unit id="form.delete.submitButton" xml:space="preserve">
-				<target>Dem löschen zustimmen</target>
+				<target>Dem Löschen zustimmen</target>
 			</trans-unit>
 
 			<trans-unit id="form.edit.saveButton" xml:space="preserve">
@@ -117,7 +117,7 @@ Versuchen Sie es bitte erneut.</target>
 			</trans-unit>
 
 			<trans-unit id="mail.registration.errorAction">
-				<target>Failed executing the action.</target>
+				<target>Fehler im Registrierungsformular.</target>
 			</trans-unit>
 
 			<trans-unit id="mail.gender.m" xml:space="preserve">
@@ -133,14 +133,8 @@ Versuchen Sie es bitte erneut.</target>
 			<trans-unit id="mail.info.editLinkText" xml:space="preserve">
 				<target>Bitte klicken Sie folgenden Link, um Ihre Daten zu bearbeiten:</target>
 			</trans-unit>
-			<trans-unit id="mail.info.editLink" xml:space="preserve">
-				<target>Daten bearbeiten</target>
-			</trans-unit>
 			<trans-unit id="mail.info.deleteLinkText" xml:space="preserve">
 				<target>Bitte klicken Sie folgenden Link, um Ihre Anmeldung zu löschen:</target>
-			</trans-unit>
-			<trans-unit id="mail.info.deleteLink" xml:space="preserve">
-				<target>Anmeldung löschen</target>
 			</trans-unit>
 			<trans-unit id="mail.info.subjectsuffix" xml:space="preserve">
 				<target>Newsletter-Information</target>
@@ -155,14 +149,8 @@ Versuchen Sie es bitte erneut.</target>
 			<trans-unit id="mail.registration.approveLinkText" xml:space="preserve">
 				<target>Bitte bestätigen Sie Ihre Anmeldung mit Klick auf folgenden Link:</target>
 			</trans-unit>
-			<trans-unit id="mail.registration.approveLink" xml:space="preserve">
-				<target>Anmeldung bestätigen</target>
-			</trans-unit>
 			<trans-unit id="mail.registration.deleteLinkText" xml:space="preserve">
 				<target>Wenn Sie sich nicht für den Newsletter anmelden wollen, dann klicken Sie bitte folgenden Link:</target>
-			</trans-unit>
-			<trans-unit id="mail.registration.deleteLink" xml:space="preserve">
-				<target>Anmeldung widerrufen</target>
 			</trans-unit>
 			<trans-unit id="mail.registration.editLinkText" xml:space="preserve">
 				<target>Wenn Sie Ihre persönlichen Daten ändern wollen, dann klicken Sie bitte folgenden Link:</target>
@@ -214,7 +202,13 @@ Versuchen Sie es bitte erneut.</target>
 			</trans-unit>
 
 			<trans-unit id="mail.registration.consentText" xml:space="preserve">
-                <target>Sie stimmen den folgenden Bedingungen zu.</target>
+				<source>You will apply the following consent.</source>
+				<target>Sie stimmen den folgenden Bedingungen zu.</target>
+			</trans-unit>
+
+			<trans-unit id="alreadyApproved" xml:space="preserve">
+				<source>Address already approved.</source>
+				<target>Adresse bereits bestätigt.</target>
 			</trans-unit>
 
 		</body>

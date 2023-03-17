@@ -27,6 +27,7 @@ namespace AFM\Registeraddress\Controller;
 
 use AFM\Registeraddress\Domain\Model\Address;
 use AFM\Registeraddress\Domain\Repository\AddressRepository;
+use AFM\Registeraddress\Event\InitializeCreateActionEvent;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -276,6 +277,11 @@ class AddressController extends ActionController
     }
 
 
+    public function initializeCreateAction(): void
+    {
+        $this->eventDispatcher->dispatch(new InitializeCreateActionEvent($this->arguments, $this->request));
+    }
+
     /**
      * action create
      *
@@ -412,11 +418,12 @@ class AddressController extends ActionController
      */
     public function approveAction($hash = NULL, $doApprove = false)
     {
+        /** @var Address $address */
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
 
         $this->view->assign('hash', $hash);
 
-        if ($address && $doApprove) {
+        if ($address && $address->getHidden() && $doApprove) {
             $address->setHidden(false);
             $address->setModuleSysDmailHtml(true);
 
@@ -460,6 +467,8 @@ class AddressController extends ActionController
             $signalSlotDispatcher->dispatch(__CLASS__, 'approveBeforePersist', [$address]);
 
             $this->persistenceManager->persistAll();
+        } else {
+            $this->view->assign('alreadyApproved',true);
         }
 
         $this->view->assign('address', $address);
