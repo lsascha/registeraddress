@@ -155,6 +155,9 @@ Versuchen Sie es bitte erneut.</target>
 			<trans-unit id="mail.registration.editLinkText" xml:space="preserve">
 				<target>Wenn Sie Ihre persönlichen Daten ändern wollen, dann klicken Sie bitte folgenden Link:</target>
 			</trans-unit>
+			<trans-unit id="mail.registration.editLink" xml:space="preserve">
+				<target>Daten bearbeiten</target>
+			</trans-unit>
 			<trans-unit id="mail.registration.subjectsuffix" xml:space="preserve">
 				<target>Newsletter-Registrierung</target>
 			</trans-unit>
