@@ -11,7 +11,6 @@
         "friendsoftypo3/tt-address": ">=3.1.0 <3.2.99"
     },
     "replace": {
-        "registeraddress": "self.version",
         "typo3-ter/registeraddress": "self.version"
     },
     "autoload": {
