@@ -21,6 +21,9 @@
 	"extra": {
 		"typo3/cms": {
 			"extension-key": "registeraddress"
+		},
+		"branch-alias":{
+			"dev-main": "4.1.x-dev"
 		}
 	}
 }
