@@ -24,7 +24,7 @@ namespace AFM\Registeraddress\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -41,7 +41,7 @@ class AddressRepository extends Repository
      * Returns an Object by email address and ignores hidden field.
      *
      * @param string $email
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+     * @return QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
     public function findOneByEmailIgnoreHidden($email)
@@ -60,7 +60,7 @@ class AddressRepository extends Repository
      * Returns an Object by hash and ignores hidden field.
      *
      * @param string $hash
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+     * @return QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
     public function findOneByRegisteraddresshashIgnoreHidden($hash)
@@ -82,7 +82,7 @@ class AddressRepository extends Repository
      * Returns all Objects by hash.
      *
      * @param string $hash
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+     * @return QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
     public function findAllByRegisteraddresshash($hash)
@@ -100,7 +100,7 @@ class AddressRepository extends Repository
      * Returns an Object by hash and ignores hidden field.
      *
      * @param string $uid
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+     * @return QueryResultInterface|array
      *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
      */
     public function findOneByUidIgnoreHidden($uid)

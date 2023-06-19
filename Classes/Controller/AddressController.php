@@ -24,7 +24,14 @@ namespace AFM\Registeraddress\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception\UnsupportedMethodException;
+use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use AFM\Registeraddress\Domain\Model\Address;
 use AFM\Registeraddress\Domain\Repository\AddressRepository;
 use AFM\Registeraddress\Event\InitializeCreateActionEvent;
@@ -84,7 +91,7 @@ class AddressController extends ActionController
      * @param string $templateName the name of the template to use
      * @param string $format the format of the fluid template "html" or "txt"
      * @return StandaloneView the Fluid instance
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws InvalidExtensionNameException
      */
     protected function getPlainRenderer($templateName = 'default', $format = 'txt')
     {
@@ -163,13 +170,13 @@ class AddressController extends ActionController
      * @param string $subjectSuffix
      * @return void
      * @throws \InvalidArgumentException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws InvalidExtensionNameException
      */
     protected function sendResponseMail( string $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
     {
-        $oldSpamProtectSetting = $GLOBALS['TSFE']->spamProtectEmailAddresses;
+        $oldSpamProtectSetting = $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'];
         // disable spamProtectEmailAddresses setting for e-mails
-        $GLOBALS['TSFE']->spamProtectEmailAddresses = 0;
+        $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'] = 0;
 
         $recipients = explode(',', $recipientmails);
 
@@ -226,14 +233,14 @@ class AddressController extends ActionController
         }
 
         // revert spamProtectSettings
-        $GLOBALS['TSFE']->spamProtectEmailAddresses = $oldSpamProtectSetting;
+        $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'] = $oldSpamProtectSetting;
     }
 
 
     /**
      * checks if address already exists
      * @param  string $address address to check
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array returns the already existing address or NULL if it is new
+     * @return QueryResultInterface|array returns the already existing address or NULL if it is new
      */
     private function checkIfAddressExists($address)
     {
@@ -262,24 +269,26 @@ class AddressController extends ActionController
      * action form only
      *
      * @param Address $newAddress
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation
+     * @IgnoreValidation
      * @return void
      */
-    public function formOnlyAction(Address $newAddress = NULL)
+    public function formOnlyAction(Address $newAddress = NULL): ResponseInterface
     {
         $this->view->assign('newAddress', $newAddress);
+        return $this->htmlResponse();
     }
 
     /**
      * action new
      *
      * @param Address $newAddress
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation
+     * @IgnoreValidation
      * @return void
      */
-    public function newAction(Address $newAddress = NULL)
+    public function newAction(Address $newAddress = NULL): ResponseInterface
     {
         $this->view->assign('newAddress', $newAddress);
+        return $this->htmlResponse();
     }
 
 
@@ -296,10 +305,10 @@ class AddressController extends ActionController
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidExtensionNameException
      */
-    public function createAction(Address $newAddress)
+    public function createAction(Address $newAddress): ResponseInterface
     {
         $oldAddress = $this->checkIfAddressExists($newAddress->getEmail());
         if ($oldAddress) {
@@ -333,6 +342,7 @@ class AddressController extends ActionController
         }
 
         $this->view->assign('address', $newAddress);
+        return $this->htmlResponse();
     }
 
     /**
@@ -342,9 +352,9 @@ class AddressController extends ActionController
      * @param integer $uid
      * @return void
      * @throws \InvalidArgumentException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws InvalidExtensionNameException
      */
-    public function informationAction($email, $uid)
+    public function informationAction($email, $uid): ResponseInterface
     {
         $address = $this->addressRepository->findOneByEmailIgnoreHidden($email);
 
@@ -371,6 +381,7 @@ class AddressController extends ActionController
 
             $this->view->assign('address', $address);
         }
+        return $this->htmlResponse();
     }
 
     /**
@@ -379,10 +390,10 @@ class AddressController extends ActionController
      * @param \string $email
      * @return void
      * @throws \InvalidArgumentException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception\UnsupportedMethodException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws UnsupportedMethodException
+     * @throws InvalidExtensionNameException
      */
-    public function unsubscribeFormAction( $email = NULL )
+    public function unsubscribeFormAction( $email = NULL ): ResponseInterface
     {
         $address = $this->addressRepository->findOneByEmail($email);
 
@@ -406,23 +417,24 @@ class AddressController extends ActionController
 
             $this->view->assign('address', $address);
         }
+        return $this->htmlResponse();
     }
 
     /**
      * action approve
      *
      * @param string $hash
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
+     * @Validate("NotEmpty", param="hash")
      * @param boolean $doApprove
      * @return void
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws InvalidExtensionNameException
      */
-    public function approveAction($hash = NULL, $doApprove = false)
+    public function approveAction($hash = NULL, $doApprove = false): ResponseInterface
     {
         /** @var Address $address */
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
@@ -479,16 +491,17 @@ class AddressController extends ActionController
 
         $this->view->assign('address', $address);
         $this->view->assign('doApprove', $doApprove);
+        return $this->htmlResponse();
     }
 
     /**
      * action edit
      *
      * @param \string $hash
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
+     * @Validate("NotEmpty", param="hash")
      * @return void
      */
-    public function editAction( $hash = NULL )
+    public function editAction( $hash = NULL ): ResponseInterface
     {
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
 
@@ -496,6 +509,7 @@ class AddressController extends ActionController
             $this->view->assign('hash', $hash);
             $this->view->assign('address', $address);
         }
+        return $this->htmlResponse();
     }
 
     /**
@@ -505,8 +519,8 @@ class AddressController extends ActionController
      * @return void
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
@@ -562,16 +576,16 @@ class AddressController extends ActionController
      * action delete
      *
      * @param \string $hash
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty", param="hash")
+     * @Validate("NotEmpty", param="hash")
      * @param boolean $doDelete
      * @return void
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidExtensionNameException
      */
-    public function deleteAction($hash = NULL, $doDelete = false)
+    public function deleteAction($hash = NULL, $doDelete = false): ResponseInterface
     {
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
         $this->view->assign('hash', $hash);
@@ -614,6 +628,7 @@ class AddressController extends ActionController
         }
         $this->view->assign('address', $address);
         $this->view->assign('doDelete', $doDelete);
+        return $this->htmlResponse();
     }
 
     /**

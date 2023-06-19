@@ -15,6 +15,7 @@
 
 namespace AFM\Registeraddress\Task;
 
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use AFM\Registeraddress\Task\DeleteHiddenRegistrationsTask;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -89,7 +90,7 @@ class DeleteHiddenRegistrationsTaskAdditionalFieldProvider extends AbstractAddit
     {
         $submittedData['maxAge'] = (int)$submittedData['maxAge'];
         if ($submittedData['maxAge'] < 1) {
-            $this->addMessage($this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.maxAge.invalidMaxAge'), FlashMessage::ERROR);
+            $this->addMessage($this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.maxAge.invalidMaxAge'), AbstractMessage::ERROR);
             $result = false;
         } else {
             $result = true;

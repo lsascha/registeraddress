@@ -33,12 +33,7 @@ class DeleteHiddenRegistrationsService
         $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         $query = $queryBuilder
             ->select('uid','pid','email')
-            ->from($table)
-            ->where(
-                $queryBuilder->expr()->eq($hiddenField, 1),
-                $queryBuilder->expr()->lt('crdate', $limit)
-            )
-            ->execute();
+            ->from($table)->where($queryBuilder->expr()->eq($hiddenField, 1), $queryBuilder->expr()->lt('crdate', $limit))->executeQuery();
         return $query->fetchAllAssociative();
     }
 

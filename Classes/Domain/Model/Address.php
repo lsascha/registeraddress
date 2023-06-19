@@ -25,7 +25,7 @@ namespace AFM\Registeraddress\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -77,8 +77,8 @@ class Address extends AbstractEntity
      * email
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
-     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
+     * @Validate("NotEmpty")
+     * @Validate("EmailAddress")
      */
     protected $email;
 

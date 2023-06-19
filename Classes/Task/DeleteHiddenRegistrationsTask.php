@@ -13,8 +13,7 @@ namespace AFM\Registeraddress\Task;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
-
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use AFM\Registeraddress\Service\DeleteHiddenRegistrationsService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -63,7 +62,7 @@ class DeleteHiddenRegistrationsTask extends AbstractTask
                         $countDeletedEntries
                     ),
                     $this->getLanguageService()->sL('LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:scheduler.deleteSuccessTitle'),
-                    FlashMessage::OK
+                    AbstractMessage::OK
                 )
             );
         }

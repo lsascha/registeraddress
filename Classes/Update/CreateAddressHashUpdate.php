@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AFM\Registeraddress\Update;
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -17,7 +18,7 @@ class CreateAddressHashUpdate implements UpgradeWizardInterface
 
     public function __construct()
     {
-        $this->queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+        $this->queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tt_address');
         $this->queryBuilder->getRestrictions()
             ->removeAll()
@@ -48,9 +49,7 @@ class CreateAddressHashUpdate implements UpgradeWizardInterface
                     'registeraddresshash',
                     $this->queryBuilder->createNamedParameter('')
                 )
-            )
-            ->groupBy('uid')
-            ->execute()->fetchAll();
+            )->groupBy('uid')->executeQuery()->fetchAll();
 
         foreach ($addresslist as $fixAddress) {
             $content .= 'Updating tt_address uid:' . $fixAddress['uid'] . PHP_EOL;
@@ -59,14 +58,10 @@ class CreateAddressHashUpdate implements UpgradeWizardInterface
             $regHash = sha1($fixAddress['email'] . $rnd);
 
             $this->queryBuilder->update('tt_address')
-                ->set('registeraddresshash', $regHash)
-                ->where(
-                    $this->queryBuilder->expr()->eq(
-                        'uid',
-                        $this->queryBuilder->createNamedParameter($fixAddress['uid'])
-                    )
-                )
-                ->execute();
+                ->set('registeraddresshash', $regHash)->where($this->queryBuilder->expr()->eq(
+                'uid',
+                $this->queryBuilder->createNamedParameter($fixAddress['uid'])
+            ))->executeStatement();
         }
         return true;
     }
@@ -74,14 +69,10 @@ class CreateAddressHashUpdate implements UpgradeWizardInterface
     public function updateNecessary(): bool
     {
         return (bool)$this->queryBuilder->count('uid')
-            ->from('tt_address')
-            ->where(
-                $this->queryBuilder->expr()->eq(
-                    'registeraddresshash',
-                    $this->queryBuilder->createNamedParameter('')
-                )
-            )
-            ->execute()
+            ->from('tt_address')->where($this->queryBuilder->expr()->eq(
+            'registeraddresshash',
+            $this->queryBuilder->createNamedParameter('')
+        ))->executeQuery()
             ->fetchFirstColumn();
     }
 
