@@ -95,27 +95,17 @@ class AddressController extends ActionController
      */
     protected function getPlainRenderer($templateName = 'default', $format = 'txt')
     {
-        $view = $this->objectManager->get(StandaloneView::class);
-        $view->getRequest()->setControllerExtensionName('registeraddress');
+        $view = GeneralUtility::makeInstance(StandaloneView::class);
+        $view->setRequest($this->request);
         $view->setFormat($format);
-
 
         // find plugin view configuration
         $frameworkConfiguration = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
 
-        // find partial paths from plugin configuration
-        $partialPaths = $this->getViewProperty($frameworkConfiguration, 'partialRootPaths');
-        // set configured partialPaths so they can be overwritten
-        $view->setPartialRootPaths($partialPaths);
-
-        $templatePaths = $this->getViewProperty($frameworkConfiguration, 'templateRootPaths');
-        $view->setTemplateRootPaths($templatePaths); // set configured TemplateRootPaths from plugin
-
-        $layoutPaths = $this->getViewProperty($frameworkConfiguration, 'layoutRootPaths');
-        $view->setLayoutRootPaths($layoutPaths);
-
+        // find paths from plugin configuration
+        $view->getTemplatePaths()->fillFromConfigurationArray($frameworkConfiguration['view']);
 
         $view->setTemplate($templateName);
 
@@ -174,7 +164,7 @@ class AddressController extends ActionController
      */
     protected function sendResponseMail( string $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
     {
-        $oldSpamProtectSetting = $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'];
+        $oldSpamProtectSetting = $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'] ?? '';
         // disable spamProtectEmailAddresses setting for e-mails
         $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'] = 0;
 
@@ -434,7 +424,7 @@ class AddressController extends ActionController
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws InvalidExtensionNameException
      */
-    public function approveAction($hash = NULL, $doApprove = false): ResponseInterface
+    public function approveAction(string $hash = '', bool $doApprove = false): ResponseInterface
     {
         /** @var Address $address */
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
@@ -501,7 +491,7 @@ class AddressController extends ActionController
      * @Validate("NotEmpty", param="hash")
      * @return void
      */
-    public function editAction( $hash = NULL ): ResponseInterface
+    public function editAction(string $hash = '' ): ResponseInterface
     {
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
 
@@ -585,7 +575,7 @@ class AddressController extends ActionController
      * @throws IllegalObjectTypeException
      * @throws InvalidExtensionNameException
      */
-    public function deleteAction($hash = NULL, $doDelete = false): ResponseInterface
+    public function deleteAction(string $hash = '', $doDelete = false): ResponseInterface
     {
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
         $this->view->assign('hash', $hash);
