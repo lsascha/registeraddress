@@ -24,6 +24,11 @@ namespace AFM\Registeraddress\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use AFM\Registeraddress\Event\ApproveBeforePersistEvent;
+use AFM\Registeraddress\Event\CreateBeforePersistEvent;
+use AFM\Registeraddress\Event\DeleteBeforePersistEvent;
+use AFM\Registeraddress\Event\UpdateBeforePersistEvent;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
@@ -41,7 +46,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
@@ -293,8 +297,6 @@ class AddressController extends ActionController
      * @param Address $newAddress
      * @return void
      * @throws \InvalidArgumentException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws IllegalObjectTypeException
      * @throws InvalidExtensionNameException
      */
@@ -317,8 +319,7 @@ class AddressController extends ActionController
                 'hash' => $regHash
             ];
 
-            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-            $signalSlotDispatcher->dispatch(__CLASS__, 'createBeforePersist', [$newAddress]);
+            $this->eventDispatcher->dispatch(new CreateBeforePersistEvent($newAddress));
 
             $this->sendResponseMail(
                 $newAddress->getEmail(),
@@ -418,10 +419,8 @@ class AddressController extends ActionController
      * @param boolean $doApprove
      * @return void
      * @throws \InvalidArgumentException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws InvalidExtensionNameException
      */
     public function approveAction(string $hash = '', bool $doApprove = false): ResponseInterface
@@ -471,8 +470,7 @@ class AddressController extends ActionController
 
             }
 
-            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-            $signalSlotDispatcher->dispatch(__CLASS__, 'approveBeforePersist', [$address]);
+            $this->eventDispatcher->dispatch(new ApproveBeforePersistEvent($address));
 
             $this->persistenceManager->persistAll();
         } else {
@@ -511,8 +509,6 @@ class AddressController extends ActionController
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
     public function updateAction(Address $address)
@@ -526,8 +522,7 @@ class AddressController extends ActionController
         $eigeneAnrede = $this->generateEigeneAnrede($address);
         $address->setEigeneAnrede($eigeneAnrede);
 
-        $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        $signalSlotDispatcher->dispatch(__CLASS__, 'updateBeforePersist', [$address]);
+        $this->eventDispatcher->dispatch(new UpdateBeforePersistEvent($address));
 
         // send email to admin with updated data
         if ($this->settings['adminmail'] && !empty($this->settings['updateSubject'])) {
@@ -570,8 +565,6 @@ class AddressController extends ActionController
      * @param boolean $doDelete
      * @return void
      * @throws \InvalidArgumentException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws IllegalObjectTypeException
      * @throws InvalidExtensionNameException
      */
@@ -610,8 +603,7 @@ class AddressController extends ActionController
                     $subject
                 );
             }
-            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-            $signalSlotDispatcher->dispatch(__CLASS__, 'deleteBeforePersist', [$address]);
+            $this->eventDispatcher->dispatch(new DeleteBeforePersistEvent($address));
 
             $this->addressRepository->remove($address);
 
