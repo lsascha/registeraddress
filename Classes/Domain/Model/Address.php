@@ -125,6 +125,13 @@ class Address extends AbstractEntity
     protected $consent;
 
     /**
+     * Title
+     *
+     * @var string
+     */
+    protected $title;
+
+    /**
      * Returns the name
      *
      * @return string
@@ -362,6 +369,22 @@ class Address extends AbstractEntity
     public function setConsent($consent)
     {
         $this->consent = $consent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
 

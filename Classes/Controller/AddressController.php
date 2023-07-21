@@ -621,18 +621,19 @@ class AddressController extends ActionController
      */
     protected function generateEigeneAnrede($address)
     {
+        $title = $address->getTitle() ? $address->getTitle() . ' ' : '';
         if ($address->getLastName()) {
             if ($address->getGender() === 'm') {
                 $eigeneAnrede = LocalizationUtility::translate(
                         'salutationgeneration.lastname.m',
                         'registeraddress'
-                    ) . $address->getLastName();
+                    ) . $title . $address->getLastName();
 
             } elseif ($address->getGender() === 'f') {
                 $eigeneAnrede = LocalizationUtility::translate(
                         'salutationgeneration.lastname.f',
                         'registeraddress'
-                    ) . $address->getLastName();
+                    ) . $title . $address->getLastName();
             }
         } elseif ($address->getFirstName()) {
             $eigeneAnrede = LocalizationUtility::translate(
@@ -645,6 +646,6 @@ class AddressController extends ActionController
                 'registeraddress'
             );
         }
-        return $eigeneAnrede;
+        return $eigeneAnrede ?? '';
     }
 }

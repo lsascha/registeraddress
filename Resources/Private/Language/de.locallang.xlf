@@ -19,6 +19,9 @@
 			<trans-unit id="tx_registeraddress_domain_model_address.gender.f" xml:space="preserve">
 				<target>Frau</target>
 			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.title" xml:space="preserve">
+				<target>Titel</target>
+			</trans-unit>
 			<trans-unit id="tx_registeraddress_domain_model_address.first_name" xml:space="preserve">
 				<target>Vorname</target>
 			</trans-unit>

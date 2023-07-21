@@ -11,6 +11,9 @@ return [
             'gender' => [
                 'fieldName' => 'gender'
             ],
+            'title' => [
+                'fieldName' => 'title'
+            ],
             'firstName' => [
                 'fieldName' => 'first_name'
             ],

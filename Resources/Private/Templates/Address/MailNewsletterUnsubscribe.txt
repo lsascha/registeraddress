@@ -1,4 +1,4 @@
-{f:translate(key:'mail.info.greet')} {f:translate(key:'mail.gender.{address.gender}')} {address.firstName} {address.lastName}
+{f:translate(key:'mail.info.greet')} {f:translate(key:'mail.gender.{address.gender}')} {f:if(condition:address.title,then:'{address.title} ')}{address.firstName} {address.lastName}
 
 {f:translate(key:'mail.info.deleteLinkText')}
 {f:uri.action(action: 'delete', arguments: {hash: hash}, controller: 'Address', extensionName: 'registeraddress', pluginName: 'registerform',  pageUid: settings.pagewithform, absolute: 1) -> f:format.htmlentitiesDecode()}
