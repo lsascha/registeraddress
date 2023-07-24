@@ -132,6 +132,13 @@ class Address extends AbstractEntity
     protected $title;
 
     /**
+     * Organisation
+     *
+     * @var string
+     */
+    protected $organisation;
+
+    /**
      * Returns the name
      *
      * @return string
@@ -387,5 +394,20 @@ class Address extends AbstractEntity
         $this->title = $title;
     }
 
+    /**
+     * @return string
+     */
+    public function getOrganisation(): string
+    {
+        return $this->organisation;
+    }
+
+    /**
+     * @param string $organisation
+     */
+    public function setOrganisation(string $organisation): void
+    {
+        $this->organisation = $organisation;
+    }
 
 }

@@ -37,6 +37,9 @@
 			<trans-unit id="tx_registeraddress_domain_model_address.email.placeholder" xml:space="preserve">
 				<source>E-mail address</source>
 			</trans-unit>
+			<trans-unit id="tx_registeraddress_domain_model_address.organisation" xml:space="preserve">
+				<source>Organisation</source>
+			</trans-unit>
 			<trans-unit id="salutationgeneration.lastname.m" xml:space="preserve">
 				<source>Dear Mr </source>
 			</trans-unit>
