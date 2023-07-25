@@ -1,40 +1,41 @@
+# customsubcategory=general=General
 plugin.tx_registeraddress {
 	view {
-		# cat=plugin.tx_registeraddress/file; type=string; label=Path to template root (FE)
+		# cat=plugin.tx_registeraddress/file/5; type=string; label=Path to template root (FE)
 		templateRootPath = EXT:registeraddress/Resources/Private/Templates/
-		# cat=plugin.tx_registeraddress/file; type=string; label=Path to template partials (FE)
+		# cat=plugin.tx_registeraddress/file/6; type=string; label=Path to template partials (FE)
 		partialRootPath = EXT:registeraddress/Resources/Private/Partials/
-		# cat=plugin.tx_registeraddress/file; type=string; label=Path to template layouts (FE)
+		# cat=plugin.tx_registeraddress/file/7; type=string; label=Path to template layouts (FE)
 		layoutRootPath = EXT:registeraddress/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.tx_registeraddress//a; type=string; label=Default storage PID
+		# cat=plugin.tx_registeraddress/general/10; type=string; label=Default storage PID
 		storagePid =
 	}
 	settings {
-		# cat=plugin.tx_registeraddress//a; type=string; label=Admin email
+		# cat=plugin.tx_registeraddress/general/20; type=string; label=Admin email
 		adminmail =
-		# cat=plugin.tx_registeraddress//a; type=int; label=Page id with form
+		# cat=plugin.tx_registeraddress/general/30; type=int; label=Page id with form
 		pagewithform =
-		# cat=plugin.tx_registeraddress//a; type=string; label=Mail address from which mails are send
+		# cat=plugin.tx_registeraddress/general/40; type=string; label=Mail address from which mails are send
 		sendermail =
-		# cat=plugin.tx_registeraddress//a; type=string; label=Name from which mails are send
+		# cat=plugin.tx_registeraddress/general/50; type=string; label=Name from which mails are send
 		sendername = Webserver
-		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of response mail
+		# cat=plugin.tx_registeraddress/general/60; type=string; label=Subject of response mail
 		responseSubject = Newsletter
-		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of delete mail
+		# cat=plugin.tx_registeraddress/general/70; type=string; label=Subject of delete mail
 		deleteSubject = Newsletter Benutzer abgemeldet
-		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of approve mail
+		# cat=plugin.tx_registeraddress/general/80; type=string; label=Subject of approve mail
 		approveSubject = Newsletter Benutzer angemeldet
-		# cat=plugin.tx_registeraddress//a; type=string; label=Subject of update mail
+		# cat=plugin.tx_registeraddress/general/90; type=string; label=Subject of update mail
 		updateSubject = Newsletter Benutzer aktualisiert
-		# cat=plugin.tx_registeraddress//a; type=options[txt,html,both]; label=format of send e-mails (txt, html or both)
+		# cat=plugin.tx_registeraddress/general/100; type=options[txt,html,both]; label=format of send e-mails (txt, html or both)
 		mailformat = txt
-		# cat=plugin.tx_registeraddress//a; type=boolean; label=Send mail to User after successfully deleting or approving
+		# cat=plugin.tx_registeraddress/general/110; type=boolean; label=Send mail to User after successfully deleting or approving
 		sendDeleteApproveMails = 1
-		# cat=plugin.tx_registeraddress//a; type=string; label=Mail address for replyTo
+		# cat=plugin.tx_registeraddress/general/120; type=string; label=Mail address for replyTo
 		replyTo =
-		# cat=plugin.tx_registeraddress//a; type=string; label=Mail address for returnPath
+		# cat=plugin.tx_registeraddress/general/130; type=string; label=Mail address for returnPath
 		returnPath =
 	}
 }
