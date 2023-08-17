@@ -157,8 +157,8 @@ class AddressController extends ActionController
     /** @noinspection MoreThanThreeArgumentsInspection */
     /**
      * sends an e-mail to users
-     * @param string $recipientmails
      * @param string $templateName
+     * @param string $recipientmails
      * @param array $data
      * @param string $type
      * @param string $subjectSuffix
@@ -166,7 +166,7 @@ class AddressController extends ActionController
      * @throws \InvalidArgumentException
      * @throws InvalidExtensionNameException
      */
-    protected function sendResponseMail( string $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
+    protected function sendResponseMail( string $templateName, string $recipientmails = '', array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
     {
         $oldSpamProtectSetting = $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'] ?? '';
         // disable spamProtectEmailAddresses setting for e-mails
