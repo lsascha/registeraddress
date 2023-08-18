@@ -322,8 +322,8 @@ class AddressController extends ActionController
             $this->eventDispatcher->dispatch(new CreateBeforePersistEvent($newAddress));
 
             $this->sendResponseMail(
-                $newAddress->getEmail(),
                 'Address/MailNewsletterRegistration',
+                $newAddress->getEmail(),
                 $data,
                 $this->settings['mailformat'],
                 LocalizationUtility::translate('mail.registration.subjectsuffix', 'registeraddress')
@@ -363,8 +363,8 @@ class AddressController extends ActionController
                 $mailTemplate = 'Address/MailNewsletterInformation';
             }
             $this->sendResponseMail(
-                $address->getEmail(),
                 $mailTemplate,
+                $address->getEmail(),
                 $data,
                 $this->settings['mailformat'],
                 LocalizationUtility::translate('mail.info.subjectsuffix', 'registeraddress')
@@ -399,8 +399,8 @@ class AddressController extends ActionController
 
             $mailTemplate = 'Address/MailNewsletterUnsubscribe';
             $this->sendResponseMail(
-                $address->getEmail(),
                 $mailTemplate,
+                $address->getEmail(),
                 $data,
                 $this->settings['mailformat'],
                 LocalizationUtility::translate('mail.unsubscribe.subjectsuffix', 'registeraddress')
@@ -444,8 +444,8 @@ class AddressController extends ActionController
                     'address' => $address
                 ];
                 $this->sendResponseMail(
-                    $address->getEmail(),
                     'Address/MailNewsletterApproveSuccess',
+                    $address->getEmail(),
                     $data,
                     $this->settings['mailformat'],
                     LocalizationUtility::translate(
@@ -461,8 +461,8 @@ class AddressController extends ActionController
                 $subject = $this->settings['approveSubject'];
 
                 $this->sendResponseMail(
-                    $adminRecipient,
                     'Address/Admin/MailAdminApprove',
+                    $adminRecipient,
                     ['address' => $address],
                     self::MAILFORMAT_TXT,
                     $subject
@@ -530,8 +530,8 @@ class AddressController extends ActionController
             $subject = $this->settings['updateSubject'];
 
             $this->sendResponseMail(
-                $adminRecipient,
                 'Address/Admin/MailAdminUpdate',
+                $adminRecipient,
                 ['address' => $address],
                 self::MAILFORMAT_TXT,
                 $subject
@@ -580,8 +580,8 @@ class AddressController extends ActionController
                     'address' => $address
                 ];
                 $this->sendResponseMail(
-                    $address->getEmail(),
                     'Address/MailNewsletterDeleteSuccess',
+                    $address->getEmail(),
                     $data,
                     $this->settings['mailformat'],
                     LocalizationUtility::translate(
@@ -596,8 +596,8 @@ class AddressController extends ActionController
                 $subject = $this->settings['deleteSubject'];
 
                 $this->sendResponseMail(
-                    $adminRecipient,
                     'Address/Admin/MailAdminDelete',
+                    $adminRecipient,
                     ['address' => $address],
                     self::MAILFORMAT_TXT,
                     $subject
