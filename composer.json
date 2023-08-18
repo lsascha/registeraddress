@@ -5,6 +5,18 @@
     "support": {
         "issues": "https://github.com/lsascha/registeraddress/issues"
     },
+  "authors": [
+    {
+      "name": "Sascha Löffler",
+      "role": "Developer",
+      "email": "lsascha@gmail.com"
+    },
+    {
+      "name": "Undkonsorten",
+      "email": "kontakt@undkonsorten.com",
+      "homepage": "https://www.undkonsorten.com"
+    }
+  ],
     "require": {
         "typo3/cms-core": "^11.5 || ^12.4",
 		"php": "^7.4 || ^8.0",
