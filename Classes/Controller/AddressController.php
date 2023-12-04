@@ -125,11 +125,11 @@ class AddressController extends ActionController
      * @param string $subject
      * @param string $bodyHTML
      * @param string $bodyPlain
-     * @param array $replyTo
+     * @param string $returnPath
+     * @param array|null $replyTo
      * @return integer the number of recipients who were accepted for delivery
-     * @throws \InvalidArgumentException
      */
-    protected function sendEmail(array $recipient, array $from, $subject, $bodyHTML = '', $bodyPlain = '', array $replyTo = NULL)
+    protected function sendEmail(array $recipient, array $from, string $subject, string $bodyHTML = '', string $bodyPlain = '', string $returnPath = '', array $replyTo = NULL)
     {
 
         if ($replyTo == NULL) {
@@ -140,7 +140,8 @@ class AddressController extends ActionController
             ->setTo($recipient)
             ->setFrom($from)
             ->setReplyTo($replyTo)
-            ->setSubject($subject);
+            ->setSubject($subject)
+            ->setSender($returnPath);
 
         if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
             $mail->html($bodyHTML);
@@ -157,14 +158,14 @@ class AddressController extends ActionController
      * sends an e-mail to users
      * @param string $recipientmails
      * @param string $templateName
-     * @param array $data
+     * @param array|null $data
      * @param string $type
      * @param string $subjectSuffix
      * @return void
      * @throws \InvalidArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      */
-    protected function sendResponseMail( $recipientmails = '', $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
+    protected function sendResponseMail( string $recipientmails = '', string $templateName, array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
     {
         $oldSpamProtectSetting = $GLOBALS['TSFE']->spamProtectEmailAddresses;
         // disable spamProtectEmailAddresses setting for e-mails
@@ -174,6 +175,9 @@ class AddressController extends ActionController
 
         $from = [$this->settings['sendermail'] => $this->settings['sendername']];
         $subject = $this->settings['responseSubject'];
+
+        $replyTo = GeneralUtility::trimExplode(',',$this->settings['replyTo']);
+        $returnPath = $this->settings['returnPath'];
 
         // add suffix to subject if set
         if ($subjectSuffix != '') {
@@ -215,7 +219,9 @@ class AddressController extends ActionController
                 $from,
                 $subject,
                 $mailHtml,
-                $mailText
+                $mailText,
+                $returnPath,
+                $replyTo
             );
         }
 
