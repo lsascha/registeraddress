@@ -244,22 +244,6 @@ class AddressController extends ActionController
     }
 
     /**
-     * error action
-     * @return null|string
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     */
-    protected function errorAction()
-    {
-        $this->forwardToReferringRequest();
-
-        $errorMessage = LocalizationUtility::translate(
-            'mail.registration.errorAction',
-            'registeraddress'
-        );
-        return !$errorMessage ? 'Failed executing the action.' : $errorMessage;
-    }
-
-    /**
      * action form only
      *
      * @param Address $newAddress
