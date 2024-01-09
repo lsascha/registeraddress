@@ -132,17 +132,18 @@ class AddressController extends ActionController
      */
     protected function sendEmail(array $recipient, array $from, $subject, $bodyHTML = '', $bodyPlain = '', string $returnPath = '', array $replyTo = NULL)
     {
-
-        if ($replyTo == NULL) {
-            $replyTo = $from;
-        }
         $mail = GeneralUtility::makeInstance(MailMessage::class);
         $mail
             ->setTo($recipient)
             ->setFrom($from)
-            ->setReplyTo($replyTo)
-            ->setSubject($subject)
-            ->setReturnPath($returnPath);
+            ->setSubject($subject);
+
+        if (!empty(array_filter($replyTo ?? []))) {
+            $mail->setReplyTo($replyTo);
+        }
+        if ($returnPath) {
+            $mail->setReturnPath($returnPath);
+        }
 
         if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
             $mail->html($bodyHTML);
