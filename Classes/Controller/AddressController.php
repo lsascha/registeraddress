@@ -106,6 +106,8 @@ class AddressController extends ActionController
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         if ($versionInformation->getMajorVersion() > 11) {
             $view->setRequest($this->request);
+        } else {
+            $view->getRequest()->setControllerExtensionName('registeraddress');
         }
         $view->setFormat($format);
 
