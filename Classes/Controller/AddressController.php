@@ -29,6 +29,7 @@ use AFM\Registeraddress\Event\ApproveBeforePersistEvent;
 use AFM\Registeraddress\Event\CreateBeforePersistEvent;
 use AFM\Registeraddress\Event\DeleteBeforePersistEvent;
 use AFM\Registeraddress\Event\UpdateBeforePersistEvent;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
@@ -46,6 +47,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
@@ -99,8 +101,12 @@ class AddressController extends ActionController
      */
     protected function getPlainRenderer($templateName = 'default', $format = 'txt')
     {
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+
         $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setRequest($this->request);
+        if ($versionInformation->getMajorVersion() > 11) {
+            $view->setRequest($this->request);
+        }
         $view->setFormat($format);
 
         // find plugin view configuration
