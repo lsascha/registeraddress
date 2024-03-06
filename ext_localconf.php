@@ -49,12 +49,5 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
     )
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\AFM\Registeraddress\Task\DeleteHiddenRegistrationsTask::class] = [
-    'extension' => 'registeraddress',
-    'title' => 'DeleteHiddenRegistrations',
-    'description' => 'Delete old, hidden registrations',
-    'additionalFields' => \AFM\Registeraddress\Task\DeleteHiddenRegistrationsTaskAdditionalFieldProvider::class,
-];
-
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['registeraddress_createAddressHash']
     = \AFM\Registeraddress\Update\CreateAddressHashUpdate::class;
