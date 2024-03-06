@@ -6,6 +6,8 @@ services:
 
   AFM\Registeraddress\:
     resource: '../Classes/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
 
   AFM\Registeraddress\Command\DeleteHiddenRegistrationsCommand:
     tags:
