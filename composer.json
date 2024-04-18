@@ -20,7 +20,7 @@
     "require": {
         "typo3/cms-core": "^11.5 || ^12.4",
 		"php": "^7.4 || ^8.0",
-		"friendsoftypo3/tt-address": "^5.2 || ^6.1 || ^7.0",
+		"friendsoftypo3/tt-address": "^5.2 || ^6.1 || ^7.0 || ^8.0",
 		"symfony/console": "^5.4 || ^6.0 || ^7"
 	},
     "replace": {

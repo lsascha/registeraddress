@@ -23,7 +23,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'constraints' => array(
 		'depends' => array(
 			'typo3' => '11.5.0 - 12.9.99',
-			'tt_address' => '5.2.0-7.99.99',
+			'tt_address' => '5.2.0-8.99.99',
 		),
 		'conflicts' => array(
 		),
