@@ -67,10 +67,8 @@ class AddressRepository extends Repository
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-        //$query->getQuerySettings()->setRespectStoragePage(FALSE);
         //@todo decide if tca defaults maybe better solution (set sys_language_uid to "-1")
         $query->getQuerySettings()->setRespectSysLanguage(FALSE);
-        $query->getQuerySettings()->setLanguageOverlayMode(FALSE);
         $query->matching(
             $query->equals('registeraddresshash', $hash )
         );
