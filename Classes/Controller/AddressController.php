@@ -29,7 +29,6 @@ use AFM\Registeraddress\Event\ApproveBeforePersistEvent;
 use AFM\Registeraddress\Event\CreateBeforePersistEvent;
 use AFM\Registeraddress\Event\DeleteBeforePersistEvent;
 use AFM\Registeraddress\Event\UpdateBeforePersistEvent;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
@@ -42,12 +41,10 @@ use AFM\Registeraddress\Domain\Model\Address;
 use AFM\Registeraddress\Domain\Repository\AddressRepository;
 use AFM\Registeraddress\Event\InitializeCreateActionEvent;
 use TYPO3\CMS\Core\Mail\MailMessage;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
@@ -94,27 +91,20 @@ class AddressController extends ActionController
      */
     protected function getPlainRenderer($templateName = 'default', $format = 'txt')
     {
-        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
-
         $view = GeneralUtility::makeInstance(StandaloneView::class);
-        if ($versionInformation->getMajorVersion() > 11) {
-            $view->setRequest($this->request);
-        } else {
-            $view->getRequest()->setControllerExtensionName('registeraddress');
-        }
+        $view->setRequest($this->request);
         $view->setFormat($format);
 
         // find plugin view configuration
         $frameworkConfiguration = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
-
         // find paths from plugin configuration
-        $view->getTemplatePaths()->fillFromConfigurationArray($frameworkConfiguration['view']);
+        $view->getRenderingContext()->getTemplatePaths()->fillFromConfigurationArray($frameworkConfiguration['view']);
 
         $view->setTemplate($templateName);
-
         $view->assign('settings', $this->settings);
+
         return $view;
     }
 
