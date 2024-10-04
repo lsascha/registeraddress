@@ -77,9 +77,9 @@ class Address extends AbstractEntity
      * email
      *
      * @var string
-     * @Validate("NotEmpty")
-     * @Validate("EmailAddress")
      */
+    #[Validate(['validator' => 'NotEmpty'])]
+    #[Validate(['validator' => 'EmailAddress'])]
     protected $email;
 
     /**
@@ -154,7 +154,7 @@ class Address extends AbstractEntity
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -175,7 +175,7 @@ class Address extends AbstractEntity
      * @param string $gender
      * @return void
      */
-    public function setGender($gender)
+    public function setGender($gender): void
     {
         $this->gender = $gender;
     }
@@ -196,7 +196,7 @@ class Address extends AbstractEntity
      * @param string $firstName
      * @return void
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -217,7 +217,7 @@ class Address extends AbstractEntity
      * @param string $middleName
      * @return void
      */
-    public function setMiddleName($middleName)
+    public function setMiddleName($middleName): void
     {
         $this->middleName = $middleName;
     }
@@ -238,7 +238,7 @@ class Address extends AbstractEntity
      * @param string $lastName
      * @return void
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): void
     {
         $this->lastName = $lastName;
     }
@@ -259,7 +259,7 @@ class Address extends AbstractEntity
      * @param string $email
      * @return void
      */
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -280,7 +280,7 @@ class Address extends AbstractEntity
      * @param string $registeraddresshash
      * @return void
      */
-    public function setRegisteraddresshash($registeraddresshash)
+    public function setRegisteraddresshash($registeraddresshash): void
     {
         $this->registeraddresshash = $registeraddresshash;
     }
@@ -291,7 +291,7 @@ class Address extends AbstractEntity
      * @param boolean $hidden
      * @return void
      */
-    public function setHidden($hidden)
+    public function setHidden($hidden): void
     {
         $this->hidden = ($hidden ? true : false);
     }
@@ -312,7 +312,7 @@ class Address extends AbstractEntity
      * @param boolean $moduleSysDmailHtml
      * @return void
      */
-    public function setModuleSysDmailHtml($moduleSysDmailHtml)
+    public function setModuleSysDmailHtml($moduleSysDmailHtml): void
     {
         $this->moduleSysDmailHtml = ($moduleSysDmailHtml ? true : false);
     }
@@ -344,7 +344,7 @@ class Address extends AbstractEntity
      * @param string $eigeneAnrede
      * @return void
      */
-    public function setEigeneAnrede($eigeneAnrede)
+    public function setEigeneAnrede($eigeneAnrede): void
     {
         $this->eigeneAnrede = $eigeneAnrede;
 
@@ -357,7 +357,7 @@ class Address extends AbstractEntity
      * @param string $txDirectmailsubscriptionLocalgender
      * @return void
      */
-    public function setTxDirectmailsubscriptionLocalgender($txDirectmailsubscriptionLocalgender)
+    public function setTxDirectmailsubscriptionLocalgender($txDirectmailsubscriptionLocalgender): void
     {
         $this->txDirectmailsubscriptionLocalgender = $txDirectmailsubscriptionLocalgender;
     }
@@ -373,7 +373,7 @@ class Address extends AbstractEntity
     /**
      * @param string $consent
      */
-    public function setConsent($consent)
+    public function setConsent($consent): void
     {
         $this->consent = $consent;
     }

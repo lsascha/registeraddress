@@ -72,9 +72,10 @@ class AddressController extends ActionController
      */
     protected $addressRepository;
 
-    public function injectAddressRepository(AddressRepository $addressRepository): void
+    public function __construct(\AFM\Registeraddress\Domain\Repository\AddressRepository $addressRepository, \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager)
     {
         $this->addressRepository = $addressRepository;
+        $this->persistenceManager = $persistenceManager;
     }
 
     /**
@@ -83,14 +84,6 @@ class AddressController extends ActionController
      * @var PersistenceManager
      */
     protected $persistenceManager;
-
-    /**
-     * @param PersistenceManager $persistenceManager
-     */
-    public function injectPersistenceManager(PersistenceManager $persistenceManager): void
-    {
-        $this->persistenceManager = $persistenceManager;
-    }
 
     /**
      * This creates another stand-alone instance of the Fluid view to render a template
@@ -256,9 +249,9 @@ class AddressController extends ActionController
      * action form only
      *
      * @param Address $newAddress
-     * @IgnoreValidation
      * @return void
      */
+    #[IgnoreValidation([])]
     public function formOnlyAction(Address $newAddress = NULL): ResponseInterface
     {
         $this->view->assign('newAddress', $newAddress);
@@ -269,9 +262,9 @@ class AddressController extends ActionController
      * action new
      *
      * @param Address $newAddress
-     * @IgnoreValidation
      * @return void
      */
+    #[IgnoreValidation([])]
     public function newAction(Address $newAddress = NULL): ResponseInterface
     {
         $this->view->assign('newAddress', $newAddress);
@@ -408,7 +401,6 @@ class AddressController extends ActionController
      * action approve
      *
      * @param string $hash
-     * @Validate("NotEmpty", param="hash")
      * @param boolean $doApprove
      * @return void
      * @throws \InvalidArgumentException
@@ -416,6 +408,7 @@ class AddressController extends ActionController
      * @throws UnknownObjectException
      * @throws InvalidExtensionNameException
      */
+    #[Validate(['validator' => 'NotEmpty', 'param' => 'hash'])]
     public function approveAction(string $hash = '', bool $doApprove = false): ResponseInterface
     {
         /** @var Address $address */
@@ -479,9 +472,9 @@ class AddressController extends ActionController
      * action edit
      *
      * @param \string $hash
-     * @Validate("NotEmpty", param="hash")
      * @return void
      */
+    #[Validate(['validator' => 'NotEmpty', 'param' => 'hash'])]
     public function editAction(string $hash = '' ): ResponseInterface
     {
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);
@@ -504,7 +497,7 @@ class AddressController extends ActionController
      * @throws UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
-    public function updateAction(Address $address)
+    public function updateAction(Address $address): void
     {
         $hash = $address->getRegisteraddresshash();
 
@@ -535,7 +528,7 @@ class AddressController extends ActionController
 
         // Reset internal messages
         $flashMessageQueue = $this->controllerContext->getFlashMessageQueue();
-        $flashMessageQueue->getAllMessagesAndFlush(AbstractMessage::OK);
+        $flashMessageQueue->getAllMessagesAndFlush(\TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
 
         $this->addFlashMessage(LocalizationUtility::translate(
             'flashMessage.update',
@@ -554,13 +547,13 @@ class AddressController extends ActionController
      * action delete
      *
      * @param \string $hash
-     * @Validate("NotEmpty", param="hash")
      * @param boolean $doDelete
      * @return void
      * @throws \InvalidArgumentException
      * @throws IllegalObjectTypeException
      * @throws InvalidExtensionNameException
      */
+    #[Validate(['validator' => 'NotEmpty', 'param' => 'hash'])]
     public function deleteAction(string $hash = '', $doDelete = false): ResponseInterface
     {
         $address = $this->addressRepository->findOneByRegisteraddresshashIgnoreHidden($hash);

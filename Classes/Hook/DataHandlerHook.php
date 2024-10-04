@@ -38,7 +38,7 @@ class DataHandlerHook
      * @param DataHandler $pObj
      * @return void
      */
-    public function processDatamap_postProcessFieldArray($status, $table, $id, array &$fieldArray, DataHandler $pObj)
+    public function processDatamap_postProcessFieldArray($status, $table, $id, array &$fieldArray, DataHandler $pObj): void
     {
         if ($table === 'tt_address' && $status === 'new') {
             if (empty($fieldArray['registeraddresshash'])) {
