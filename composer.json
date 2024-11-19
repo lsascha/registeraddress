@@ -36,7 +36,7 @@
 			"extension-key": "registeraddress"
 		},
 		"branch-alias":{
-			"dev-main": "6.0.x-dev"
+			"dev-main": "6.1.x-dev"
 		}
 	}
 }
