@@ -26,8 +26,8 @@ return [
             'email' => [
                 'fieldName' => 'email'
             ],
-            'company' => [
-                'fieldName' => 'organisation'
+            'organisation' => [
+                'fieldName' => 'company'
             ],
             'registeraddresshash' => [
                 'fieldName' => 'registeraddresshash'
