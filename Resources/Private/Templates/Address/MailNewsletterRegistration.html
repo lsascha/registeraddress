@@ -2,25 +2,25 @@
 			data-namespace-typo3-fluid="true"
 			lang="en">
 <p>
-	{f:translate(key:'mail.registration.greet')} {f:translate(key:'mail.gender.{address.gender}')} {f:if(condition:address.title,then:'{address.title} ')}{address.firstName} {address.lastName}
+	{f:translate(extensionName:'Registeraddress', key:'mail.registration.greet')} {f:translate(extensionName:'Registeraddress', key:'mail.gender.{address.gender}')} {f:if(condition:address.title,then:'{address.title} ')}{address.firstName} {address.lastName}
 </p>
 <p>
-	{f:translate(key:'mail.registration.text')}
+	{f:translate(extensionName:'Registeraddress', key:'mail.registration.text')}
 </p>
 <div>
-	{f:translate(key:'mail.registration.consentText')}
+	{f:translate(extensionName:'Registeraddress', key:'mail.registration.consentText')}
 	{address.consent -> f:format.html(parseFuncTSPath:"plugin.tx_registeraddress.lib.parseFunc_HTML")}
 </div>
 <p>
-	{f:translate(key:'mail.registration.approveLinkText')}
+	{f:translate(extensionName:'Registeraddress', key:'mail.registration.approveLinkText')}
 	<f:link.action action="approve" arguments="{hash: hash}" controller="Address" extensionName="Registeraddress" pluginName="Registerform" pageUid="{settings.pagewithform}" absolute="1">[click]</f:link.action>
 </p>
 <p>
-	{f:translate(key:'mail.registration.deleteLinkText')}
+	{f:translate(extensionName:'Registeraddress', key:'mail.registration.deleteLinkText')}
 	<f:link.action action="delete" arguments="{hash: hash}" controller="Address" extensionName="Registeraddress" pluginName="Registerform" pageUid="{settings.pagewithform}" absolute="1">[click]</f:link.action>
 </p>
 <p>
-	{f:translate(key:'mail.registration.editLinkText')}
+	{f:translate(extensionName:'Registeraddress', key:'mail.registration.editLinkText')}
 	<f:link.action action="edit" arguments="{hash: hash}" controller="Address" extensionName="Registeraddress" pluginName="Registerform" pageUid="{settings.pagewithform}" absolute="1">[click]</f:link.action>
 </p>
 </html>

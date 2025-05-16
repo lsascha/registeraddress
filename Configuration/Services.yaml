@@ -15,3 +15,20 @@ services:
         command: 'registeraddress:deleteHiddenRegistrations'
         schedulable: true
         description: 'Delete not activated registrations older than 24h'
+
+  extbaseSettings.Registeraddress:
+    class: 'array'
+    factory:
+      - '@TYPO3\CMS\Extbase\Configuration\ConfigurationManager'
+      - 'getConfiguration'
+    arguments:
+      $configurationType: 'Settings'
+      $extensionName: 'Registeraddress'
+
+  AFM\Registeraddress\Service\MailService:
+    arguments:
+      $settings: '@extbaseSettings.Registeraddress'
+
+  AFM\Registeraddress\Service\AddressService:
+    arguments:
+      $settings: '@extbaseSettings.Registeraddress'

@@ -1,1 +1,1 @@
-The User {f:translate(key:'mail.gender.{address.gender}')} {address.firstName} {address.lastName} ({address.email}) has updated his data.
+The User {f:translate(extensionName:'Registeraddress',key:'mail.gender.{address.gender}')} {address.firstName} {address.lastName} ({address.email}) has updated his data.

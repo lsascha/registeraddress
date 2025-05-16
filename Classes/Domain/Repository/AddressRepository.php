@@ -24,6 +24,8 @@ namespace AFM\Registeraddress\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use AFM\Registeraddress\Domain\Model\Address;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -37,14 +39,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class AddressRepository extends Repository
 {
 
-    /**
-     * Returns an Object by email address and ignores hidden field.
-     *
-     * @param string $email
-     * @return QueryResultInterface|array
-     *         all objects, will be empty if no objects are found, will be an array if raw query results are enabled
-     */
-    public function findOneByEmailIgnoreHidden($email)
+    public function findOneByEmailIgnoreHidden($email): ?Address
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(TRUE);

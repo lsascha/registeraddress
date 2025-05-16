@@ -18,10 +18,10 @@ Otherwise your changes will be overwritten the next time you save the extension 
     <f:render partial="FormErrors" arguments="{object:Address}"/>
 
     <div class="newform">
-        <h2><f:translate key="form.new.title" /></h2>
+        <h2><f:translate extensionName="Registeraddress" key="form.new.title" /></h2>
         <f:form action="create" name="newAddress" object="{newAddress}" pageUid="{settings.pagewithform}" section="tx-registeraddress" pluginName="Registerform">
         <f:render partial="Address/FormFields" />
-        	<f:form.submit value="{f:translate(key:'form.new.submitButton')}" class="submit" />
+        	<f:form.submit value="{f:translate(extensionName:'Registeraddress',key:'form.new.submitButton')}" class="submit" />
         </f:form>
     </div>
 </f:section>

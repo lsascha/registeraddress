@@ -22,10 +22,10 @@ Otherwise your changes will be overwritten the next time you save the extension 
 			<f:then>
 				<f:if condition="{alreadyApproved}">
 				    <f:then>
-							<p><f:translate key="alreadyApproved" default="already aprooved"/></p>
+							<p><f:translate extensionName="Registeraddress" key="alreadyApproved" default="already aprooved"/></p>
 						</f:then>
 					<f:else>
-						<p><f:translate key="form.approve.approvetext" arguments="{0: address.firstName, 1:address.lastName, 2:address.email}" /></p>
+						<p><f:translate extensionName="Registeraddress" key="form.approve.approvetext" arguments="{0: address.firstName, 1:address.lastName, 2:address.email}" /></p>
 					</f:else>
 				</f:if>
 
@@ -33,13 +33,13 @@ Otherwise your changes will be overwritten the next time you save the extension 
 			<f:else>
 				<f:form action="approve" arguments="{hash: hash}">
 					<f:form.hidden name="doApprove" value="1" />
-					<f:form.submit value="{f:translate(key:'form.approve.submitButton')}" class="submit" />
+					<f:form.submit value="{f:translate(extensionName:'Registeraddress',key:'form.approve.submitButton')}" class="submit" />
 				</f:form>
 			</f:else>
 		</f:if>
 	</f:then>
 	<f:else>
-		<p><f:translate key="form.approve.errortext" /></p>
+		<p><f:translate extensionName="Registeraddress" key="form.approve.errortext" /></p>
 	</f:else>
 </f:if>
 

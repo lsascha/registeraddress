@@ -14,26 +14,26 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
     <div class="unsubscribeform">
         <h2>
-            <f:translate key="form.unsubscribe.title" />
+            <f:translate extensionName="Registeraddress" key="form.unsubscribe.title" />
         </h2>
         <f:form action="unsubscribeForm">
             <div class="fieldrow">
                 <label for="email">
-                    <f:translate key="tx_registeraddress_domain_model_address.email" />
+                    <f:translate extensionName="Registeraddress" key="tx_registeraddress_domain_model_address.email" />
                 </label>
-                <f:form.textfield name="email" id="email" placeholder="{f:translate(key:'tx_registeraddress_domain_model_address.email.placeholder')}"
+                <f:form.textfield name="email" id="email" placeholder="{f:translate(extensionName:'Registeraddress',key:'tx_registeraddress_domain_model_address.email.placeholder')}"
                 />
             </div>
-            <f:form.submit value="{f:translate(key:'form.unsubscribe.submitButton')}" class="submit" />
+            <f:form.submit value="{f:translate(extensionName:'Registeraddress',key:'form.unsubscribe.submitButton')}" class="submit" />
         </f:form>
     </div>
     <f:if condition="{address}">
         <f:then>
-            <f:translate key="form.unsubscribe.success" />
+            <f:translate extensionName="Registeraddress" key="form.unsubscribe.success" />
         </f:then>
         <f:else>
             <f:if condition="{email}">
-                <f:translate key="form.unsubscribe.error" />
+                <f:translate extensionName="Registeraddress" key="form.unsubscribe.error" />
             </f:if>
         </f:else>
     </f:if>

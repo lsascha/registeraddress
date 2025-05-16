@@ -29,8 +29,9 @@ use AFM\Registeraddress\Event\ApproveBeforePersistEvent;
 use AFM\Registeraddress\Event\CreateBeforePersistEvent;
 use AFM\Registeraddress\Event\DeleteBeforePersistEvent;
 use AFM\Registeraddress\Event\UpdateBeforePersistEvent;
+use AFM\Registeraddress\Service\AddressService;
+use AFM\Registeraddress\Service\MailService;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
@@ -40,13 +41,9 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use AFM\Registeraddress\Domain\Model\Address;
 use AFM\Registeraddress\Domain\Repository\AddressRepository;
 use AFM\Registeraddress\Event\InitializeCreateActionEvent;
-use TYPO3\CMS\Core\Mail\MailMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  *
@@ -59,8 +56,10 @@ class AddressController extends ActionController
 {
 
     const MAILFORMAT_TXT = 'txt';
-    const MAILFORMAT_HTML = 'html';
-    const MAILFORMAT_TXTHTML = 'both';
+
+    protected MailService $mailService;
+
+    protected AddressService $addressService;
 
     /**
      * addressRepository
@@ -69,10 +68,17 @@ class AddressController extends ActionController
      */
     protected $addressRepository;
 
-    public function __construct(\AFM\Registeraddress\Domain\Repository\AddressRepository $addressRepository, \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager)
+    public function __construct(
+        AddressRepository $addressRepository,
+        PersistenceManager $persistenceManager,
+        MailService $mailService,
+        AddressService $addressService,
+    )
     {
         $this->addressRepository = $addressRepository;
         $this->persistenceManager = $persistenceManager;
+        $this->mailService = $mailService;
+        $this->addressService = $addressService;
     }
 
     /**
@@ -81,159 +87,6 @@ class AddressController extends ActionController
      * @var PersistenceManager
      */
     protected $persistenceManager;
-
-    /**
-     * This creates another stand-alone instance of the Fluid view to render a template
-     * @param string $templateName the name of the template to use
-     * @param string $format the format of the fluid template "html" or "txt"
-     * @return StandaloneView the Fluid instance
-     * @throws InvalidExtensionNameException
-     */
-    protected function getPlainRenderer($templateName = 'default', $format = 'txt')
-    {
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setRequest($this->request);
-        $view->setFormat($format);
-
-        // find plugin view configuration
-        $frameworkConfiguration = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-        );
-        // find paths from plugin configuration
-        $view->getRenderingContext()->getTemplatePaths()->fillFromConfigurationArray($frameworkConfiguration['view']);
-
-        $view->setTemplate($templateName);
-        $view->assign('settings', $this->settings);
-
-        return $view;
-    }
-
-
-    /**
-     * Send email
-     *
-     * @param array $recipient
-     * @param array $from
-     * @param string $subject
-     * @param string $bodyHTML
-     * @param string $bodyPlain
-     * @param string $returnPath
-     * @param array|null $replyTo
-     * @return integer the number of recipients who were accepted for delivery
-     */
-    protected function sendEmail(array $recipient, array $from, $subject, $bodyHTML = '', $bodyPlain = '', string $returnPath = '', array $replyTo = NULL)
-    {
-        $mail = GeneralUtility::makeInstance(MailMessage::class);
-        $mail
-            ->setTo($recipient)
-            ->setFrom($from)
-            ->setSubject($subject);
-
-        if (!empty(array_filter($replyTo ?? []))) {
-            $mail->setReplyTo($replyTo);
-        }
-        if ($returnPath) {
-            $mail->setReturnPath($returnPath);
-        }
-
-        if ($bodyHTML !== '' && $bodyHTML !== NULL ) {
-            $mail->html($bodyHTML);
-        }
-        if ($bodyPlain !== '' && $bodyPlain !== NULL ) {
-            $mail->text($bodyPlain);
-        }
-
-        return $mail->send();
-    }
-
-    /** @noinspection MoreThanThreeArgumentsInspection */
-    /**
-     * sends an e-mail to users
-     * @param string $templateName
-     * @param string $recipientmails
-     * @param array $data
-     * @param string $type
-     * @param string $subjectSuffix
-     * @return void
-     * @throws \InvalidArgumentException
-     * @throws InvalidExtensionNameException
-     */
-    protected function sendResponseMail( string $templateName, string $recipientmails = '', array $data = NULL, $type = self::MAILFORMAT_TXT, $subjectSuffix = '' )
-    {
-        $oldSpamProtectSetting = $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'] ?? '';
-        // disable spamProtectEmailAddresses setting for e-mails
-        $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'] = 0;
-
-        $recipients = explode(',', $recipientmails);
-
-        $from = [$this->settings['sendermail'] => $this->settings['sendername']];
-        $subject = $this->settings['responseSubject'];
-
-        $replyTo = GeneralUtility::trimExplode(',',$this->settings['replyTo']);
-        $returnPath = $this->settings['returnPath'];
-
-        // add suffix to subject if set
-        if ($subjectSuffix != '') {
-            $subject .= ' - ' . $subjectSuffix;
-        }
-
-        $mailHtml = '';
-        $mailText = '';
-
-        switch ($type) {
-            case self::MAILFORMAT_TXT:
-                $mailTextView = $this->getPlainRenderer($templateName, 'txt');
-                break;
-            case self::MAILFORMAT_HTML:
-                $mailHtmlView = $this->getPlainRenderer($templateName, 'html');
-                break;
-
-            /** @noinspection PhpMissingBreakStatementInspection */
-            case self::MAILFORMAT_TXTHTML:
-                $mailHtmlView = $this->getPlainRenderer($templateName, 'html');
-            default:
-                $mailTextView = $this->getPlainRenderer($templateName, 'txt');
-                break;
-        }
-
-        if (isset($mailTextView)) {
-            $mailTextView->assignMultiple($data);
-            $mailText = $mailTextView->render();
-        }
-        if (isset($mailHtmlView)) {
-            $mailHtmlView->assignMultiple($data);
-            $mailHtml = $mailHtmlView->render();
-        }
-
-        foreach ($recipients as $recipient) {
-            $recipientMail = [trim($recipient)];
-            $this->sendEmail(
-                $recipientMail,
-                $from,
-                $subject,
-                $mailHtml,
-                $mailText,
-                $returnPath,
-                $replyTo
-            );
-        }
-
-        // revert spamProtectSettings
-        $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses'] = $oldSpamProtectSetting;
-    }
-
-
-    /**
-     * checks if address already exists
-     * @param  string $address address to check
-     * @return QueryResultInterface|array returns the already existing address or NULL if it is new
-     */
-    private function checkIfAddressExists($address)
-    {
-        $oldAddress = $this->addressRepository->findOneByEmailIgnoreHidden( $address );
-
-        return isset($oldAddress) && $oldAddress ? $oldAddress : null;
-    }
 
     /**
      * action form only
@@ -278,34 +131,13 @@ class AddressController extends ActionController
      */
     public function createAction(Address $newAddress): ResponseInterface
     {
-        $oldAddress = $this->checkIfAddressExists($newAddress->getEmail());
+        $oldAddress = $this->addressService->checkIfAddressExists($newAddress->getEmail());
         if ($oldAddress) {
             $this->view->assign('oldAddress', $oldAddress);
             $this->view->assign('alreadyExists', true);
         } else {
-            $rnd = microtime(true).random_int(10000,90000);
-            $regHash = sha1( $newAddress->getEmail().$rnd );
-            $newAddress->setRegisteraddresshash( $regHash );
-            $newAddress->setHidden(true);
-            $newAddress->setConsent($this->settings['consent']);
-            $this->addressRepository->add($newAddress);
-
-            $data = [
-                'address' => $newAddress,
-                'hash' => $regHash
-            ];
-
-            $this->eventDispatcher->dispatch(new CreateBeforePersistEvent($newAddress));
-
-            $this->sendResponseMail(
-                'Address/MailNewsletterRegistration',
-                $newAddress->getEmail(),
-                $data,
-                $this->settings['mailformat'],
-                LocalizationUtility::translate('mail.registration.subjectsuffix', 'registeraddress')
-            );
-
-            $this->persistenceManager->persistAll();
+            //@todo: avoid double check in AddressService if address exists
+            $this->addressService->createAddress($newAddress);
         }
 
         $this->view->assign('address', $newAddress);
@@ -338,7 +170,7 @@ class AddressController extends ActionController
                 // if e-mail already approved, just send information mail to edit or delete
                 $mailTemplate = 'Address/MailNewsletterInformation';
             }
-            $this->sendResponseMail(
+            $this->mailService->sendResponseMail(
                 $mailTemplate,
                 $address->getEmail(),
                 $data,
@@ -374,7 +206,7 @@ class AddressController extends ActionController
             ];
 
             $mailTemplate = 'Address/MailNewsletterUnsubscribe';
-            $this->sendResponseMail(
+            $this->mailService->sendResponseMail(
                 $mailTemplate,
                 $address->getEmail(),
                 $data,
@@ -419,7 +251,7 @@ class AddressController extends ActionController
                 $data = [
                     'address' => $address
                 ];
-                $this->sendResponseMail(
+                $this->mailService->sendResponseMail(
                     'Address/MailNewsletterApproveSuccess',
                     $address->getEmail(),
                     $data,
@@ -435,8 +267,7 @@ class AddressController extends ActionController
             if ($this->settings['adminmail']) {
                 $adminRecipient = $this->settings['adminmail'];
                 $subject = $this->settings['approveSubject'];
-
-                $this->sendResponseMail(
+                $this->mailService->sendResponseMail(
                     'Address/Admin/MailAdminApprove',
                     $adminRecipient,
                     ['address' => $address],
@@ -505,7 +336,7 @@ class AddressController extends ActionController
             $adminRecipient = $this->settings['adminmail'];
             $subject = $this->settings['updateSubject'];
 
-            $this->sendResponseMail(
+            $this->mailService->sendResponseMail(
                 'Address/Admin/MailAdminUpdate',
                 $adminRecipient,
                 ['address' => $address],
@@ -555,7 +386,7 @@ class AddressController extends ActionController
                 $data = [
                     'address' => $address
                 ];
-                $this->sendResponseMail(
+                $this->mailService->sendResponseMail(
                     'Address/MailNewsletterDeleteSuccess',
                     $address->getEmail(),
                     $data,
@@ -570,8 +401,7 @@ class AddressController extends ActionController
             if ($this->settings['adminmail']) {
                 $adminRecipient = $this->settings['adminmail'];
                 $subject = $this->settings['deleteSubject'];
-
-                $this->sendResponseMail(
+                $this->mailService->sendResponseMail(
                     'Address/Admin/MailAdminDelete',
                     $adminRecipient,
                     ['address' => $address],
