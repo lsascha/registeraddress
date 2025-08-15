@@ -7,16 +7,14 @@
         <type>array</type>
         <el>
             <settings.consent>
-                <TCEforms>
-                    <label>LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:flexforms.consent</label>
-                    <config>
-                        <type>text</type>
-                        <rows>5</rows>
-                        <cols>30</cols>
-                        <enableRichtext>1</enableRichtext>
-                    </config>
-                    <defaultExtras>richtext[cut|copy|paste|bold|italic|link]:rte_transform[mode=css]</defaultExtras>
-                </TCEforms>
+                <label>LLL:EXT:registeraddress/Resources/Private/Language/locallang_db.xlf:flexforms.consent</label>
+                <config>
+                    <type>text</type>
+                    <rows>5</rows>
+                    <cols>30</cols>
+                    <enableRichtext>1</enableRichtext>
+                </config>
+                <defaultExtras>richtext[cut|copy|paste|bold|italic|link]:rte_transform[mode=css]</defaultExtras>
             </settings.consent>
         </el>
     </ROOT>
