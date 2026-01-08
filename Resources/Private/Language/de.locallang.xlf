@@ -216,6 +216,14 @@ Versuchen Sie es bitte erneut.</target>
 				<source>Address already approved.</source>
 				<target>Adresse bereits bestätigt.</target>
 			</trans-unit>
+			<trans-unit id="error.emptyNewAddress.title" xml:space="preserve">
+				<source>Error</source>
+				<target>Fehler</target>
+			</trans-unit>
+			<trans-unit id="error.emptyNewAddress.description" xml:space="preserve">
+				<source>An error occured. New email address is missing. Try it again later.</source>
+				<target>Es ist ein Fehler mit der E-Mailadresse aufgetreten. Bitte versuchen Sie es später noch einmal.</target>
+			</trans-unit>
 
 		</body>
 	</file>

@@ -1,0 +1,24 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/ViewHelpers"
+			data-namespace-typo3-fluid="true"
+			lang="en">
+<f:layout name="Default" />
+
+<f:section name="main">
+
+
+	<f:flashMessages as="errors">
+		<f:for each="{errors}" as="error">
+			<b>{error.title}</b>
+			<p>{error.message}</p>
+		</f:for>
+	</f:flashMessages>
+
+    <div class="newform">
+        <h2><f:translate extensionName="Registeraddress" key="form.new.title" /></h2>
+        <f:form action="create" name="newAddress" object="{newAddress}" pageUid="{settings.pagewithform}" section="tx-registeraddress" pluginName="Registerform">
+        <f:render partial="Address/FormFields" />
+        	<f:form.submit value="{f:translate(extensionName:'Registeraddress',key:'form.new.submitButton')}" class="submit" />
+        </f:form>
+    </div>
+</f:section>
+</html>

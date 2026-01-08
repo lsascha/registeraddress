@@ -211,6 +211,12 @@ Please try again.</source>
 			<trans-unit id="alreadyApproved" xml:space="preserve">
 				<source>Address already approved.</source>
 			</trans-unit>
+			<trans-unit id="error.emptyNewAddress.title" xml:space="preserve">
+				<source>Error</source>
+			</trans-unit>
+			<trans-unit id="error.emptyNewAddress.description" xml:space="preserve">
+				<source>An error occured. New email address is missing. Try it again later.</source>
+			</trans-unit>
 
 		</body>
 	</file>
