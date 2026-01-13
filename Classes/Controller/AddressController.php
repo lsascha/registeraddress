@@ -31,6 +31,10 @@ use AFM\Registeraddress\Event\DeleteBeforePersistEvent;
 use AFM\Registeraddress\Event\UpdateBeforePersistEvent;
 use AFM\Registeraddress\Service\AddressService;
 use AFM\Registeraddress\Service\MailService;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use Psr\Http\Message\ResponseInterface;
@@ -68,17 +72,21 @@ class AddressController extends ActionController
      */
     protected $addressRepository;
 
+    protected LanguageServiceFactory $languageServiceFactory;
+
     public function __construct(
         AddressRepository $addressRepository,
         PersistenceManager $persistenceManager,
         MailService $mailService,
         AddressService $addressService,
+        LanguageServiceFactory $languageServiceFactory,
     )
     {
         $this->addressRepository = $addressRepository;
         $this->persistenceManager = $persistenceManager;
         $this->mailService = $mailService;
         $this->addressService = $addressService;
+        $this->languageServiceFactory = $languageServiceFactory;
     }
 
     /**
@@ -117,7 +125,10 @@ class AddressController extends ActionController
 
     public function initializeCreateAction(): void
     {
-        $this->eventDispatcher->dispatch(new InitializeCreateActionEvent($this->arguments, $this->request));
+        $newAddress = $this->request->getArguments();
+        if(!$newAddress['newAddress'] === NULL) {
+            $this->eventDispatcher->dispatch(new InitializeCreateActionEvent($this->arguments, $this->request));
+        }
     }
 
     /**
@@ -129,18 +140,22 @@ class AddressController extends ActionController
      * @throws IllegalObjectTypeException
      * @throws InvalidExtensionNameException
      */
-    public function createAction(Address $newAddress): ResponseInterface
+    public function createAction(?Address $newAddress = null): ResponseInterface
     {
-        $oldAddress = $this->addressService->checkIfAddressExists($newAddress->getEmail());
-        if ($oldAddress) {
-            $this->view->assign('oldAddress', $oldAddress);
-            $this->view->assign('alreadyExists', true);
+        if($newAddress === NULL) {
+            return (new ForwardResponse('errorPage'));
         } else {
-            //@todo: avoid double check in AddressService if address exists
-            $this->addressService->createAddress($newAddress);
-        }
+            $oldAddress = $this->addressService->checkIfAddressExists($newAddress->getEmail());
+            if ($oldAddress) {
+                $this->view->assign('oldAddress', $oldAddress);
+                $this->view->assign('alreadyExists', true);
+            } else {
+                //@todo: avoid double check in AddressService if address exists
+                $this->addressService->createAddress($newAddress);
+            }
 
-        $this->view->assign('address', $newAddress);
+            $this->view->assign('address', $newAddress);
+        }
         return $this->htmlResponse();
     }
 
@@ -453,5 +468,23 @@ class AddressController extends ActionController
             );
         }
         return $eigeneAnrede ?? '';
+    }
+
+    public function errorPageAction(): ResponseInterface
+    {
+        $this->addFlashMessage(
+            $this->getTranslatedLabel('LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:error.emptyNewAddress.description'),
+            $this->getTranslatedLabel('LLL:EXT:registeraddress/Resources/Private/Language/locallang.xlf:error.emptyNewAddress.title'),
+            ContextualFeedbackSeverity::INFO,
+            false
+        );
+        return $this->htmlResponse();
+    }
+
+    protected function getTranslatedLabel($key): string
+    {
+        $language = $this->request->getAttribute('language') ?? $this->request->getAttribute('site')->getDefaultLanguage();
+        $languageService = $this->languageServiceFactory->createFromSiteLanguage($language);
+        return $languageService->sL($key);
     }
 }
