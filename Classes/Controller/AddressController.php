@@ -126,7 +126,7 @@ class AddressController extends ActionController
     public function initializeCreateAction(): void
     {
         $newAddress = $this->request->getArguments();
-        if(!$newAddress['newAddress'] === NULL) {
+        if(!($newAddress['newAddress'] === NULL)) {
             $this->eventDispatcher->dispatch(new InitializeCreateActionEvent($this->arguments, $this->request));
         }
     }
