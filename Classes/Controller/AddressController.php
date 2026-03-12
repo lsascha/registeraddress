@@ -150,6 +150,7 @@ class AddressController extends ActionController
                 $this->view->assign('oldAddress', $oldAddress);
                 $this->view->assign('alreadyExists', true);
             } else {
+                $newAddress->setConsent($newAddress->getConsent() ?? $this->settings['consent']);
                 //@todo: avoid double check in AddressService if address exists
                 $this->addressService->createAddress($newAddress);
             }
