@@ -174,25 +174,8 @@ class AddressController extends ActionController
         $address = $this->addressRepository->findOneByEmailIgnoreHidden($email);
 
         if ($address && $address->getUid() == $uid) {
-            $data = [
-                'address' => $address,
-                'hash' => $address->getRegisteraddresshash()
-            ];
 
-            if ($address->getHidden()) {
-                // if e-mail still unapproved, send complete registration mail again
-                $mailTemplate = 'Address/MailNewsletterRegistration';
-            } else {
-                // if e-mail already approved, just send information mail to edit or delete
-                $mailTemplate = 'Address/MailNewsletterInformation';
-            }
-            $this->mailService->sendResponseMail(
-                $mailTemplate,
-                $address->getEmail(),
-                $data,
-                $this->settings['mailformat'],
-                LocalizationUtility::translate('mail.info.subjectsuffix', 'registeraddress')
-            );
+            $this->addressService->sendInformationEmailIfAlreadyExists($address);
 
             $this->view->assign('address', $address);
         }

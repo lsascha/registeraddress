@@ -81,4 +81,27 @@ class AddressService implements SingletonInterface
         $oldAddress = $this->addressRepository->findOneByEmailIgnoreHidden( $address );
         return isset($oldAddress) && $oldAddress ? $oldAddress : null;
     }
+
+    public function sendInformationEmailIfAlreadyExists(Address $address): void
+    {
+        $data = [
+            'address' => $address,
+            'hash' => $address->getRegisteraddresshash()
+        ];
+
+        if ($address->getHidden()) {
+            // if e-mail still unapproved, send complete registration mail again
+            $mailTemplate = 'Address/MailNewsletterRegistration';
+        } else {
+            // if e-mail already approved, just send information mail to edit or delete
+            $mailTemplate = 'Address/MailNewsletterInformation';
+        }
+        $this->mailService->sendResponseMail(
+            $mailTemplate,
+            $address->getEmail(),
+            $data,
+            $this->settings['mailformat'],
+            LocalizationUtility::translate('mail.info.subjectsuffix', 'registeraddress')
+        );
+    }
 }
