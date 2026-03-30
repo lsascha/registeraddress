@@ -81,6 +81,11 @@ class AddressService implements SingletonInterface
         $oldAddress = $this->addressRepository->findOneByEmailIgnoreHidden( $address );
         return isset($oldAddress) && $oldAddress ? $oldAddress : null;
     }
+    public function checkIfAddressExistsByPid(string $emailAddress, int $pid): ?Address
+    {
+        $oldAddress = $this->addressRepository->findOneByEmailAndPidIgnoreHidden( $emailAddress, $pid );
+        return isset($oldAddress) && $oldAddress ? $oldAddress : null;
+    }
 
     public function sendInformationEmailIfAlreadyExists(Address $address): void
     {

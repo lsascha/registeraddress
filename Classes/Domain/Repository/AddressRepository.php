@@ -108,4 +108,19 @@ class AddressRepository extends Repository
 
         return $query->execute()->getFirst();
     }
+
+    public function findOneByEmailAndPidIgnoreHidden(string $email, int $pid): ?Address
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+        $query->getQuerySettings()->setRespectStoragePage(FALSE);
+        $query->matching(
+            $query->logicalAnd(
+                $query->equals('email', $email ),
+                $query->equals('pid', $pid )
+            ),
+        );
+
+        return $query->execute()->getFirst();
+    }
 }
