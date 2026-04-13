@@ -87,7 +87,7 @@ class AddressService implements SingletonInterface
         return isset($oldAddress) && $oldAddress ? $oldAddress : null;
     }
 
-    public function sendInformationEmailIfAlreadyExists(Address $address): void
+    public function resendOptInOrSendInformationMail(Address $address): void
     {
         $data = [
             'address' => $address,

@@ -175,7 +175,7 @@ class AddressController extends ActionController
 
         if ($address && $address->getUid() == $uid) {
 
-            $this->addressService->sendInformationEmailIfAlreadyExists($address);
+            $this->addressService->resendOptInOrSendInformationMail($address);
 
             $this->view->assign('address', $address);
         }
