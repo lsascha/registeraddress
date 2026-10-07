@@ -317,7 +317,7 @@ class AddressController extends ActionController
      * @throws UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
-    public function updateAction(Address $address): void
+    public function updateAction(Address $address): ResponseInterface
     {
         $hash = $address->getRegisteraddresshash();
 
@@ -347,14 +347,14 @@ class AddressController extends ActionController
         $this->addressRepository->update($address);
 
         // Reset internal messages
-        $flashMessageQueue = $this->controllerContext->getFlashMessageQueue();
+        $flashMessageQueue = $this->getFlashMessageQueue();
         $flashMessageQueue->getAllMessagesAndFlush(\TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK);
 
         $this->addFlashMessage(LocalizationUtility::translate(
             'flashMessage.update',
             'registeraddress')
         );
-        $this->redirect(
+        return $this->redirect(
             'edit',
             'Address',
             'registeraddress',
